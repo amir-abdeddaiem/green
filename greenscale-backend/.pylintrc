@@ -1,0 +1,18 @@
+[MASTER]
+# Add files or directories to the black list.
+ignore=
+
+[MESSAGES CONTROL]
+# Disable specific warnings
+disable=
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    trailing-whitespace,
+    line-too-long,
+    import-outside-toplevel,
+    wrong-import-order,
+
+[FORMAT]
+# Maximum number of characters on a single line.
+max-line-length=100

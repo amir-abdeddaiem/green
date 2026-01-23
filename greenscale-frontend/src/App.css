@@ -1,0 +1,216 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* ===== ULTRA PREMIUM SMOOTH ANIMATIONS ===== */
+
+/* Smooth Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, rgba(16, 185, 129, 0.4), rgba(34, 197, 94, 0.2));
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, rgba(16, 185, 129, 0.8), rgba(34, 197, 94, 0.6));
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+}
+
+/* Smooth Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+.scroll-smooth {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Silky Smooth Transitions */
+button,
+input,
+select,
+textarea {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Enhanced Fade In Animation */
+@keyframes fadeInSmooth {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: fadeInSmooth 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Pulse Animation - Smooth & Premium */
+@keyframes smoothPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse {
+  animation: smoothPulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Smooth Glow Effect */
+@keyframes smoothGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+}
+
+.animate-glow {
+  animation: smoothGlow 2s ease-in-out infinite;
+}
+
+/* Smooth Hover Scale */
+.hover\:scale-110 {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Smooth Backdrop Blur */
+.backdrop-blur-2xl {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  transition: all 0.3s ease;
+}
+
+/* Silky Text Transitions */
+.transition-colors {
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Smooth Box Shadow */
+.shadow-2xl {
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.25);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Ultra Smooth Gradient Transitions */
+.transition-all {
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Premium Duration Variants */
+.duration-300 {
+  transition-duration: 300ms;
+}
+
+.duration-500 {
+  transition-duration: 500ms;
+}
+
+.duration-700 {
+  transition-duration: 700ms;
+}
+
+.duration-1000 {
+  transition-duration: 1000ms;
+}
+
+/* Smooth Hover Effects */
+.group:hover {
+  --tw-shadow: none;
+}
+
+.group:hover .group-hover\:text-emerald-300 {
+  transition: color 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Silky Smooth Border Transitions */
+.border {
+  transition: border-color 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Smooth Transform */
+.transform {
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Premium Easing Functions */
+@keyframes easeOutElastic {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Smooth Rotate Animation */
+.group-hover\:rotate-45:hover {
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Silky Opacity Transitions */
+.opacity-0 {
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.opacity-100 {
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+}
