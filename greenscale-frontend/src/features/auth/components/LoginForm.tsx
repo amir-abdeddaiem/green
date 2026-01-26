@@ -1,16 +1,13 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { authService } from "../services/authService"
-import { Eye, EyeOff, Lock, Mail, ArrowRight, ShieldCheck } from "lucide-react"
+import { Eye, EyeOff, Lock, Mail, Leaf, CheckCircle2 } from "lucide-react"
 
 export function LoginForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -19,9 +16,12 @@ export function LoginForm() {
     setIsLoading(true)
     try {
       const result = await authService.login({ email, password })
-      localStorage.setItem("business_name", result.business_name)
-      localStorage.setItem("user_id", result.user_id.toString())
+      localStorage.setItem("business_name", result.business_name || "Business")
+      localStorage.setItem("user_id", (result.user_id || "").toString())
       localStorage.setItem("isLoggedIn", "true")
+      if (rememberMe) {
+        localStorage.setItem("rememberEmail", email)
+      }
       navigate("/dashboard") 
     } catch (error: any) {
       alert("Login Error: " + error.message)
@@ -31,27 +31,35 @@ export function LoginForm() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 px-4">
-      <Card className="w-full max-w-[420px] shadow-[0_20px_60px_rgba(0,0,0,0.07)] border-none rounded-[2.5rem] bg-white overflow-hidden">
-        <div className="h-2 bg-emerald-500 w-full" /> {/* Accent Bar */}
-        <CardHeader className="pt-10 px-8 pb-6">
-          <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6">
-            <ShieldCheck className="text-emerald-600 w-8 h-8" />
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4 py-8">
+      <div className="w-full max-w-sm">
+        {/* Header Section */}
+        <div className="bg-gradient-to-br from-green-700 via-green-600 to-green-700 rounded-t-3xl p-10 text-center relative overflow-hidden">
+          {/* Decorative Elements */}
+          <div className="absolute top-0 right-0 w-40 h-40 bg-green-500/20 rounded-full -mr-20 -mt-20" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-green-500/20 rounded-full -ml-16 -mb-16" />
+          
+          <div className="relative z-10">
+            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <Leaf className="w-8 h-8 text-green-600" />
+            </div>
+            <h1 className="text-2xl font-black text-white mb-1">Welcome Back</h1>
+            <p className="text-green-100 font-medium text-sm">Sign in to GreenScale</p>
           </div>
-          <CardTitle className="text-3xl font-black text-slate-900 tracking-tight">Welcome Back</CardTitle>
-          <CardDescription className="text-slate-500 font-medium">Enter your credentials to access GreenScale.</CardDescription>
-        </CardHeader>
-        
-        <CardContent className="px-8 pb-10">
-          <form className="space-y-6" onSubmit={handleLogin}>
-            <div className="space-y-2">
-              <Label className="text-[11px] font-bold uppercase tracking-widest text-slate-400 ml-1">Work Email</Label>
+        </div>
+
+        {/* Form Section */}
+        <div className="bg-white rounded-b-3xl shadow-2xl p-6">
+          <form className="space-y-3" onSubmit={handleLogin}>
+            {/* Email Field */}
+            <div>
+              <label className="text-xs font-bold uppercase tracking-wider text-gray-600 block mb-2">EMAIL ADDRESS</label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                <Input 
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input 
                   type="email" 
                   placeholder="name@company.com" 
-                  className="h-14 pl-12 rounded-2xl border-slate-100 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 transition-all font-semibold"
+                  className="w-full h-12 pl-12 pr-4 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-green-500 transition-all font-medium"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -59,13 +67,15 @@ export function LoginForm() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-[11px] font-bold uppercase tracking-widest text-slate-400 ml-1">Security Key</Label>
+            {/* Password Field */}
+            <div>
+              <label className="text-xs font-bold uppercase tracking-wider text-gray-600 block mb-2">PASSWORD</label>
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                <Input 
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input 
                   type={showPassword ? "text" : "password"} 
-                  className="h-14 pl-12 pr-12 rounded-2xl border-slate-100 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 transition-all font-semibold"
+                  placeholder="••••••••••••"
+                  className="w-full h-12 pl-12 pr-12 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-green-500 transition-all font-medium"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -73,30 +83,54 @@ export function LoginForm() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-600 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
             </div>
 
-            <Button 
+            {/* Remember Me & Forgot Password */}
+            <div className="flex items-center justify-between pt-2">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-green-500 cursor-pointer"
+                />
+                <span className="text-sm font-medium text-gray-700">Remember me</span>
+              </label>
+              <a href="#" className="text-sm font-semibold text-green-600 hover:text-green-700 transition-colors">Forgot Password?</a>
+            </div>
+
+            {/* Sign In Button */}
+            <button 
               type="submit" 
-              className="w-full h-14 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 group"
+              className="w-full h-10 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 mt-4 flex items-center justify-center gap-2"
               disabled={isLoading}
             >
-              {isLoading ? "Verifying..." : "Sign In to Portal"}
-              {!isLoading && <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />}
-            </Button>
+              {isLoading ? "Signing in..." : "Sign In"}
+              {!isLoading && <CheckCircle2 size={18} />}
+            </button>
           </form>
-          
-          <div className="mt-8 text-center">
-            <p className="text-sm font-medium text-slate-500">
-              New to GreenScale? <Link to="/register" className="text-emerald-600 font-bold hover:underline">Create Account</Link>
-            </p>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-4">
+            <div className="flex-1 h-px bg-gray-200" />
+            <span className="text-xs text-gray-500 font-medium">NEW USER?</span>
+            <div className="flex-1 h-px bg-gray-200" />
           </div>
-        </CardContent>
-      </Card>
+
+          {/* Sign Up Link */}
+          <p className="text-center text-gray-600 font-medium text-sm">
+            Don't have an account? <Link to="/register" className="text-green-600 font-bold hover:text-green-700 transition-colors">Create one</Link>
+          </p>
+        </div>
+
+        {/* Footer */}
+        <p className="text-center text-gray-500 text-xs mt-4">© 2026 GreenScale. All rights reserved.</p>
+      </div>
     </div>
   )
 }

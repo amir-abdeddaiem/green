@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Zap, Flame, Droplets, X, TrendingUp } from "lucide-react";
+import { Zap, Flame, Droplets, TrendingUp } from "lucide-react";
 
 interface Props {
   isOpen: boolean;
@@ -24,7 +24,7 @@ export function AddEmissionModal({ isOpen, onClose, onSuccess, type }: Props) {
     const unit = type === 'Electricity' ? 'kWh' : type === 'Fuel' ? 'Liters' : 'm³';
 
     try {
-      const response = await fetch("http://127.0.0.1:8001/add-emission", {
+      const response = await fetch("http://127.0.0.1:8000/add-emission", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -62,10 +62,10 @@ export function AddEmissionModal({ isOpen, onClose, onSuccess, type }: Props) {
 
   const getColorClasses = () => {
     switch(type) {
-      case 'Electricity': return { bg: 'bg-gray-900', icon: Zap, label: 'bg-gray-100 text-gray-900 border border-gray-400' };
-      case 'Natural Gas': return { bg: 'bg-gray-800', icon: Flame, label: 'bg-gray-100 text-gray-900 border border-gray-400' };
-      case 'Fuel': return { bg: 'bg-black', icon: Droplets, label: 'bg-gray-100 text-gray-900 border border-gray-400' };
-      default: return { bg: 'bg-gray-900', icon: Droplets, label: 'bg-gray-100 text-gray-900 border border-gray-400' };
+      case 'Electricity': return { bg: 'bg-green-700', icon: Zap, label: 'bg-green-100 text-green-900 border border-green-400' };
+      case 'Natural Gas': return { bg: 'bg-green-600', icon: Flame, label: 'bg-green-100 text-green-900 border border-green-400' };
+      case 'Fuel': return { bg: 'bg-green-600', icon: Droplets, label: 'bg-green-100 text-green-900 border border-green-400' };
+      default: return { bg: 'bg-green-700', icon: Droplets, label: 'bg-green-100 text-green-900 border border-green-400' };
     }
   };
 
@@ -75,16 +75,11 @@ export function AddEmissionModal({ isOpen, onClose, onSuccess, type }: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] rounded-lg border border-gray-300 shadow-2xl p-0 overflow-hidden bg-white">
+      <DialogContent className="sm:max-w-[500px] rounded-lg border border-green-300 shadow-2xl p-0 overflow-hidden bg-white">
         {/* Header */}
         <div className={`relative h-32 md:h-40 ${colors.bg} overflow-hidden`}>
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-0 right-0 w-40 h-40 bg-white rounded-full blur-3xl" />
-          </div>
-          <div className="absolute top-4 right-4 md:top-6 md:right-6 z-10">
-            <button onClick={onClose} className="p-2 hover:bg-white/20 rounded-full transition-all">
-              <X className="text-white w-5 h-5 md:w-6 md:h-6" />
-            </button>
           </div>
           <div className="relative h-full flex items-end p-6 md:p-8">
             <div className={`w-12 h-12 md:w-14 md:h-14 ${colors.label} rounded-lg flex items-center justify-center`}>
@@ -96,8 +91,8 @@ export function AddEmissionModal({ isOpen, onClose, onSuccess, type }: Props) {
         {/* Content */}
         <div className="p-6 md:p-8 space-y-6">
           <div>
-            <DialogTitle className="text-2xl md:text-3xl font-black text-gray-900">Log {type}</DialogTitle>
-            <DialogDescription className="text-gray-600 font-medium mt-2 text-sm md:text-base">
+            <DialogTitle className="text-2xl md:text-3xl font-black text-green-900">Log {type}</DialogTitle>
+            <DialogDescription className="text-green-700 font-medium mt-2 text-sm md:text-base">
               Track your {type.toLowerCase()} consumption and calculate environmental impact
             </DialogDescription>
           </div>
@@ -105,13 +100,13 @@ export function AddEmissionModal({ isOpen, onClose, onSuccess, type }: Props) {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Input Section */}
             <div className="space-y-3">
-              <Label className="text-sm md:text-base font-black uppercase tracking-widest text-gray-700 block">
+              <Label className="text-sm md:text-base font-black uppercase tracking-widest text-green-700 block">
                 Quantity ({type === 'Electricity' ? 'kWh' : type === 'Fuel' ? 'Liters' : 'm³'})
               </Label>
               <Input
                 type="number"
                 placeholder="Enter amount..."
-                className="h-12 md:h-14 rounded-lg border-2 border-gray-400 bg-gray-50 focus:bg-white focus:border-black focus:ring-2 focus:ring-gray-300 transition-all text-lg md:text-xl font-bold text-gray-900 placeholder:text-gray-400"
+                className="h-12 md:h-14 rounded-lg border-2 border-green-400 bg-green-50 focus:bg-white focus:border-green-600 focus:ring-2 focus:ring-green-300 transition-all text-lg md:text-xl font-bold text-green-900 placeholder:text-green-400"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 required
@@ -121,12 +116,12 @@ export function AddEmissionModal({ isOpen, onClose, onSuccess, type }: Props) {
 
             {/* CO2 Estimation Card */}
             {value && (
-              <div className="p-4 md:p-6 bg-gray-50 rounded-lg border-2 border-gray-300 animate-in fade-in slide-in-from-bottom-2">
+              <div className="p-4 md:p-6 bg-green-50 rounded-lg border-2 border-green-300 animate-in fade-in slide-in-from-bottom-2">
                 <div className="flex items-center gap-3 mb-2">
-                  <TrendingUp className="text-gray-700 w-5 h-5 md:w-6 md:h-6" />
-                  <p className="text-sm font-bold text-gray-600">CO2 Impact Estimate</p>
+                  <TrendingUp className="text-green-700 w-5 h-5 md:w-6 md:h-6" />
+                  <p className="text-sm font-bold text-green-600">CO2 Impact Estimate</p>
                 </div>
-                <p className="text-2xl md:text-3xl font-black text-gray-900">{estimatedCO2} kg CO2e</p>
+                <p className="text-2xl md:text-3xl font-black text-green-900">{estimatedCO2} kg CO2e</p>
               </div>
             )}
 
@@ -135,14 +130,14 @@ export function AddEmissionModal({ isOpen, onClose, onSuccess, type }: Props) {
               <Button
                 type="button"
                 onClick={onClose}
-                className="flex-1 h-12 md:h-14 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm md:text-base transition-all border border-gray-400"
+                className="flex-1 h-12 md:h-14 rounded-lg bg-green-100 hover:bg-green-200 text-green-700 font-bold text-sm md:text-base transition-all border border-green-400"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isLoading || !value}
-                className={`flex-1 h-12 md:h-14 rounded-lg ${colors.bg} hover:bg-gray-800 text-white font-bold text-sm md:text-base transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-400`}
+                className={`flex-1 h-12 md:h-14 rounded-lg ${colors.bg} hover:bg-green-800 text-white font-bold text-sm md:text-base transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-green-400`}
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -155,8 +150,8 @@ export function AddEmissionModal({ isOpen, onClose, onSuccess, type }: Props) {
           </form>
 
           {/* Info Footer */}
-          <div className="pt-4 border-t border-gray-300">
-            <p className="text-xs md:text-sm text-gray-500 text-center font-medium">
+          <div className="pt-4 border-t border-green-300">
+            <p className="text-xs md:text-sm text-green-600 text-center font-medium">
               💡 Your data helps track carbon footprint and identify reduction opportunities
             </p>
           </div>

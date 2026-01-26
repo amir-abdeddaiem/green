@@ -1,351 +1,386 @@
 import { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Leaf, BarChart3, Settings, Menu, X, ChevronRight, ChevronLeft, Home, Clock, Wind, BarChart2, Target, LifeBuoy, Bell, LogOut, Sparkles } from "lucide-react";
+import { 
+  Leaf, BarChart3, Settings, Menu, X, Home, Wind, BarChart2, Target, 
+  LifeBuoy, Bell, LogOut, ChevronLeft, Search, Crown, DollarSign, TrendingUp, Globe, Truck
+} from "lucide-react";
+import { ChatWidget } from "./ChatWidget";
+import { CurrencyProvider, useCurrency } from "../context/CurrencyContext";
 
 export function DashboardLayout() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const businessName = localStorage.getItem("business_name") || "CarbonPro";
   const businessId = localStorage.getItem("user_id");
+  const profilePicture = localStorage.getItem("profile_picture") || "";
+  const isSuperAdmin = localStorage.getItem("is_super_admin") === "true";
 
-  // Protect route - redirect if not logged in
   useEffect(() => {
     if (!businessId || businessId === "undefined") {
       navigate("/login");
     }
   }, [businessId, navigate]);
 
+  // Update date and time every second
   useEffect(() => {
-    const handleScroll = (e: any) => {
-      setIsScrolled(e.target.scrollLeft > 10);
-    };
-    const section = document.querySelector("section");
-    section?.addEventListener("scroll", handleScroll);
-    return () => section?.removeEventListener("scroll", handleScroll);
+    const timer = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
   }, []);
 
+  const navItems = [
+    { label: "Dashboard", path: "/dashboard", icon: Home },
+    { label: "Analytics", path: "/dashboard/analytics", icon: Wind },
+    { label: "Emissions", path: "/dashboard/emissions", icon: BarChart2 },
+    { label: "Reports", path: "/dashboard/reports", icon: BarChart3 },
+    { label: "Goals", path: "/dashboard/goals", icon: Target },
+    { label: "Financial", path: "/dashboard/financial", icon: DollarSign },
+    { label: "ROI", path: "/dashboard/roi", icon: TrendingUp },
+    { label: "Supply Chain", path: "/dashboard/scope3", icon: Truck },
+  ];
+
   return (
-    <div className="flex h-screen bg-white font-sans antialiased overflow-hidden">
-      {/* ===== SIDEBAR - PREMIUM BLACK & WHITE ===== */}
-      <aside className={`${
-        isSidebarCollapsed ? "lg:w-20" : "lg:w-72"
-      } fixed lg:static inset-y-0 left-0 w-72 bg-white text-gray-900 flex flex-col shadow-2xl border-r border-gray-200 transition-all duration-500 transform ${
-        isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-      } z-50`}>
-        
-        {/* ===== PREMIUM HEADER ===== */}
-        <div className={`relative ${isSidebarCollapsed ? "lg:px-2" : "px-6"} py-8 border-b border-gray-200 transition-all duration-500`}>
-          <div className="relative flex items-center justify-between">
-            {!isSidebarCollapsed && (
-              <div className="flex items-center gap-3 flex-1 animate-in fade-in duration-500">
-                {/* Premium Logo */}
-                <div className="relative group/logo">
-                  <div className="relative w-10 h-10 bg-black rounded-xl flex items-center justify-center text-white font-black text-lg shadow-lg transition-all duration-500">
-                    <Leaf className="w-5 h-5" />
-                  </div>
-                </div>
+    <CurrencyProvider>
+      <DashboardContent 
+        isSidebarExpanded={isSidebarExpanded}
+        setIsSidebarExpanded={setIsSidebarExpanded}
+        isMobileSidebarOpen={isMobileSidebarOpen}
+        setIsMobileSidebarOpen={setIsMobileSidebarOpen}
+        currentDateTime={currentDateTime}
+        isProfileDropdownOpen={isProfileDropdownOpen}
+        setIsProfileDropdownOpen={setIsProfileDropdownOpen}
+        navigate={navigate}
+        location={location}
+        businessName={businessName}
+        businessId={businessId}
+        profilePicture={profilePicture}
+        isSuperAdmin={isSuperAdmin}
+        navItems={navItems}
+      />
+    </CurrencyProvider>
+  );
+}
 
-                {/* Company Branding */}
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs uppercase tracking-widest font-bold text-gray-900 leading-none">CarbonPro</p>
-                  <p className="text-xs text-gray-600 font-medium">Enterprise Platform</p>
-                </div>
+interface DashboardContentProps {
+  isSidebarExpanded: boolean;
+  setIsSidebarExpanded: (val: boolean) => void;
+  isMobileSidebarOpen: boolean;
+  setIsMobileSidebarOpen: (val: boolean) => void;
+  currentDateTime: Date;
+  isProfileDropdownOpen: boolean;
+  setIsProfileDropdownOpen: (val: boolean) => void;
+  navigate: any;
+  location: any;
+  businessName: string;
+  businessId: string | null;
+  profilePicture: string;
+  isSuperAdmin: boolean;
+  navItems: any[];
+}
 
-                {/* Premium Badge */}
-                <div className="px-2.5 py-1 bg-black border border-gray-800 rounded-full">
-                  <span className="text-xs font-bold text-white flex items-center gap-1">
-                    <Sparkles className="w-3 h-3" />
-                    PRO
-                  </span>
-                </div>
+function DashboardContent({
+  isSidebarExpanded,
+  setIsSidebarExpanded,
+  isMobileSidebarOpen,
+  setIsMobileSidebarOpen,
+  currentDateTime,
+  isProfileDropdownOpen,
+  setIsProfileDropdownOpen,
+  navigate,
+  location,
+  businessName,
+  businessId,
+  profilePicture,
+  isSuperAdmin,
+  navItems,
+}: DashboardContentProps) {
+  return (
+    <div className="flex h-screen bg-white">
+      {/* ===== SIDEBAR - WHITE & GREEN PROFESSIONAL DESIGN ===== */}
+      <aside
+        className={`fixed lg:static inset-y-0 left-0 z-50 bg-white border-r border-gray-200 transition-all duration-300 ease-in-out flex flex-col ${
+          isSidebarExpanded ? "w-64" : "w-20"
+        } ${isMobileSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
+      >
+        {/* Logo & Hamburger */}
+        <div className="flex items-center justify-between px-6 py-6 border-b border-gray-200">
+          {isSidebarExpanded && (
+            <div className="flex items-center gap-3 flex-1">
+              <div className="w-8 h-8 bg-green-600 rounded-md flex items-center justify-center flex-shrink-0">
+                <Leaf className="w-5 h-5 text-white" />
               </div>
-            )}
+              <div className="hidden sm:block">
+                <p className="text-black font-bold text-sm leading-tight">GreenScale</p>
+                <p className="text-gray-500 text-xs">Dashboard</p>
+              </div>
+            </div>
+          )}
+          {!isSidebarExpanded && (
+            <div className="w-full flex justify-center">
+              <div className="w-8 h-8 bg-green-600 rounded-md flex items-center justify-center">
+                <Leaf className="w-5 h-5 text-white" />
+              </div>
+            </div>
+          )}
+          
+          <button
+            onClick={() => setIsSidebarExpanded(!isSidebarExpanded)}
+            className="hidden lg:flex text-gray-600 hover:text-green-600 transition-colors p-1"
+            title={isSidebarExpanded ? "Collapse sidebar" : "Expand sidebar"}
+          >
+            <ChevronLeft className={`w-5 h-5 transition-transform ${!isSidebarExpanded ? "rotate-180" : ""}`} />
+          </button>
 
-            {/* Mobile Close Button */}
-            <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-gray-700 hover:text-gray-900 transition-all duration-300 p-2 hover:bg-gray-100 rounded-lg">
-              <X className="w-5 h-5" />
-            </button>
-
-            {/* Desktop Collapse Toggle */}
-            <button 
-              onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)} 
-              className="hidden lg:flex p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all duration-300"
-              title={isSidebarCollapsed ? "Expand" : "Collapse"}
-            >
-              {isSidebarCollapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
-            </button>
-          </div>
+          <button
+            onClick={() => setIsMobileSidebarOpen(false)}
+            className="lg:hidden text-gray-600 hover:text-black p-1"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
-        {/* ===== NAVIGATION MENU - PREMIUM DESIGN ===== */}
-        <nav className={`flex-1 overflow-y-auto custom-scrollbar ${isSidebarCollapsed ? "lg:px-2" : "px-4"} py-6 space-y-2 scroll-smooth`}>
-          {/* Main Navigation */}
-          <div className="space-y-1">
-            <p className={`text-xs uppercase tracking-wider font-bold text-gray-600 ${isSidebarCollapsed ? "lg:hidden" : "block"} mb-3 px-3`}>Main</p>
-            <NavItem 
-              icon={<Home className="w-5 h-5" />} 
-              label="Dashboard" 
-              active={location.pathname === "/dashboard"}
-              collapsed={isSidebarCollapsed}
-              onClick={() => { navigate("/dashboard"); setIsSidebarOpen(false); }}
-              badge="Core"
-              onHover={() => setHoveredItem("dashboard")}
-              isHovered={hoveredItem === "dashboard"}
-            />
-          </div>
-
-          {/* Analytics Section */}
-          <div className="space-y-1 pt-4">
-            <p className={`text-xs uppercase tracking-wider font-bold text-gray-600 ${isSidebarCollapsed ? "lg:hidden" : "block"} px-3`}>Analytics</p>
-            <NavItem 
-              icon={<Wind className="w-5 h-5" />} 
-              label="Analytics" 
-              active={location.pathname === "/dashboard/analytics"}
-              collapsed={isSidebarCollapsed}
-              onClick={() => { navigate("/dashboard/analytics"); setIsSidebarOpen(false); }}
-              onHover={() => setHoveredItem("analytics")}
-              isHovered={hoveredItem === "analytics"}
-            />
-            <NavItem 
-              icon={<BarChart2 className="w-5 h-5" />} 
-              label="Emissions Log" 
-              active={location.pathname === "/dashboard/emissions"}
-              collapsed={isSidebarCollapsed}
-              onClick={() => { navigate("/dashboard/emissions"); setIsSidebarOpen(false); }}
-              onHover={() => setHoveredItem("emissions")}
-              isHovered={hoveredItem === "emissions"}
-            />
-          </div>
-
-          {/* Operations Section */}
-          <div className="space-y-1 pt-4">
-            <p className={`text-xs uppercase tracking-wider font-bold text-gray-600 ${isSidebarCollapsed ? "lg:hidden" : "block"} px-3`}>Operations</p>
-            <NavItem 
-              icon={<BarChart3 className="w-5 h-5" />} 
-              label="Reports" 
-              active={location.pathname === "/dashboard/reports"}
-              collapsed={isSidebarCollapsed}
-              onClick={() => { navigate("/dashboard/reports"); setIsSidebarOpen(false); }}
-              badge="NEW"
-              badgeColor="black"
-              onHover={() => setHoveredItem("reports")}
-              isHovered={hoveredItem === "reports"}
-            />
-            <NavItem 
-              icon={<Target className="w-5 h-5" />} 
-              label="Goals" 
-              active={location.pathname === "/dashboard/goals"}
-              collapsed={isSidebarCollapsed}
-              onClick={() => { navigate("/dashboard/goals"); setIsSidebarOpen(false); }}
-              onHover={() => setHoveredItem("goals")}
-              isHovered={hoveredItem === "goals"}
-            />
-          </div>
-
-          {/* System Section */}
-          <div className="space-y-1 pt-4 border-t border-gray-200">
-            <p className={`text-xs uppercase tracking-wider font-bold text-gray-600 ${isSidebarCollapsed ? "lg:hidden" : "block"} px-3 pt-4`}>System</p>
-            <NavItem 
-              icon={<Settings className="w-5 h-5" />} 
-              label="Settings" 
-              active={location.pathname === "/dashboard/settings"}
-              collapsed={isSidebarCollapsed}
-              onClick={() => { navigate("/dashboard/settings"); setIsSidebarOpen(false); }}
-              onHover={() => setHoveredItem("settings")}
-              isHovered={hoveredItem === "settings"}
-            />
-            <NavItem 
-              icon={<LifeBuoy className="w-5 h-5" />} 
-              label="Support" 
-              active={location.pathname === "/dashboard/support"}
-              collapsed={isSidebarCollapsed}
-              onClick={() => { navigate("/dashboard/support"); setIsSidebarOpen(false); }}
-              onHover={() => setHoveredItem("support")}
-              isHovered={hoveredItem === "support"}
-            />
-          </div>
+        {/* Navigation */}
+        <nav className="flex-1 px-3 py-6 space-y-2 overflow-y-auto">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = location.pathname === item.path;
+            return (
+              <button
+                key={item.path}
+                onClick={() => {
+                  navigate(item.path);
+                  setIsMobileSidebarOpen(false);
+                }}
+                className={`w-full flex items-center gap-4 px-4 py-3 rounded-lg transition-all duration-200 relative group ${
+                  isActive
+                    ? "bg-green-600 text-white"
+                    : "text-gray-600 hover:text-black hover:bg-gray-100"
+                }`}
+                title={!isSidebarExpanded ? item.label : ""}
+              >
+                {/* Active indicator - left bar */}
+                {isActive && (
+                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-white rounded-r"></div>
+                )}
+                
+                <Icon className={`w-5 h-5 flex-shrink-0 transition-colors ${
+                  isActive ? "text-white" : "group-hover:text-green-600"
+                }`} />
+                
+                {isSidebarExpanded && (
+                  <span className="text-sm font-medium whitespace-nowrap">{item.label}</span>
+                )}
+              </button>
+            );
+          })}
         </nav>
 
-        {/* ===== PREMIUM FOOTER ===== */}
-        <div className={`relative border-t border-gray-200 ${isSidebarCollapsed ? "lg:px-2" : "px-4"} py-6 transition-all duration-500`}>
-          <div className="relative">
-            {!isSidebarCollapsed ? (
-              <div className="space-y-3 animate-in fade-in duration-500">
-                {/* Status Indicator */}
-                <div className="flex items-center gap-2 px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg hover:border-gray-300 transition-all duration-300">
-                  <div className="w-2.5 h-2.5 bg-black rounded-full" />
-                  <span className="text-xs font-semibold text-gray-900">Active Session</span>
-                </div>
-
-                {/* Profile Card */}
-                <button 
-                  onClick={() => navigate("/dashboard/settings")} 
-                  className="w-full group/profile relative overflow-hidden rounded-lg p-3 bg-gray-50 border border-gray-200 hover:border-gray-300 transition-all duration-300"
-                >
-                  <div className="relative flex items-center gap-3">
-                    {(() => {
-                      const profilePicture = localStorage.getItem("profile_picture");
-                      return profilePicture ? (
-                        <img 
-                          src={profilePicture} 
-                          alt={businessName}
-                          className="w-10 h-10 rounded-lg object-cover border border-gray-300"
-                        />
-                      ) : (
-                        <div className="w-10 h-10 bg-black rounded-lg flex items-center justify-center font-bold text-white text-sm border border-gray-800">
-                          {businessName[0]?.toUpperCase()}
-                        </div>
-                      );
-                    })()}
-                    <div className="flex-1 text-left min-w-0">
-                      <p className="font-bold text-sm text-gray-900 truncate">{businessName}</p>
-                      <p className="text-xs text-gray-600">Business Admin</p>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-gray-500 group-hover/profile:text-gray-700 transition-all duration-300" />
-                  </div>
-                </button>
-
-                {/* Logout Button */}
-                <button 
-                  onClick={() => { localStorage.clear(); navigate("/login"); }}
-                  className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 rounded-lg transition-all duration-300 text-sm font-semibold"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>Logout</span>
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-2">
-                <button 
-                  onClick={() => navigate("/dashboard/settings")} 
-                  className="w-full flex items-center justify-center p-3 bg-black border border-gray-800 rounded-lg transition-all duration-300 text-white font-bold hover:bg-gray-900"
-                  title={businessName}
-                >
-                  {businessName[0]?.toUpperCase()}
-                </button>
-                <button 
-                  onClick={() => { localStorage.clear(); navigate("/login"); }}
-                  className="w-full flex items-center justify-center p-2.5 text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 rounded-lg transition-all duration-300"
-                  title="Logout"
-                >
-                  <LogOut className="w-5 h-5" />
-                </button>
-              </div>
-            )}
-          </div>
+        {/* Logout - Footer */}
+        <div className="px-3 py-4 border-t border-gray-200">
         </div>
       </aside>
 
-      {/* Sidebar Overlay for Mobile */}
-      {isSidebarOpen && (
-        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm lg:hidden z-40" onClick={() => setIsSidebarOpen(false)} />
-      )}
-
       {/* ===== MAIN CONTENT ===== */}
-      <main className="flex-1 flex flex-col overflow-hidden">
-        
-        {/* TOP HEADER - PREMIUM MINIMALIST */}
-        <header className={`h-16 bg-white border-b transition-all duration-300 ${
-          isScrolled ? "border-gray-300 shadow-sm" : "border-gray-200"
-        } px-6 lg:px-8 flex items-center justify-between z-40`}>
-          
-          {/* Left Section */}
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)} 
-              className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-600 hover:text-gray-900"
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* TOP BAR - WHITE/LIGHT GREY */}
+        <header className="bg-white border-b border-gray-200 px-4 sm:px-8 py-4 flex items-center justify-between sticky top-0 z-40 shadow-sm">
+          <div className="flex items-center gap-4 flex-1">
+            <button
+              onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+              className="lg:hidden p-2 text-black hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <Menu className="w-6 h-6" />
+              {isMobileSidebarOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
-            
-            <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-lg text-sm text-gray-700 font-semibold">
-              <Clock className="w-4 h-4" />
-              <span>Real-time Dashboard</span>
+
+            {/* Search Bar */}
+            <div className="hidden sm:flex flex-1 max-w-md items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg">
+              <Search className="w-4 h-4 text-gray-500" />
+              <input
+                type="text"
+                placeholder="Search emissions, goals..."
+                className="bg-transparent text-sm text-black placeholder-gray-500 outline-none flex-1"
+              />
             </div>
           </div>
 
-          {/* Right Section */}
-          <div className="flex items-center gap-4">
-            {/* Live Status */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-2 bg-gray-100 text-gray-900 rounded-full border border-gray-200 text-sm font-semibold">
-              <div className="h-2 w-2 bg-black rounded-full" />
-              <span>Live</span>
+          <div className="flex items-center gap-6">
+            {/* Date and Time Display */}
+            <div className="hidden sm:flex flex-col items-end">
+              <p className="text-sm font-semibold text-black">
+                {currentDateTime.toLocaleDateString("en-US", {
+                  weekday: "short",
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </p>
+              <p className="text-xs text-gray-500">
+                {currentDateTime.toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                })}
+              </p>
             </div>
 
             {/* Notifications */}
-            <button className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-600 hover:text-gray-900">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-black rounded-full" />
+            <button className="relative p-2 text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-colors">
+              <Bell size={20} />
+              <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-green-600 rounded-full"></span>
             </button>
 
-            {/* User Profile Avatar */}
-            <div className="h-10 w-10 bg-black rounded-lg flex items-center justify-center font-bold text-white text-sm cursor-pointer hover:bg-gray-900 transition-all group relative">
-              {businessName[0]?.toUpperCase()}
-              
-              {/* Dropdown Menu */}
-              <div className="absolute right-0 top-full mt-3 hidden group-hover:flex flex-col gap-1 bg-white rounded-lg shadow-xl border border-gray-200 p-2 text-sm text-gray-700 z-50 whitespace-nowrap w-48">
-                <div className="px-3 py-2 border-b border-gray-100 font-bold text-gray-900">{businessName}</div>
-                <button className="text-left px-3 py-2 hover:bg-gray-100 rounded text-xs font-medium">Profile Settings</button>
-                <button className="text-left px-3 py-2 hover:bg-gray-100 rounded text-xs font-medium">Help & Support</button>
-                <button className="text-left px-3 py-2 hover:bg-gray-100 rounded text-xs font-medium border-t border-gray-100 text-gray-900">Account Settings</button>
-              </div>
+            {/* Currency Selector */}
+            <CurrencyToggle />            {/* Profile */}
+            <div className="flex items-center gap-3 pl-4 border-l border-gray-200 relative">
+              <button
+                onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                className="flex items-center gap-3 hover:opacity-80 transition"
+              >
+                {profilePicture ? (
+                  <img
+                    src={profilePicture}
+                    alt="Profile"
+                    className="w-10 h-10 rounded-lg object-cover border-2 border-green-600"
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded-lg bg-green-600 flex items-center justify-center text-white font-bold text-sm">
+                    {businessName.charAt(0).toUpperCase()}
+                  </div>
+                )}
+                <div className="hidden sm:block">
+                  <p className="text-black font-semibold text-sm">{businessName}</p>
+                  <p className="text-gray-500 text-xs">Admin</p>
+                </div>
+              </button>
+
+              {/* Profile Dropdown Menu */}
+              {isProfileDropdownOpen && (
+                <div className="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 w-48 overflow-hidden">
+                  {/* Admin Dashboard Option - Only for Super Admin */}
+                  {isSuperAdmin && (
+                    <button
+                      onClick={() => {
+                        navigate("/admin-dashboard");
+                        setIsProfileDropdownOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 px-4 py-3 text-yellow-700 hover:bg-yellow-50 transition border-b border-gray-100 font-semibold"
+                    >
+                      <Crown className="w-5 h-5 text-yellow-600" />
+                      <span>👑 Owner Dashboard</span>
+                    </button>
+                  )}
+
+                  {/* Settings Option */}
+                  <button
+                    onClick={() => {
+                      navigate("/dashboard/settings");
+                      setIsProfileDropdownOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition border-b border-gray-100"
+                  >
+                    <Settings className="w-5 h-5 text-gray-600" />
+                    <span className="font-medium">Settings</span>
+                  </button>
+
+                  {/* Support Option */}
+                  <button
+                    onClick={() => {
+                      navigate("/dashboard/support");
+                      setIsProfileDropdownOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition border-b border-gray-100"
+                  >
+                    <LifeBuoy className="w-5 h-5 text-gray-600" />
+                    <span className="font-medium">Support</span>
+                  </button>
+
+                  {/* Logout Option */}
+                  <button
+                    onClick={() => {
+                      localStorage.clear();
+                      navigate("/login");
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition"
+                  >
+                    <LogOut className="w-5 h-5" />
+                    <span className="font-medium">Logout</span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </header>
 
-        {/* CONTENT SECTION */}
-        <section className="flex-1 overflow-y-auto custom-scrollbar bg-gray-50">
-          <div className="p-6 lg:p-8">
+        {/* CANVAS - MAIN CONTENT */}
+        <main className="flex-1 overflow-y-auto">
+          <div className="px-4 sm:px-8 py-6 lg:py-8">
             <Outlet />
           </div>
-        </section>
-      </main>
+        </main>
+      </div>
+
+      {/* Mobile Sidebar Overlay */}
+      {isMobileSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 lg:hidden z-40"
+          onClick={() => setIsMobileSidebarOpen(false)}
+        />
+      )}
+
+      {/* Chat Widget - Visible on All Dashboard Pages */}
+      <ChatWidget businessId={businessId || "0"} userName={businessName} />
+
+      {/* Profile Dropdown Overlay */}
+      {isProfileDropdownOpen && (
+        <div
+          className="fixed inset-0 z-30"
+          onClick={() => setIsProfileDropdownOpen(false)}
+        />
+      )}
     </div>
   );
 }
 
-function NavItem({ icon, label, active = false, collapsed = false, onClick, badge, badgeColor = "gray", onHover, isHovered }: any) {
-  const badgeColors = {
-    black: "bg-black text-white",
-    gray: "bg-gray-200 text-gray-900",
-  };
+// Currency Toggle Component
+function CurrencyToggle() {
+  const { displayCurrency, setDisplayCurrency, supportedCurrencies } = useCurrency();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <button 
-      onClick={onClick}
-      onMouseEnter={onHover}
-      onMouseLeave={() => onHover(null)}
-      className={`w-full flex items-center gap-3 ${collapsed ? "px-2.5" : "px-4"} py-3.5 rounded-lg transition-all duration-300 text-sm font-semibold group relative ${
-        active 
-          ? "bg-black text-white shadow-lg" 
-          : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-      }`}
-      title={collapsed ? label : ""}
-    >
-      {/* Active Indicator Line */}
-      {active && (
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-white" />
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+      >
+        <Globe className="w-4 h-4" />
+        <span>{displayCurrency}</span>
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+          {supportedCurrencies.map((currency) => (
+            <button
+              key={currency}
+              onClick={() => {
+                setDisplayCurrency(currency);
+                setIsOpen(false);
+              }}
+              className={`w-full text-left px-4 py-2 text-sm transition ${
+                displayCurrency === currency
+                  ? 'bg-green-50 text-green-700 font-semibold'
+                  : 'text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              {currency}
+            </button>
+          ))}
+        </div>
       )}
-      
-      {/* Icon Container */}
-      <span className={`flex-shrink-0 transition-all duration-300 ${active ? "text-white" : "text-gray-600 group-hover:text-gray-900"}`}>
-        {icon}
-      </span>
-      
-      {!collapsed && (
-        <>
-          <span className="flex-1 text-left relative z-10 transition-all duration-300">{label}</span>
-          {badge && (
-            <span className={`px-2 py-0.5 text-xs font-bold rounded ${badgeColors[badgeColor as keyof typeof badgeColors]}`}>
-              {badge}
-            </span>
-          )}
-        </>
-      )}
-    </button>
+    </div>
   );
 }

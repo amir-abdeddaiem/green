@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Search, Zap, Flame, Wind, Trash2, Calendar, AlertCircle, Edit2, CheckCircle2, Clock } from "lucide-react";
+import { AddEmissionModal } from "../AddEmissionModal";
 
 interface Emission {
   id: number;
@@ -30,6 +31,8 @@ export function EmissionsLogTab() {
   const [selectedStatusId, setSelectedStatusId] = useState<number | null>(null);
   const [newStatus, setNewStatus] = useState<"active" | "draft" | "archived">("active");
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [emissionType, setEmissionType] = useState<'Electricity' | 'Natural Gas' | 'Fuel' | 'Waste'>('Electricity');
 
   useEffect(() => {
     fetchAllEmissions();
@@ -47,7 +50,7 @@ export function EmissionsLogTab() {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8001/recent-logs/${businessId}`);
+      const response = await fetch(`http://127.0.0.1:8000/recent-logs/${businessId}`);
       if (response.ok) {
         const data = await response.json();
         setEmissions(data);
@@ -70,7 +73,7 @@ export function EmissionsLogTab() {
 
     setIsDeleting(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8001/delete-emission/${selectedDeleteId}`, {
+      const response = await fetch(`http://127.0.0.1:8000/delete-emission/${selectedDeleteId}`, {
         method: "DELETE",
       });
 
@@ -105,7 +108,7 @@ export function EmissionsLogTab() {
 
     setIsSavingEdit(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8001/update-emission/${selectedEditId}`, {
+      const response = await fetch(`http://127.0.0.1:8000/update-emission/${selectedEditId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -148,7 +151,7 @@ export function EmissionsLogTab() {
 
     setIsUpdatingStatus(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8001/update-emission-status/${selectedStatusId}`, {
+      const response = await fetch(`http://127.0.0.1:8000/update-emission-status/${selectedStatusId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
@@ -209,13 +212,13 @@ export function EmissionsLogTab() {
   const getTypeColor = (type: string) => {
     switch (type) {
       case "Electricity":
-        return "bg-gray-100 text-gray-700 border border-gray-300";
+        return "bg-green-100 text-green-700 border border-green-300";
       case "Natural Gas":
-        return "bg-gray-100 text-gray-700 border border-gray-300";
+        return "bg-green-100 text-green-700 border border-green-300";
       case "Fuel":
-        return "bg-gray-100 text-gray-700 border border-gray-300";
+        return "bg-green-100 text-green-700 border border-green-300";
       default:
-        return "bg-gray-100 text-gray-700 border border-gray-300";
+        return "bg-green-100 text-green-700 border border-green-300";
     }
   };
 
@@ -237,22 +240,54 @@ export function EmissionsLogTab() {
   return (
     <div className="min-h-screen bg-white p-4 sm:p-6 md:p-8 lg:p-12 space-y-8 md:space-y-10">
       {/* Header */}
-      <div className="space-y-2">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900">Emissions Audit Trail</h1>
-        <p className="text-gray-600 text-sm md:text-base">Complete history of all logged emissions with search and filtering</p>
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+        <div>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-green-900">Emissions Audit Trail</h1>
+          <p className="text-green-700 text-sm md:text-base">Complete history of all logged emissions with search and filtering</p>
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          <button
+            onClick={() => { setEmissionType('Electricity'); setIsModalOpen(true); }}
+            className="px-6 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-all active:scale-95 shadow-lg"
+            title="Log electricity consumption"
+          >
+            ⚡ Electricity
+          </button>
+          <button
+            onClick={() => { setEmissionType('Natural Gas'); setIsModalOpen(true); }}
+            className="px-6 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-all active:scale-95 shadow-lg"
+            title="Log natural gas usage"
+          >
+            🔥 Gas
+          </button>
+          <button
+            onClick={() => { setEmissionType('Fuel'); setIsModalOpen(true); }}
+            className="px-6 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-all active:scale-95 shadow-lg"
+            title="Log fuel consumption"
+          >
+            ⛽ Fuel
+          </button>
+          <button
+            onClick={() => { setEmissionType('Waste'); setIsModalOpen(true); }}
+            className="px-6 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-all active:scale-95 shadow-lg"
+            title="Log waste"
+          >
+            ♻️ Waste
+          </button>
+        </div>
       </div>
 
       {/* Search & Filter */}
       <div className="flex flex-col sm:flex-row gap-3">
         {/* Search Box */}
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-400" />
           <input
             type="text"
             placeholder="Search by type or date..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+            className="w-full pl-9 pr-4 py-2.5 bg-white border border-green-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
           />
         </div>
 
@@ -260,7 +295,7 @@ export function EmissionsLogTab() {
         <select
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
-          className="px-4 py-2.5 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+          className="px-4 py-2.5 bg-white border border-green-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
         >
           <option value="all">All Types</option>
           <option value="Electricity">Electricity</option>
@@ -271,42 +306,42 @@ export function EmissionsLogTab() {
       </div>
 
       {/* Emissions Table */}
-      <Card className="overflow-hidden rounded-lg shadow-lg bg-white border border-gray-300">
+      <Card className="overflow-hidden rounded-lg shadow-lg bg-white border border-green-300">
         {isLoading ? (
           <div className="flex justify-center items-center py-12">
-            <div className="w-8 h-8 border-4 border-gray-200 border-t-black rounded-full animate-spin"></div>
+            <div className="w-8 h-8 border-4 border-green-200 border-t-green-600 rounded-full animate-spin"></div>
           </div>
         ) : filteredEmissions.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 border-b border-gray-300">
+              <thead className="bg-green-50 border-b border-green-300">
                 <tr>
-                  <th className="text-left px-6 py-4 font-bold text-gray-900">Date</th>
-                  <th className="text-left px-6 py-4 font-bold text-gray-900">Type</th>
-                  <th className="text-left px-6 py-4 font-bold text-gray-900">Usage</th>
-                  <th className="text-right px-6 py-4 font-bold text-gray-900">CO2 Impact</th>
-                  <th className="text-center px-6 py-4 font-bold text-gray-900">Action</th>
+                  <th className="text-left px-6 py-4 font-bold text-green-900">Date</th>
+                  <th className="text-left px-6 py-4 font-bold text-green-900">Type</th>
+                  <th className="text-left px-6 py-4 font-bold text-green-900">Usage</th>
+                  <th className="text-right px-6 py-4 font-bold text-green-900">CO2 Impact</th>
+                  <th className="text-center px-6 py-4 font-bold text-green-900">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredEmissions.map((emission, idx) => (
                   <tr
                     key={emission.id}
-                    className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
+                    className="border-b border-green-200 hover:bg-green-50 transition-colors"
                     style={{ animationDelay: `${idx * 50}ms` }}
                   >
-                    <td className="px-6 py-4 text-gray-900 font-medium">{formatDate(emission.recorded_at)}</td>
+                    <td className="px-6 py-4 text-green-900 font-medium">{formatDate(emission.recorded_at)}</td>
                     <td className="px-6 py-4">
                       <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold ${getTypeColor(emission.type)}`}>
                         {getTypeIcon(emission.type)}
                         {emission.type}
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-gray-700">
+                    <td className="px-6 py-4 text-green-700">
                       {emission.value} {emission.unit}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-bold border border-gray-300">
+                      <span className="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold border border-green-300">
                         {emission.co2_impact} kg
                       </span>
                     </td>
@@ -315,7 +350,7 @@ export function EmissionsLogTab() {
                         {/* Edit Button */}
                         <button 
                           onClick={() => handleEditClick(emission)}
-                          className="p-2 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition-colors duration-200 border border-gray-300"
+                          className="p-2 text-green-400 hover:text-green-600 hover:bg-green-100 rounded-lg transition-colors duration-200 border border-green-300"
                           title="Edit emission"
                         >
                           <Edit2 className="w-4 h-4" />
@@ -324,10 +359,10 @@ export function EmissionsLogTab() {
                         {/* Status Button */}
                         <button 
                           onClick={() => handleStatusClick(emission.id, emission.status || "active")}
-                          className={`p-2 rounded-lg transition-colors duration-200 border border-gray-300 ${
+                          className={`p-2 rounded-lg transition-colors duration-200 border border-green-300 ${
                             emission.status === "draft"
-                              ? "text-gray-600 hover:bg-gray-100"
-                              : "text-gray-900 hover:bg-gray-100"
+                              ? "text-green-600 hover:bg-green-100"
+                              : "text-green-900 hover:bg-green-100"
                           }`}
                           title={emission.status === "draft" ? "Activate" : "Set as Draft"}
                         >
@@ -341,7 +376,7 @@ export function EmissionsLogTab() {
                         {/* Delete Button */}
                         <button 
                           onClick={() => handleDeleteClick(emission.id)}
-                          className="p-2 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition-colors duration-200 border border-gray-300"
+                          className="p-2 text-green-400 hover:text-green-600 hover:bg-green-100 rounded-lg transition-colors duration-200 border border-green-300"
                           title="Delete emission"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -355,9 +390,9 @@ export function EmissionsLogTab() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-12 px-4">
-            <Calendar className="w-12 h-12 text-gray-300 mb-3" />
-            <p className="text-gray-500 font-medium">No emissions logged yet</p>
-            <p className="text-gray-400 text-sm">Start logging your emissions to see them here</p>
+            <Calendar className="w-12 h-12 text-green-300 mb-3" />
+            <p className="text-green-600 font-medium">No emissions logged yet</p>
+            <p className="text-green-500 text-sm">Start logging your emissions to see them here</p>
           </div>
         )}
       </Card>
@@ -365,17 +400,17 @@ export function EmissionsLogTab() {
       {/* Stats Footer */}
       {filteredEmissions.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Card className="p-4 rounded-lg bg-white border border-gray-300">
-            <p className="text-xs text-gray-600 font-medium">Total Records</p>
-            <p className="text-2xl font-black text-gray-900">{filteredEmissions.length}</p>
+          <Card className="p-4 rounded-lg bg-white border border-green-300">
+            <p className="text-xs text-green-600 font-medium">Total Records</p>
+            <p className="text-2xl font-black text-green-900">{filteredEmissions.length}</p>
           </Card>
-          <Card className="p-4 rounded-lg bg-white border border-gray-300">
-            <p className="text-xs text-gray-600 font-medium">Total CO2 Impact</p>
-            <p className="text-2xl font-black text-gray-900">{filteredEmissions.reduce((sum, e) => sum + e.co2_impact, 0).toFixed(2)} kg</p>
+          <Card className="p-4 rounded-lg bg-white border border-green-300">
+            <p className="text-xs text-green-600 font-medium">Total CO2 Impact</p>
+            <p className="text-2xl font-black text-green-900">{filteredEmissions.reduce((sum, e) => sum + e.co2_impact, 0).toFixed(2)} kg</p>
           </Card>
-          <Card className="p-4 rounded-lg bg-white border border-gray-300">
-            <p className="text-xs text-gray-600 font-medium">Average per Entry</p>
-            <p className="text-2xl font-black text-gray-900">
+          <Card className="p-4 rounded-lg bg-white border border-green-300">
+            <p className="text-xs text-green-600 font-medium">Average per Entry</p>
+            <p className="text-2xl font-black text-green-900">
               {(filteredEmissions.reduce((sum, e) => sum + e.co2_impact, 0) / filteredEmissions.length).toFixed(2)} kg
             </p>
           </Card>
@@ -385,17 +420,17 @@ export function EmissionsLogTab() {
       {/* Edit Emission Dialog */}
       {editDialogOpen && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full animate-in border border-gray-300">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Edit Emission</h3>
+          <div className="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full animate-in border border-green-300">
+            <h3 className="text-lg font-bold text-green-900 mb-4">Edit Emission</h3>
             
             <div className="space-y-4">
               {/* Type */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Emission Type</label>
+                <label className="block text-sm font-semibold text-green-700 mb-2">Emission Type</label>
                 <select
                   value={editFormData.type}
                   onChange={(e) => setEditFormData({ ...editFormData, type: e.target.value })}
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full px-3 py-2 bg-white border border-green-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600"
                 >
                   <option value="Electricity">Electricity</option>
                   <option value="Natural Gas">Natural Gas</option>
@@ -406,25 +441,25 @@ export function EmissionsLogTab() {
 
               {/* Value */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Usage Value</label>
+                <label className="block text-sm font-semibold text-green-700 mb-2">Usage Value</label>
                 <input
                   type="number"
                   step="0.01"
                   value={editFormData.value}
                   onChange={(e) => setEditFormData({ ...editFormData, value: e.target.value })}
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full px-3 py-2 bg-white border border-green-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600"
                   placeholder="Enter value"
                 />
               </div>
 
               {/* Unit */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Unit</label>
+                <label className="block text-sm font-semibold text-green-700 mb-2">Unit</label>
                 <input
                   type="text"
                   value={editFormData.unit}
                   onChange={(e) => setEditFormData({ ...editFormData, unit: e.target.value })}
-                  className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full px-3 py-2 bg-white border border-green-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600"
                   placeholder="e.g., kWh, m³"
                 />
               </div>
@@ -437,14 +472,14 @@ export function EmissionsLogTab() {
                   setSelectedEditId(null);
                 }}
                 disabled={isSavingEdit}
-                className="flex-1 px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-semibold transition-colors disabled:opacity-50 border border-gray-300"
+                className="flex-1 px-4 py-2.5 text-green-700 hover:bg-green-100 rounded-lg font-semibold transition-colors disabled:opacity-50 border border-green-300"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmEdit}
                 disabled={isSavingEdit}
-                className="flex-1 px-4 py-2.5 bg-black hover:bg-gray-800 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {isSavingEdit ? (
                   <>
@@ -466,14 +501,14 @@ export function EmissionsLogTab() {
       {/* Status Change Dialog */}
       {statusDialogOpen && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full animate-in border border-gray-300">
+          <div className="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full animate-in border border-green-300">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 border border-gray-300">
-                <Clock className="w-6 h-6 text-gray-700" />
+              <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 border border-green-300">
+                <Clock className="w-6 h-6 text-green-700" />
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-bold text-gray-900">Change Status</h3>
-                <p className="text-gray-600 text-sm mt-1">
+                <h3 className="text-lg font-bold text-green-900">Change Status</h3>
+                <p className="text-green-700 text-sm mt-1">
                   {newStatus === "draft" 
                     ? "Set this emission as Draft? It won't be counted in your main statistics."
                     : "Activate this emission? It will be included in your main statistics."}
@@ -488,7 +523,7 @@ export function EmissionsLogTab() {
                   setSelectedStatusId(null);
                 }}
                 disabled={isUpdatingStatus}
-                className="flex-1 px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-semibold transition-colors disabled:opacity-50 border border-gray-300"
+                className="flex-1 px-4 py-2.5 text-green-700 hover:bg-green-100 rounded-lg font-semibold transition-colors disabled:opacity-50 border border-green-300"
               >
                 Cancel
               </button>
@@ -497,8 +532,8 @@ export function EmissionsLogTab() {
                 disabled={isUpdatingStatus}
                 className={`flex-1 px-4 py-2.5 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2 ${
                   newStatus === "draft"
-                    ? "bg-gray-700 hover:bg-gray-800"
-                    : "bg-black hover:bg-gray-800"
+                    ? "bg-green-700 hover:bg-green-800"
+                    : "bg-green-600 hover:bg-green-700"
                 }`}
               >
                 {isUpdatingStatus ? (
@@ -525,14 +560,14 @@ export function EmissionsLogTab() {
       {/* Delete Confirmation Dialog */}
       {deleteDialogOpen && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full animate-in border border-gray-300">
+          <div className="bg-white rounded-lg shadow-2xl p-6 max-w-md w-full animate-in border border-green-300">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 border border-gray-300">
-                <AlertCircle className="w-6 h-6 text-gray-700" />
+              <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 border border-green-300">
+                <AlertCircle className="w-6 h-6 text-green-700" />
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-bold text-gray-900">Delete Emission</h3>
-                <p className="text-gray-600 text-sm mt-1">Are you sure you want to delete this emission record? This action cannot be undone.</p>
+                <h3 className="text-lg font-bold text-green-900">Delete Emission</h3>
+                <p className="text-green-700 text-sm mt-1">Are you sure you want to delete this emission record? This action cannot be undone.</p>
               </div>
             </div>
 
@@ -543,14 +578,14 @@ export function EmissionsLogTab() {
                   setSelectedDeleteId(null);
                 }}
                 disabled={isDeleting}
-                className="flex-1 px-4 py-2.5 text-gray-700 hover:bg-gray-100 rounded-lg font-semibold transition-colors disabled:opacity-50 border border-gray-300"
+                className="flex-1 px-4 py-2.5 text-green-700 hover:bg-green-100 rounded-lg font-semibold transition-colors disabled:opacity-50 border border-green-300"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmDelete}
                 disabled={isDeleting}
-                className="flex-1 px-4 py-2.5 bg-black hover:bg-gray-800 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {isDeleting ? (
                   <>
@@ -568,6 +603,14 @@ export function EmissionsLogTab() {
           </div>
         </div>
       )}
+
+      {/* Add Emission Modal */}
+      <AddEmissionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSuccess={fetchAllEmissions}
+        type={emissionType}
+      />
     </div>
   );
 }

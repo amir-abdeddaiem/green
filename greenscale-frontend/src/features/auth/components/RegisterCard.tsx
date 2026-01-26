@@ -1,11 +1,7 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { authService } from "../services/authService"
-import { Building2, Mail, Lock, UserPlus, ArrowLeft } from "lucide-react"
+import { Building2, Mail, Lock, Leaf, ArrowLeft, UserCheck } from "lucide-react"
 
 export function RegistrationForm() {
   const [formData, setFormData] = useState({ business_name: "", email: "", password: "" })
@@ -27,71 +23,99 @@ export function RegistrationForm() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 px-4">
-      <Card className="w-full max-w-[450px] shadow-[0_20px_60px_rgba(0,0,0,0.07)] border-none rounded-[2.5rem] bg-white overflow-hidden">
-        <div className="h-2 bg-blue-600 w-full" />
-        <CardHeader className="pt-10 px-10 pb-6">
-          <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
-            <UserPlus className="text-blue-600 w-7 h-7" />
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4 py-8">
+      <div className="w-full max-w-sm">
+        {/* Header Section */}
+        <div className="bg-gradient-to-br from-green-700 via-green-600 to-green-700 rounded-t-3xl p-10 text-center relative overflow-hidden">
+          {/* Decorative Elements */}
+          <div className="absolute top-0 right-0 w-40 h-40 bg-green-500/20 rounded-full -mr-20 -mt-20" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-green-500/20 rounded-full -ml-16 -mb-16" />
+          
+          <div className="relative z-10">
+            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <Leaf className="w-8 h-8 text-green-600" />
+            </div>
+            <h1 className="text-2xl font-black text-white mb-1">Join GreenScale</h1>
+            <p className="text-green-100 font-medium text-sm">Create your account and start tracking sustainability</p>
           </div>
-          <CardTitle className="text-3xl font-black text-slate-900 tracking-tight">Join GreenScale</CardTitle>
-          <CardDescription className="text-slate-500 font-medium">Set up your sustainability dashboard today.</CardDescription>
-        </CardHeader>
-        
-        <CardContent className="px-10 pb-12">
-          <form className="space-y-5" onSubmit={handleRegister}>
-            <div className="space-y-2">
-              <Label className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Business Name</Label>
+        </div>
+
+        {/* Form Section */}
+        <div className="bg-white rounded-b-3xl shadow-2xl p-5">
+          <form className="space-y-2" onSubmit={handleRegister}>
+            {/* Business Name Field */}
+            <div>
+              <label className="text-xs font-bold uppercase tracking-wider text-gray-600 block mb-1.5">BUSINESS NAME</label>
               <div className="relative">
-                <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                <Input 
+                <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input 
                   placeholder="e.g. Global Tech Inc" 
-                  className="h-14 pl-12 rounded-2xl border-slate-100 bg-slate-50 transition-all font-semibold"
+                  className="w-full h-10 pl-12 pr-4 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-green-500 transition-all font-medium"
                   onChange={(e) => setFormData({...formData, business_name: e.target.value})}
                   required 
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Official Email</Label>
+            {/* Email Field */}
+            <div>
+              <label className="text-xs font-bold uppercase tracking-wider text-gray-600 block mb-1.5">EMAIL ADDRESS</label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                <Input 
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input 
                   type="email" 
                   placeholder="admin@business.com" 
-                  className="h-14 pl-12 rounded-2xl border-slate-100 bg-slate-50 transition-all font-semibold"
+                  className="w-full h-10 pl-12 pr-4 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-green-500 transition-all font-medium"
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                   required 
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Password</Label>
+            {/* Password Field */}
+            <div>
+              <label className="text-xs font-bold uppercase tracking-wider text-gray-600 block mb-1.5">PASSWORD</label>
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                <Input 
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input 
                   type="password" 
-                  className="h-14 pl-12 rounded-2xl border-slate-100 bg-slate-50 transition-all font-semibold"
+                  placeholder="••••••••••••"
+                  className="w-full h-10 pl-12 pr-4 rounded-lg bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-green-500 transition-all font-medium"
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
                   required 
                 />
               </div>
             </div>
 
-            <Button type="submit" className="w-full h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-xl transition-all active:scale-95" disabled={isLoading}>
-              {isLoading ? "Creating Account..." : "Register Business"}
-            </Button>
+            {/* Register Button */}
+            <button 
+              type="submit" 
+              className="w-full h-9 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg active:scale-95 mt-3 flex items-center justify-center gap-2"
+              disabled={isLoading}
+            >
+              {isLoading ? "Creating Account..." : "Create Account"}
+              {!isLoading && <UserCheck size={18} />}
+            </button>
           </form>
 
-          <div className="mt-8 flex items-center justify-center">
-            <Link to="/login" className="text-sm font-bold text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-2">
-              <ArrowLeft size={16} /> Back to Login
-            </Link>
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-3">
+            <div className="flex-1 h-px bg-gray-200" />
+            <span className="text-xs text-gray-500 font-medium">ALREADY A MEMBER?</span>
+            <div className="flex-1 h-px bg-gray-200" />
           </div>
-        </CardContent>
-      </Card>
+
+          {/* Login Link */}
+          <p className="text-center text-xs">
+            <Link to="/login" className="inline-flex items-center gap-2 text-green-600 font-bold hover:text-green-700 transition-colors">
+              <ArrowLeft size={14} /> Back to Login
+            </Link>
+          </p>
+        </div>
+
+        {/* Footer */}
+        <p className="text-center text-gray-500 text-xs mt-3">© 2026 GreenScale. All rights reserved.</p>
+      </div>
     </div>
   )
 }

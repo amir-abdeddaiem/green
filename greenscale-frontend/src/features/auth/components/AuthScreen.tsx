@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { RegisterCard } from "./RegisterCard"
+import { RegistrationForm } from "./RegisterCard"
 import { LoginForm } from "./LoginForm" // Import the new card
 import { AuthMode } from "../types"
 import { Button } from "@/components/ui/button"
@@ -15,7 +15,7 @@ export function AuthScreen() {
       </div>
 
       {/* Logic to toggle between Login and Register */}
-      {mode === 'register' ? <RegisterCard /> : <LoginForm />}
+      {mode === 'register' ? <RegistrationForm /> : <LoginForm />}
 
       <Button 
         variant="link" 

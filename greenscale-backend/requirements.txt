@@ -1,5 +1,40 @@
+# Core API Framework
 fastapi==0.104.1
-uvicorn==0.24.0
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+pydantic[email]==2.5.0
+
+# Database
 sqlalchemy==2.0.23
+mysqlconnector==2.2.9
+mysql-connector-python==8.2.0
+
+# Authentication & Security
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+bcrypt==4.1.1
+
+# File Uploads & Processing
 python-multipart==0.0.6
 reportlab==4.0.9
+
+# API Integration
+httpx==0.25.2
+requests==2.31.0
+
+# AI/ML
+google-generativeai>=0.0.0
+openai>=1.0.0
+
+# Environment & Configuration
+python-dotenv==1.0.0
+
+# Utilities
+python-dateutil==2.8.2
+pytz==2023.3.post1
+
+# Development (optional)
+pytest==7.4.3
+black==23.12.1
+pylint==3.0.3
+flake8==6.1.0

@@ -12,6 +12,8 @@ disable=
     line-too-long,
     import-outside-toplevel,
     wrong-import-order,
+    logging-format-interpolation,
+    too-broad-except,
 
 [FORMAT]
 # Maximum number of characters on a single line.
