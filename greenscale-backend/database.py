@@ -47,5 +47,5 @@ def get_db():
         db.close()
 
 
-# Log successful connection
-logger.info("✅ Database connected: %s", (SQLALCHEMY_DATABASE_URL.split('@')[-1],))
+# Log configuration (engine creation doesn't guarantee connectivity)
+logger.info("🗄️  Database configured: %s", (SQLALCHEMY_DATABASE_URL.split('@')[-1],))

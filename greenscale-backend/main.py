@@ -38,9 +38,6 @@ load_dotenv()
 # Get settings
 settings = get_settings()
 
-# Create all tables (including role tables)
-models.Base.metadata.create_all(bind=engine)
-
 # Lifespan context manager to handle startup and shutdown
 @asynccontextmanager
 async def lifespan(_: FastAPI):
@@ -48,6 +45,15 @@ async def lifespan(_: FastAPI):
     # Startup
     try:
         logger.info("🚀 Initializing Verdustry backend...")
+
+        # Create all tables (including role tables)
+        try:
+            logger.info("🗄️  Creating/verifying database tables...")
+            models.Base.metadata.create_all(bind=engine)
+            logger.info("✅ Database tables ready!")
+        except Exception as migration_error:  # pylint: disable=broad-except
+            logger.error("❌ Database initialization failed (check DATABASE_URL): %s", migration_error, exc_info=True)
+
         db = next(get_db())
         try:
             logger.info("🔐 Setting up roles and permissions...")
