@@ -101,6 +101,21 @@ app.add_middleware(
 )
 
 
+@app.get("/", tags=["health"])
+def root():
+    """Basic service check."""
+    return {
+        "status": "ok",
+        "service": "Verdustry API",
+    }
+
+
+@app.get("/health", tags=["health"])
+def health():
+    """Health endpoint for uptime checks."""
+    return {"status": "ok"}
+
+
 class UserCreate(BaseModel):
     """User registration schema with validation."""
     business_name: str = Field(..., min_length=1, max_length=255, description="Business name")
