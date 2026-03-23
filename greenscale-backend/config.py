@@ -65,7 +65,7 @@ class Settings:
     ALLOWED_ORIGINS: list[str] = parse_allowed_origins(
         os.getenv("ALLOWED_ORIGINS"),
         "http://localhost:5173,http://127.0.0.1:5173",
-        "https://green-five-bice.vercel.app",
+        "https://green-five-bice.vercel.app/",
     )
 
     # JWT
