@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { apiUrl } from "@/config/api";
 
 interface PermissionCheckResponse {
   user_id: number;
@@ -7,7 +8,7 @@ interface PermissionCheckResponse {
   roles: string[];
 }
 
-const API_BASE = "http://localhost:8000/api/roles";
+const API_BASE = apiUrl("/api/roles");
 
 /**
  * Hook to check if user has a specific permission

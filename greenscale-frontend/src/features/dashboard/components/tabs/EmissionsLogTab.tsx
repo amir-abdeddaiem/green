@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Search, Zap, Flame, Wind, Trash2, Calendar, AlertCircle, Edit2, CheckCircle2, Clock } from "lucide-react";
 import { AddEmissionModal } from "../AddEmissionModal";
+import { apiUrl } from "@/config/api";
 
 interface Emission {
   id: number;
@@ -50,7 +51,7 @@ export function EmissionsLogTab() {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/recent-logs/${businessId}`);
+      const response = await fetch(apiUrl(`/recent-logs/${businessId}`));
       if (response.ok) {
         const data = await response.json();
         setEmissions(data);
@@ -73,7 +74,7 @@ export function EmissionsLogTab() {
 
     setIsDeleting(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/delete-emission/${selectedDeleteId}`, {
+      const response = await fetch(apiUrl(`/delete-emission/${selectedDeleteId}`), {
         method: "DELETE",
       });
 
@@ -108,7 +109,7 @@ export function EmissionsLogTab() {
 
     setIsSavingEdit(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/update-emission/${selectedEditId}`, {
+      const response = await fetch(apiUrl(`/update-emission/${selectedEditId}`), {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -151,7 +152,7 @@ export function EmissionsLogTab() {
 
     setIsUpdatingStatus(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/update-emission-status/${selectedStatusId}`, {
+      const response = await fetch(apiUrl(`/update-emission-status/${selectedStatusId}`), {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),

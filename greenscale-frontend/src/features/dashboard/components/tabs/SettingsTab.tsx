@@ -4,6 +4,7 @@ import { Lock, AlertCircle, CheckCircle2, Upload, User, Shield, Users, DollarSig
 import { RoleManagementTab } from "./RoleManagementTab";
 import { UserManagementTab } from "./UserManagementTab";
 import { BillingTariffsTab } from "./BillingTariffsTab";
+import { apiUrl } from "@/config/api";
 
 export function SettingsTab() {
   const initialBusinessName = localStorage.getItem("business_name") || "Business";
@@ -47,7 +48,7 @@ export function SettingsTab() {
       formData.append("file", file);
       formData.append("business_id", businessId);
 
-      const response = await fetch("http://127.0.0.1:8000/upload-profile-picture", {
+      const response = await fetch(apiUrl("/upload-profile-picture"), {
         method: "POST",
         body: formData,
       });

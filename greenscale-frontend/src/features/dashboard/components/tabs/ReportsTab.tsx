@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Download, FileText, AlertCircle, CheckCircle2, Loader, TrendingUp, Shield, Clock, Award } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { apiUrl } from "@/config/api";
 
 interface ComplianceStatus {
   standard: string;
@@ -67,7 +68,7 @@ export function ReportsTab() {
     console.log("📥 Initiating CSV export for business:", businessId);
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/export-data/${businessId}`);
+      const response = await fetch(apiUrl(`/export-data/${businessId}`));
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -115,7 +116,7 @@ export function ReportsTab() {
     console.log("📥 Initiating PDF export for business:", businessId);
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/export-pdf/${businessId}`);
+      const response = await fetch(apiUrl(`/export-pdf/${businessId}`));
 
       if (!response.ok) {
         const errorData = await response.json();

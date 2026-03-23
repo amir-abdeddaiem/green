@@ -11,6 +11,7 @@ import {
 } from 'recharts';
 import { TrendingDown, AlertCircle, Zap } from 'lucide-react';
 import { useCurrency } from '../../context/CurrencyContext';
+import { apiUrl } from "@/config/api";
 
 interface FinancialStatsData {
   month: number;
@@ -55,7 +56,9 @@ export const FinancialTab: React.FC = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:8000/api/financial-stats?business_id=${businessId}&month=${selectedMonth}&year=${selectedYear}&currency=${displayCurrency}`
+          apiUrl(
+            `/api/financial-stats?business_id=${businessId}&month=${selectedMonth}&year=${selectedYear}&currency=${displayCurrency}`
+          )
         );
 
         if (!response.ok) {

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Zap, Flame, Droplets, TrendingUp } from "lucide-react";
+import { apiUrl } from "@/config/api";
 
 interface Props {
   isOpen: boolean;
@@ -24,7 +25,7 @@ export function AddEmissionModal({ isOpen, onClose, onSuccess, type }: Props) {
     const unit = type === 'Electricity' ? 'kWh' : type === 'Fuel' ? 'Liters' : 'm³';
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/add-emission", {
+      const response = await fetch(apiUrl("/add-emission"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

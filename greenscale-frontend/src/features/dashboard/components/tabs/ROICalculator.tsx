@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, Calendar, Target } from 'lucide-react';
 import { useCurrency } from '../../context/CurrencyContext';
+import { apiUrl } from "@/config/api";
 
 interface ROIData {
   current_month: {
@@ -53,10 +54,14 @@ export const ROICalculator: React.FC = () => {
         // Fetch both months' data
         const [currentRes, previousRes] = await Promise.all([
           fetch(
-            `http://localhost:8000/api/financial-stats?business_id=${businessId}&month=${currentMonth}&year=${currentYear}&currency=${displayCurrency}`
+            apiUrl(
+              `/api/financial-stats?business_id=${businessId}&month=${currentMonth}&year=${currentYear}&currency=${displayCurrency}`
+            )
           ),
           fetch(
-            `http://localhost:8000/api/financial-stats?business_id=${businessId}&month=${previousMonth}&year=${previousYear}&currency=${displayCurrency}`
+            apiUrl(
+              `/api/financial-stats?business_id=${businessId}&month=${previousMonth}&year=${previousYear}&currency=${displayCurrency}`
+            )
           ),
         ]);
 

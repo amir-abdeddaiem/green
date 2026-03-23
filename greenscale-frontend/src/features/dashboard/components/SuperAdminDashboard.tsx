@@ -11,6 +11,7 @@ import {
   Loader,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { apiUrl } from "@/config/api";
 
 interface SuperAdminUser {
   id: number;
@@ -39,7 +40,7 @@ export function SuperAdminDashboard() {
   const [actionLoading, setActionLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const API_BASE = "http://localhost:8000/api/super-admin";
+  const API_BASE = apiUrl("/api/super-admin");
 
   useEffect(() => {
     fetchData();

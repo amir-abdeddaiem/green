@@ -4,6 +4,7 @@ import { BarChart3, TrendingUp, AlertCircle } from "lucide-react";
 import { CategoryChart } from "../CategoryChart";
 import { MonthlyChart } from "../MonthlyChart";
 import { transformCategoryData, transformMonthlyData } from "../ChartUtils";
+import { apiUrl } from "@/config/api";
 
 interface CategoryData {
   type: string;
@@ -37,7 +38,7 @@ export function AnalyticsTab() {
     setChartsLoading(true);
     try {
       // Fetch category breakdown
-      const cRes = await fetch(`http://127.0.0.1:8000/category-breakdown/${businessId}`);
+      const cRes = await fetch(apiUrl(`/category-breakdown/${businessId}`));
       if (cRes.ok) {
         const cData = await cRes.json();
         console.log("✅ Category analytics loaded:", cData);
@@ -45,7 +46,7 @@ export function AnalyticsTab() {
       }
 
       // Fetch monthly trends
-      const mRes = await fetch(`http://127.0.0.1:8000/monthly-trends/${businessId}`);
+      const mRes = await fetch(apiUrl(`/monthly-trends/${businessId}`));
       if (mRes.ok) {
         const mData = await mRes.json();
         console.log("✅ Monthly analytics loaded:", mData);

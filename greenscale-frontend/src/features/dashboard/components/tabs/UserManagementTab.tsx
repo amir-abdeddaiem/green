@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Users, Shield, Trash2, Plus, X } from "lucide-react";
+import { API_URL } from "@/config/api";
 
 interface User {
   id: number;
@@ -33,7 +34,7 @@ export function UserManagementTab() {
     roleIds: [] as number[],
   });
 
-  const API_BASE = "http://localhost:8000";
+  const API_BASE = API_URL;
 
   useEffect(() => {
     fetchUsers();

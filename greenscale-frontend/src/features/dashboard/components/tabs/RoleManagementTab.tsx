@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Shield, Plus, Edit2, Trash2, Users } from "lucide-react";
+import { apiUrl } from "@/config/api";
 
 interface Role {
   id: number;
@@ -37,7 +38,7 @@ export function RoleManagementTab() {
     permission_ids: [],
   });
 
-  const API_BASE = "http://localhost:8000/api/roles";
+  const API_BASE = apiUrl("/api/roles");
 
   useEffect(() => {
     fetchRoles();

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, X, AlertCircle, CheckCircle2, Loader, MapPin, Phone, Globe } from 'lucide-react';
+import { apiUrl } from "@/config/api";
 
 interface AddSupplierModalProps {
   isOpen: boolean;
@@ -75,7 +76,7 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
       if (contact) params.append('contact_email', contact);
       
       const response = await fetch(
-        `http://127.0.0.1:8000/api/scope3/suppliers?${params.toString()}`,
+        apiUrl(`/api/scope3/suppliers?${params.toString()}`),
         { method: 'POST', headers: { 'Content-Type': 'application/json' } }
       );
 

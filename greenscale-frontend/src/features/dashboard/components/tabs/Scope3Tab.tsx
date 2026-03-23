@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { Scope3LogForm } from './Scope3LogForm';
 import { SupplierLeaderboard } from './SupplierLeaderboard';
 import { AddSupplierModal } from '../modals/AddSupplierModal';
+import { apiUrl } from "@/config/api";
 
 interface Scope3Stats {
   total_scope3_co2_kg: number;
@@ -41,7 +42,7 @@ export function Scope3Tab() {
 
       // Fetch stats
       const statsRes = await fetch(
-        `http://127.0.0.1:8000/api/scope3/stats?business_id=${businessId}`
+        apiUrl(`/api/scope3/stats?business_id=${businessId}`)
       );
       const statsData = await statsRes.json();
       setStats(statsData);

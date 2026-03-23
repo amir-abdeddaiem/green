@@ -1,0 +1,3 @@
+# Render (and other PaaS) sometimes run installs from the repo root.
+# This file delegates to the actual backend requirements.
+-r greenscale-backend/requirements.txt

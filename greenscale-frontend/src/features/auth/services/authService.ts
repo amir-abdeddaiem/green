@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000";
+import { API_URL } from "@/config/api";
 
 const formatApiError = (value: unknown): string => {
   if (typeof value === "string") {
@@ -100,7 +100,7 @@ export const authService = {
         throw error;
       }
       throw new Error(
-        "Failed to connect to backend. Ensure server is running on http://127.0.0.1:8000"
+        "Failed to connect to backend. Check VITE_API_URL or ensure the backend is running."
       );
     }
   },
@@ -141,7 +141,7 @@ export const authService = {
         throw error;
       }
       throw new Error(
-        "Failed to connect to backend. Ensure server is running on http://127.0.0.1:8000"
+        "Failed to connect to backend. Check VITE_API_URL or ensure the backend is running."
       );
     }
   },

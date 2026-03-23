@@ -5,6 +5,7 @@ import { AddEmissionModal } from "./AddEmissionModal";
 import { CategoryChart } from "./CategoryChart";
 import { MonthlyChart } from "./MonthlyChart";
 import { transformCategoryData, transformMonthlyData, formatCO2 } from "./ChartUtils";
+import { apiUrl } from "@/config/api";
 
 interface CategoryData {
   type: string;
@@ -87,28 +88,28 @@ export function DashboardOverview() {
       if (dateParams.end_date) statsParams.append("end_date", dateParams.end_date);
 
       // Fetch dashboard stats
-      const statsRes = await fetch(`http://127.0.0.1:8000/dashboard-stats/${businessId}?${statsParams}`);
+      const statsRes = await fetch(apiUrl(`/dashboard-stats/${businessId}?${statsParams}`));
       if (!statsRes.ok) throw new Error("Failed to fetch stats");
       const statsData = await statsRes.json();
       setStats(statsData);
       console.log("✅ Stats fetched:", statsData);
 
       // Fetch recent logs
-      const logsRes = await fetch(`http://127.0.0.1:8000/recent-logs/${businessId}?${statsParams}`);
+      const logsRes = await fetch(apiUrl(`/recent-logs/${businessId}?${statsParams}`));
       if (!logsRes.ok) throw new Error("Failed to fetch logs");
       const logsData = await logsRes.json();
       setLogs(logsData);
       console.log("✅ Logs fetched:", logsData);
 
       // Fetch category breakdown
-      const categoryRes = await fetch(`http://127.0.0.1:8000/category-breakdown/${businessId}?${statsParams}`);
+      const categoryRes = await fetch(apiUrl(`/category-breakdown/${businessId}?${statsParams}`));
       if (!categoryRes.ok) throw new Error("Failed to fetch category data");
       const categoryDataJson = await categoryRes.json();
       setCategoryData(categoryDataJson.data || []);
       console.log("✅ Category data fetched:", categoryDataJson.data);
 
       // Fetch monthly trends
-      const monthlyRes = await fetch(`http://127.0.0.1:8000/monthly-trends/${businessId}?${statsParams}`);
+      const monthlyRes = await fetch(apiUrl(`/monthly-trends/${businessId}?${statsParams}`));
       if (!monthlyRes.ok) throw new Error("Failed to fetch monthly data");
       const monthlyDataJson = await monthlyRes.json();
       setMonthlyData(monthlyDataJson.data || []);

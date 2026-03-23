@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AlertTriangle, TrendingUp, TrendingDown, Award, Trash2 } from 'lucide-react';
+import { apiUrl } from "@/config/api";
 
 interface Supplier {
   id: number;
@@ -37,7 +38,7 @@ export function SupplierLeaderboard({ businessId: propBusinessId, onRefresh }: S
       setError(null);
 
       const response = await fetch(
-        `http://127.0.0.1:8000/api/scope3/leaderboard?business_id=${businessId}`
+        apiUrl(`/api/scope3/leaderboard?business_id=${businessId}`)
       );
 
       if (!response.ok) throw new Error('Failed to fetch leaderboard');
@@ -62,7 +63,7 @@ export function SupplierLeaderboard({ businessId: propBusinessId, onRefresh }: S
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/scope3/suppliers/${supplierId}?business_id=${businessId}`,
+        apiUrl(`/api/scope3/suppliers/${supplierId}?business_id=${businessId}`),
         { method: 'DELETE' }
       );
 

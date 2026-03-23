@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import { useCurrency } from '../../context/CurrencyContext';
+import { apiUrl } from "@/config/api";
 
 interface Tariff {
   id: number;
@@ -57,8 +58,8 @@ export const BillingTariffsTab: React.FC = () => {
     setLoading(true);
     try {
       const [tariffsRes, budgetsRes] = await Promise.all([
-        fetch(`http://localhost:8000/api/tariffs?business_id=${businessId}`),
-        fetch(`http://localhost:8000/api/budgets?business_id=${businessId}`),
+        fetch(apiUrl(`/api/tariffs?business_id=${businessId}`)),
+        fetch(apiUrl(`/api/budgets?business_id=${businessId}`)),
       ]);
 
       if (tariffsRes.ok) {
@@ -83,7 +84,7 @@ export const BillingTariffsTab: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/tariffs?business_id=${businessId}`,
+        apiUrl(`/api/tariffs?business_id=${businessId}`),
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -112,7 +113,7 @@ export const BillingTariffsTab: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/tariffs/${tariffId}?business_id=${businessId}`,
+        apiUrl(`/api/tariffs/${tariffId}?business_id=${businessId}`),
         { method: 'DELETE' }
       );
 
@@ -130,7 +131,7 @@ export const BillingTariffsTab: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/budgets?business_id=${businessId}`,
+        apiUrl(`/api/budgets?business_id=${businessId}`),
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

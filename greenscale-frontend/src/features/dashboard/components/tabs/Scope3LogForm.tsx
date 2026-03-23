@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Truck, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { apiUrl } from "@/config/api";
 
 interface EmissionFactor {
   id: number;
@@ -64,7 +65,7 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
 
   const fetchSuppliers = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/scope3/suppliers?business_id=${businessId}`);
+      const response = await fetch(apiUrl(`/api/scope3/suppliers?business_id=${businessId}`));
       const data = await response.json();
       setSuppliers(data || []);
     } catch (err) {
@@ -74,7 +75,7 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
 
   const fetchFactors = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/scope3/emission-factors?region=Global`);
+      const response = await fetch(apiUrl(`/api/scope3/emission-factors?region=Global`));
       const data = await response.json();
       setFactors(data || []);
     } catch (err) {
@@ -175,7 +176,7 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
       if (sourceReference) params.append('source_reference', sourceReference);
 
       // Submit to API
-      const response = await fetch(`http://127.0.0.1:8000/api/scope3/logs?${params}`, {
+      const response = await fetch(apiUrl(`/api/scope3/logs?${params}`), {
         method: 'POST',
       });
 

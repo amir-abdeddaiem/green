@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { apiUrl } from "@/config/api";
 
 interface CurrencyContextType {
   baseCurrency: string;
@@ -37,7 +38,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
       try {
         // In a real app, this would call an endpoint like /api/exchange-rates
         // For now, we'll use localStorage or fetch from backend
-        const response = await fetch(`http://localhost:8000/api/exchange-rates?base=${baseCurrency}`);
+        const response = await fetch(apiUrl(`/api/exchange-rates?base=${baseCurrency}`));
         if (response.ok) {
           const data = await response.json();
           setExchangeRates(data.rates || {});
