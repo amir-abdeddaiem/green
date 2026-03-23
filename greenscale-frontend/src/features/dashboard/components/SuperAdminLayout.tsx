@@ -78,7 +78,7 @@ export const SuperAdminLayout = ({ children }: { children: React.ReactNode }) =>
         <div className="p-6 border-b border-green-600 flex items-center justify-between">
           {sidebarOpen && (
             <div>
-              <h1 className="text-2xl font-bold">GreenScale</h1>
+              <h1 className="text-2xl font-bold">Verdustry</h1>
               <p className="text-xs text-green-100">Owner Dashboard</p>
             </div>
           )}

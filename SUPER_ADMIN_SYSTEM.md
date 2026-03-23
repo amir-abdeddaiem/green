@@ -2,7 +2,7 @@
 
 ## Overview
 
-The GreenScale platform now includes a comprehensive **Super Admin System** that enables complete platform administration and user management. Super admins have the highest level of access and can manage all users, roles, permissions, and system configuration.
+The Verdustry platform now includes a comprehensive **Super Admin System** that enables complete platform administration and user management. Super admins have the highest level of access and can manage all users, roles, permissions, and system configuration.
 
 ---
 

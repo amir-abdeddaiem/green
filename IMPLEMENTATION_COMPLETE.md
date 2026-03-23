@@ -13,7 +13,7 @@ All 5 phases of the Reporting & Exporting System have been successfully implemen
 - Returns data as CSV format with professional formatting
 - Includes intelligent error handling (404 for missing business, friendly message for empty data)
 - Uses streaming response for optimal performance with large datasets
-- Generates timestamped filenames: `greenscale_report_[BusinessName]_[Timestamp].csv`
+- Generates timestamped filenames: `Verdustry_report_[BusinessName]_[Timestamp].csv`
 
 ### Data Normalization Pipeline
 - Converts database columns to human-readable headers:
@@ -47,7 +47,7 @@ All 5 phases of the Reporting & Exporting System have been successfully implemen
 
 ## Files Modified
 
-### 1. Backend: `greenscale-backend/main.py`
+### 1. Backend: `Verdustry-backend/main.py`
 **Lines Added:** 57 lines (169-225)
 **Changes:**
 - Added imports: `StreamingResponse`, `csv`, `io`
@@ -55,7 +55,7 @@ All 5 phases of the Reporting & Exporting System have been successfully implemen
 - Validation, data fetching, normalization, streaming
 - Comprehensive debug logging with emojis
 
-### 2. Frontend: `greenscale-frontend/src/features/dashboard/components/DashboardOverview.tsx`
+### 2. Frontend: `Verdustry-frontend/src/features/dashboard/components/DashboardOverview.tsx`
 **Changes:**
 - Added icons: `Download`, `Loader` from lucide-react
 - Added state: `isDownloading` boolean
@@ -98,7 +98,7 @@ All 5 phases of the Reporting & Exporting System have been successfully implemen
 ```
 📥 Export request for Business ID: 1
 ✅ Found 6 emissions to export
-📤 Streaming CSV export: greenscale_report_Test_20260123_125557.csv (6 records)
+📤 Streaming CSV export: Verdustry_report_Test_20260123_125557.csv (6 records)
 INFO: 127.0.0.1:59804 - "GET /export-data/1 HTTP/1.1" 200 OK
 ```
 
@@ -124,7 +124,7 @@ INFO: 127.0.0.1:59804 - "GET /export-data/1 HTTP/1.1" 200 OK
 
 ## CSV Export Example
 
-**File:** `greenscale_report_Test_20260123_125557.csv`
+**File:** `Verdustry_report_Test_20260123_125557.csv`
 
 ```csv
 Date Recorded,Emission Source,Usage Amount,Unit,Carbon Footprint (kg CO2e)

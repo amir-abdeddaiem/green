@@ -1,4 +1,4 @@
-"""AI-powered chatbot service for GreenScale using Google Gemini."""
+"""AI-powered chatbot service for Verdustry using Google Gemini."""
 
 import os
 import logging
@@ -20,11 +20,11 @@ logger = logging.getLogger(__name__)
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-# GreenScale Product Knowledge Base
-GREENSCALE_SYSTEM_PROMPT = """You are an expert support agent for GreenScale, a comprehensive sustainability platform designed to help businesses track, manage, and reduce their carbon emissions. Provide detailed, helpful, and actionable answers about the platform.
+# Verdustry Product Knowledge Base
+Verdustry_SYSTEM_PROMPT = """You are an expert support agent for Verdustry, a comprehensive sustainability platform designed to help businesses track, manage, and reduce their carbon emissions. Provide detailed, helpful, and actionable answers about the platform.
 
-# About GreenScale:
-GreenScale is a modern sustainability platform that provides:
+# About Verdustry:
+Verdustry is a modern sustainability platform that provides:
 
 ## Core Features:
 1. **Carbon Emissions Tracking**
@@ -119,7 +119,7 @@ class AIChattBotService:
             logger.info("Requesting Gemini API response for: %s", user_message[:50])
             
             # Full context for better responses
-            full_message = f"{GREENSCALE_SYSTEM_PROMPT}\n\nUser Question: {user_message}\n\nProvide a detailed, helpful answer:"
+            full_message = f"{Verdustry_SYSTEM_PROMPT}\n\nUser Question: {user_message}\n\nProvide a detailed, helpful answer:"
             
             # Get streaming response
             response = self.model.generate_content(
@@ -154,7 +154,7 @@ class AIChattBotService:
         message_lower = user_message.lower()
         
         fallback_responses = {
-            "tracking": "To track emissions in GreenScale:\n1. Go to the Emissions section\n2. Click 'Add Emission'\n3. Select the source category (Energy, Transportation, Waste, etc.)\n4. Enter the date and quantity\n5. GreenScale automatically calculates CO2 equivalent\n\nYou can view all emissions in the Emissions table with filters for date ranges and categories.",
+            "tracking": "To track emissions in Verdustry:\n1. Go to the Emissions section\n2. Click 'Add Emission'\n3. Select the source category (Energy, Transportation, Waste, etc.)\n4. Enter the date and quantity\n5. Verdustry automatically calculates CO2 equivalent\n\nYou can view all emissions in the Emissions table with filters for date ranges and categories.",
             
             "dashboard": "The Dashboard is your main hub:\n• Real-time statistics showing total emissions\n• Monthly trend charts to see patterns\n• Category breakdown showing which sources contribute most\n• Quick filters (Today, 7D, Month, 6M, Year, All) for date ranges\n• Recent emission logs\n\nThe dashboard updates in real-time as new data is added.",
             
@@ -173,7 +173,7 @@ class AIChattBotService:
                 return response
         
         # Default response
-        return "I'm here to help with GreenScale! I can assist with:\n• Tracking emissions\n• Understanding the dashboard\n• Generating reports\n• Setting goals\n• Data management\n\nWhat would you like to know?"
+        return "I'm here to help with Verdustry! I can assist with:\n• Tracking emissions\n• Understanding the dashboard\n• Generating reports\n• Setting goals\n• Data management\n\nWhat would you like to know?"
 
 
 # Initialize AI chatbot

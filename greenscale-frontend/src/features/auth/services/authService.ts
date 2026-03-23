@@ -1,5 +1,36 @@
 const API_URL = "http://127.0.0.1:8000";
 
+const formatApiError = (value: unknown): string => {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    const messages = value
+      .map((item) => {
+        if (typeof item === "string") return item;
+        if (item && typeof item === "object") {
+          const obj = item as Record<string, unknown>;
+          if (typeof obj.msg === "string") return obj.msg;
+          if (typeof obj.message === "string") return obj.message;
+        }
+        return "";
+      })
+      .filter(Boolean);
+
+    return messages.length > 0 ? messages.join("; ") : "Request failed";
+  }
+
+  if (value && typeof value === "object") {
+    const obj = value as Record<string, unknown>;
+    if (typeof obj.detail === "string") return obj.detail;
+    if (typeof obj.message === "string") return obj.message;
+    return JSON.stringify(obj);
+  }
+
+  return "Request failed";
+};
+
 interface LoginCredentials {
   email: string;
   password: string;
@@ -42,7 +73,7 @@ export const authService = {
       
       if (!response.ok) {
         const error = data as ApiError;
-        throw new Error(error.detail || error.message || "Login failed");
+        throw new Error(formatApiError(error.detail ?? error.message ?? data) || "Login failed");
       }
 
       // Store auth data
@@ -101,7 +132,7 @@ export const authService = {
       
       if (!response.ok) {
         const error = data as ApiError;
-        throw new Error(error.detail || error.message || "Registration failed");
+        throw new Error(formatApiError(error.detail ?? error.message ?? data) || "Registration failed");
       }
 
       return data as AuthResponse;

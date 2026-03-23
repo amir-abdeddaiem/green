@@ -4,7 +4,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
 # MySQL database connection
-DATABASE_URL = "mysql+mysqlconnector://root:@localhost:3306/greenscale_db"
+DATABASE_URL = "mysql+mysqlconnector://root:@localhost:3306/Verdustry_db"
 
 def promote_user_to_super_admin(user_email):
     """Promote a user to super admin by email using SQL."""

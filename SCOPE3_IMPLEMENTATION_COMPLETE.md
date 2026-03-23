@@ -8,14 +8,14 @@ Complete implementation of Scope 3 supply chain emissions tracking with financia
 ### Backend Tasks (All Complete ✅)
 
 #### Task 1: Database Models ✅
-**File:** `greenscale-backend/models.py`
+**File:** `Verdustry-backend/models.py`
 - **Supplier Model**: 10 columns with auto-updating sustainability rating (1-5 stars)
 - **EmissionFactor Model**: 26 pre-loaded DEFRA-aligned factors with high precision (Decimal 15,8)
 - **Scope3Log Model**: 15 columns with audit trail (source_reference field)
 - All using high-precision Decimal arithmetic to prevent rounding errors
 
 #### Task 2: Emission Factors Library ✅
-**File:** `greenscale-backend/init_scope3_factors.py`
+**File:** `Verdustry-backend/init_scope3_factors.py`
 - **26 DEFRA-Aligned Factors** across 4 categories:
   - Transportation (5): Ocean Freight, HGV, Van, Air Cargo, Rail
   - Goods (9): Steel, Aluminum, Paper, Plastic, Glass, Concrete (virgin & recycled)
@@ -24,7 +24,7 @@ Complete implementation of Scope 3 supply chain emissions tracking with financia
 - Pre-populated during database initialization
 
 #### Task 3: Smart Calculation Engine ✅
-**File:** `greenscale-backend/scope3_service.py`
+**File:** `Verdustry-backend/scope3_service.py`
 - **Scope3Calculator Class**: 4 category-specific calculation methods
   - `calculate_logistics()`: Distance × Weight × Factor
   - `calculate_goods()`: Quantity × Factor
@@ -34,7 +34,7 @@ Complete implementation of Scope 3 supply chain emissions tracking with financia
 - Central dispatcher pattern for category routing
 
 #### Task 4: Automated Supplier Scoring ✅
-**File:** `greenscale-backend/scope3_service.py`
+**File:** `Verdustry-backend/scope3_service.py`
 - **SupplierScoringEngine Class**: Auto-updating 1-5 star ratings
   - Calculates Carbon Intensity: Total CO2 / Total Units
   - Compares to industry average (by supplier_industry_type)
@@ -47,7 +47,7 @@ Complete implementation of Scope 3 supply chain emissions tracking with financia
   - Triggers automatically on every POST /api/scope3/logs
 
 #### Task 5: Financial Integration ✅
-**File:** `greenscale-backend/scope3_routes.py`
+**File:** `Verdustry-backend/scope3_routes.py`
 - **Green ROI Endpoint**: `/api/scope3/financial-impact?supplier_id=X`
 - Calculates:
   - Total acquisition cost
@@ -56,7 +56,7 @@ Complete implementation of Scope 3 supply chain emissions tracking with financia
 - Integrates with existing FinancialTab for holistic sustainability ROI
 
 #### Task 6: Scope 3 API Routes ✅
-**File:** `greenscale-backend/scope3_routes.py` (8 endpoints)
+**File:** `Verdustry-backend/scope3_routes.py` (8 endpoints)
 1. `POST /api/scope3/suppliers` - Create supplier
 2. `GET /api/scope3/suppliers` - List all suppliers
 3. `DELETE /api/scope3/suppliers/{id}` - Remove supplier
@@ -69,7 +69,7 @@ Complete implementation of Scope 3 supply chain emissions tracking with financia
 ### Frontend Tasks (All Complete ✅)
 
 #### Task 7: Smart Form Component ✅
-**File:** `greenscale-frontend/src/features/dashboard/components/tabs/Scope3LogForm.tsx`
+**File:** `Verdustry-frontend/src/features/dashboard/components/tabs/Scope3LogForm.tsx`
 - **Smart Conditional Rendering**: Form fields change based on category selection
 - **4 Emission Categories**:
   - **Goods**: Material type select + quantity (kg) input
@@ -89,7 +89,7 @@ Complete implementation of Scope 3 supply chain emissions tracking with financia
   - Receives: Auto-calculated CO2, updated supplier rating
 
 #### Task 8: Supplier Leaderboard ✅
-**File:** `greenscale-frontend/src/features/dashboard/components/tabs/SupplierLeaderboard.tsx`
+**File:** `Verdustry-frontend/src/features/dashboard/components/tabs/SupplierLeaderboard.tsx`
 - **8-Column Ranked Table**:
   - Rank (auto-numbered)
   - Supplier Name
@@ -116,7 +116,7 @@ Complete implementation of Scope 3 supply chain emissions tracking with financia
 - **Delete Action**: With confirmation dialog
 
 #### Task 9: Scope 3 Dashboard (Main Tab) ✅
-**File:** `greenscale-frontend/src/features/dashboard/components/tabs/Scope3Tab.tsx`
+**File:** `Verdustry-frontend/src/features/dashboard/components/tabs/Scope3Tab.tsx`
 - **Dashboard Sections**:
   1. **Header**: Blue-purple gradient with Truck icon, "Scope 3: Supply Chain"
   2. **Overview Cards (4)**:
@@ -149,12 +149,12 @@ Complete implementation of Scope 3 supply chain emissions tracking with financia
 
 ### Integration ✅
 
-**File:** `greenscale-frontend/src/App.tsx`
+**File:** `Verdustry-frontend/src/App.tsx`
 - Added import: `import { Scope3Tab } from "./features/dashboard/components/tabs/Scope3Tab";`
 - Added route: `<Route path="scope3" element={<Scope3Tab />} />`
 - Full path: `/dashboard/scope3`
 
-**File:** `greenscale-frontend/src/features/dashboard/components/DashboardLayout.tsx`
+**File:** `Verdustry-frontend/src/features/dashboard/components/DashboardLayout.tsx`
 - Added Truck icon to imports from lucide-react
 - Added menu item: `{ label: "Supply Chain", path: "/dashboard/scope3", icon: Truck }`
 - Navigation now displays "Supply Chain" with Truck icon in sidebar
@@ -268,18 +268,18 @@ curl http://localhost:8000/api/scope3/stats
 ## File Manifest
 
 ### Backend Files Created
-- `greenscale-backend/scope3_routes.py` (8 endpoints, 380 lines)
-- `greenscale-backend/scope3_service.py` (Calculators, 420 lines)
-- `greenscale-backend/init_scope3_factors.py` (Factors, 210 lines)
-- `greenscale-backend/models.py` (Extended with 3 models)
-- `greenscale-backend/main.py` (Modified to register router)
+- `Verdustry-backend/scope3_routes.py` (8 endpoints, 380 lines)
+- `Verdustry-backend/scope3_service.py` (Calculators, 420 lines)
+- `Verdustry-backend/init_scope3_factors.py` (Factors, 210 lines)
+- `Verdustry-backend/models.py` (Extended with 3 models)
+- `Verdustry-backend/main.py` (Modified to register router)
 
 ### Frontend Files Created
-- `greenscale-frontend/src/features/dashboard/components/tabs/Scope3Tab.tsx` (280 lines)
-- `greenscale-frontend/src/features/dashboard/components/tabs/Scope3LogForm.tsx` (370 lines)
-- `greenscale-frontend/src/features/dashboard/components/tabs/SupplierLeaderboard.tsx` (380 lines)
-- `greenscale-frontend/src/App.tsx` (Modified for routing)
-- `greenscale-frontend/src/features/dashboard/components/DashboardLayout.tsx` (Modified for navigation)
+- `Verdustry-frontend/src/features/dashboard/components/tabs/Scope3Tab.tsx` (280 lines)
+- `Verdustry-frontend/src/features/dashboard/components/tabs/Scope3LogForm.tsx` (370 lines)
+- `Verdustry-frontend/src/features/dashboard/components/tabs/SupplierLeaderboard.tsx` (380 lines)
+- `Verdustry-frontend/src/App.tsx` (Modified for routing)
+- `Verdustry-frontend/src/features/dashboard/components/DashboardLayout.tsx` (Modified for navigation)
 
 ## Summary
 

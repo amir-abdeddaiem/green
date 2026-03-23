@@ -15,8 +15,9 @@ export function RegistrationForm() {
       await authService.register(formData)
       alert("Success! You can now log in.")
       navigate("/login")
-    } catch (error: any) {
-      alert("Registration Error: " + error.message)
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error)
+      alert("Registration Error: " + message)
     } finally {
       setIsLoading(false)
     }
@@ -35,7 +36,7 @@ export function RegistrationForm() {
             <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
               <Leaf className="w-8 h-8 text-green-600" />
             </div>
-            <h1 className="text-2xl font-black text-white mb-1">Join GreenScale</h1>
+            <h1 className="text-2xl font-black text-white mb-1">Join Verdustry</h1>
             <p className="text-green-100 font-medium text-sm">Create your account and start tracking sustainability</p>
           </div>
         </div>
@@ -114,7 +115,7 @@ export function RegistrationForm() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-gray-500 text-xs mt-3">© 2026 GreenScale. All rights reserved.</p>
+        <p className="text-center text-gray-500 text-xs mt-3">© 2026 Verdustry. All rights reserved.</p>
       </div>
     </div>
   )

@@ -60,8 +60,8 @@ export function HomePage() {
                 <Leaf className="w-6 h-6 text-white" />
               </div>
               <div className="hidden sm:block">
-                <p className="font-bold text-black text-lg">GreenScale</p>
-                <p className="text-xs text-gray-500">Sustainability Hub</p>
+                <p className="font-bold text-black text-lg">Verdustry</p>
+                <p className="text-xs text-gray-500">Sustainability Platform</p>
               </div>
             </div>
 
@@ -149,7 +149,7 @@ export function HomePage() {
                 Track Your <span className="text-green-600">Carbon Impact</span> with Precision
               </h1>
               <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                GreenScale is a comprehensive sustainability platform that helps organizations measure, monitor, and reduce their carbon emissions effectively.
+                Verdustry is a comprehensive sustainability platform that helps organizations measure, monitor, and reduce their carbon emissions effectively.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
@@ -224,7 +224,7 @@ export function HomePage() {
       <section id="why-us" className="bg-gray-50 py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">Why Choose GreenScale?</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">Why Choose Verdustry?</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Join thousands of organizations committed to sustainability
             </p>
@@ -265,7 +265,7 @@ export function HomePage() {
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">Meet the Developer</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              The passionate engineer behind GreenScale
+              The passionate engineer behind Verdustry
             </p>
           </div>
 
@@ -292,7 +292,7 @@ export function HomePage() {
               
               <p className="text-gray-700 text-lg leading-relaxed mb-8">
                 Muhammad is a passionate full-stack developer dedicated to building sustainable technology solutions. 
-                With expertise in React, Python, and cloud technologies, he created GreenScale to empower organizations 
+                With expertise in React, Python, and cloud technologies, he created Verdustry to empower organizations 
                 in their sustainability journey.
               </p>
 
@@ -357,7 +357,7 @@ export function HomePage() {
                 <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
                   <Leaf className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-bold text-lg">GreenScale</span>
+                <span className="font-bold text-lg">Verdustry</span>
               </div>
               <p className="text-gray-400 text-sm">Sustainability tracking made simple</p>
             </div>
@@ -392,7 +392,7 @@ export function HomePage() {
 
           <div className="border-t border-gray-800 pt-8">
             <p className="text-center text-gray-400 text-sm">
-              © 2026 GreenScale. All rights reserved. Committed to a sustainable future.
+              © 2026 Verdustry. All rights reserved. Committed to a sustainable future.
             </p>
           </div>
         </div>

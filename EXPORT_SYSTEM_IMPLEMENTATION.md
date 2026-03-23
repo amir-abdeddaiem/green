@@ -1,7 +1,7 @@
 # Module 7.0: Reporting & Exporting System - Implementation Complete ✅
 
 ## Overview
-Implemented a complete CSV export system for GreenScale allowing users to download their complete emissions data for compliance reporting and sustainability audits.
+Implemented a complete CSV export system for Verdustry allowing users to download their complete emissions data for compliance reporting and sustainability audits.
 
 ---
 
@@ -10,7 +10,7 @@ Implemented a complete CSV export system for GreenScale allowing users to downlo
 ### Endpoint Created
 **Route:** `GET /export-data/{business_id}`
 
-**Location:** [greenscale-backend/main.py](greenscale-backend/main.py#L169-L225)
+**Location:** [Verdustry-backend/main.py](Verdustry-backend/main.py#L169-L225)
 
 ### Key Features
 - **Full Data Retrieval:** Fetches ALL emissions for a business (unlike dashboard which shows last 5)
@@ -34,7 +34,7 @@ def export_data(business_id: int, db: Session = Depends(get_db)):
 Backend logs:
 - `📥 Export request for Business ID: 1`
 - `✅ Found 6 emissions to export`
-- `📤 Streaming CSV export: greenscale_report_Test_20260123_125557.csv (6 records)`
+- `📤 Streaming CSV export: Verdustry_report_Test_20260123_125557.csv (6 records)`
 
 ### Imports Added
 ```python
@@ -75,7 +75,7 @@ January 22, 2025 at 11:30 AM,Natural Gas,450.0,m³,900.0
 ## Phase 3: Frontend Download Button ✅ COMPLETE
 
 ### Location
-[greenscale-frontend/src/features/dashboard/components/DashboardOverview.tsx](greenscale-frontend/src/features/dashboard/components/DashboardOverview.tsx#L227-L244)
+[Verdustry-frontend/src/features/dashboard/components/DashboardOverview.tsx](Verdustry-frontend/src/features/dashboard/components/DashboardOverview.tsx#L227-L244)
 
 ### UI Components Added
 - **Button Location:** Recent Activity card header
@@ -121,7 +121,7 @@ January 22, 2025 at 11:30 AM,Natural Gas,450.0,m³,900.0
 
 ### Handler Function: `handleDownloadReport()`
 
-**Location:** [DashboardOverview.tsx](greenscale-frontend/src/features/dashboard/components/DashboardOverview.tsx#L93-L126)
+**Location:** [DashboardOverview.tsx](Verdustry-frontend/src/features/dashboard/components/DashboardOverview.tsx#L93-L126)
 
 ### Implementation Steps
 1. **Validation:** Check businessId exists and is valid
@@ -180,7 +180,7 @@ try {
 ## Phase 4: Security & Validation ✅ COMPLETE
 
 ### Backend Security
-**Location:** [main.py - export_data function](greenscale-backend/main.py#L173-L181)
+**Location:** [main.py - export_data function](Verdustry-backend/main.py#L173-L181)
 
 ### Validation Checks
 1. **Business Existence Validation**
@@ -246,7 +246,7 @@ try {
 ```
 📥 Export request for Business ID: 1
 ✅ Found 6 emissions to export
-📤 Streaming CSV export: greenscale_report_Test_20260123_125557.csv (6 records)
+📤 Streaming CSV export: Verdustry_report_Test_20260123_125557.csv (6 records)
 INFO:     127.0.0.1:59804 - "GET /export-data/1 HTTP/1.1" 200 OK
 ```
 
@@ -296,8 +296,8 @@ INFO:     127.0.0.1:59804 - "GET /export-data/1 HTTP/1.1" 200 OK
 3. **Frontend fetches** → `/export-data/{businessId}` endpoint
 4. **Backend processes** → Fetches all emissions, normalizes data, returns CSV
 5. **Frontend receives** → CSV blob with auto-generated filename
-6. **Browser downloads** → File saved to Downloads folder (e.g., `greenscale_report_Test_20260123_125557.csv`)
-7. **User extracts filename** → e.g., `greenscale_report_Test_20260123_125557.csv`
+6. **Browser downloads** → File saved to Downloads folder (e.g., `Verdustry_report_Test_20260123_125557.csv`)
+7. **User extracts filename** → e.g., `Verdustry_report_Test_20260123_125557.csv`
 8. **User opens in Excel/Sheets** → Fully formatted table with business data
 
 ---

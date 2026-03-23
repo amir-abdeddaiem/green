@@ -1,4 +1,4 @@
-# Quick Start: Using GreenScale Export System
+# Quick Start: Using Verdustry Export System
 
 ## For End Users
 
@@ -23,8 +23,8 @@
 
 5. **File Downloaded**
    - Your browser will automatically save the file to your Downloads folder
-   - Filename format: `greenscale_report_[BusinessName]_[Timestamp].csv`
-   - Example: `greenscale_report_Test_20260123_125557.csv`
+   - Filename format: `Verdustry_report_[BusinessName]_[Timestamp].csv`
+   - Example: `Verdustry_report_Test_20260123_125557.csv`
 
 6. **Open in Spreadsheet**
    - Right-click the file → Open with Excel/Google Sheets/LibreOffice
@@ -63,7 +63,7 @@ curl http://127.0.0.1:8001/export-data/1
 **Response:**
 - **Status:** 200 OK
 - **Content-Type:** `text/csv`
-- **Headers:** `Content-Disposition: attachment; filename=greenscale_report_Test_20260123_125557.csv`
+- **Headers:** `Content-Disposition: attachment; filename=Verdustry_report_Test_20260123_125557.csv`
 
 **Success Response Body (CSV):**
 ```csv
@@ -86,7 +86,7 @@ January 21, 2025 at 10:15 AM,Electricity,450.0,kWh,180.0
 
 ### Implementation Details
 
-**File:** `greenscale-backend/main.py` (lines 169-225)
+**File:** `Verdustry-backend/main.py` (lines 169-225)
 
 **Key Features:**
 - Fetches ALL emissions for a business (not limited to last 5)
@@ -155,7 +155,7 @@ fetch('http://127.0.0.1:8001/export-data/1')
 **Issue:** Backend is not running
 **Solution:** 
 ```bash
-cd greenscale-backend
+cd Verdustry-backend
 uvicorn main:app --reload --host 127.0.0.1 --port 8001
 ```
 

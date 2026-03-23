@@ -68,7 +68,7 @@ src/
 
 ### Backend
 ```
-greenscale-backend/
+Verdustry-backend/
 ├── super_admin_routes.py ............... Admin endpoints
 ├── role_utils.py ...................... is_super_admin() check
 └── main.py ............................ App config

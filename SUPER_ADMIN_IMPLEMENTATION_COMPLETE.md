@@ -1,7 +1,7 @@
 # Super Admin System - Implementation Summary
 
 ## 🎯 Project Objective
-Implement a comprehensive super admin management system for the GreenScale carbon tracking platform, enabling elevated users to manage all platform users, roles, and permissions.
+Implement a comprehensive super admin management system for the Verdustry carbon tracking platform, enabling elevated users to manage all platform users, roles, and permissions.
 
 ---
 

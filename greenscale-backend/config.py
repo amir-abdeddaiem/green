@@ -1,8 +1,22 @@
-"""Configuration management for GreenScale backend."""
+"""Configuration management for Verdustry backend."""
 
 import os
+import re
 from functools import lru_cache
 from typing import Optional
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+def normalize_database_url(database_url: str) -> str:
+    """Normalize PostgreSQL URLs to use psycopg driver for SQLAlchemy."""
+    if database_url.startswith("postgres://"):
+        return re.sub(r"^postgres://", "postgresql+psycopg://", database_url, count=1)
+    if database_url.startswith("postgresql://"):
+        return re.sub(r"^postgresql://", "postgresql+psycopg://", database_url, count=1)
+    return database_url
 
 
 class Settings:
@@ -11,8 +25,9 @@ class Settings:
     # Database
     DATABASE_URL: str = os.getenv(
         "DATABASE_URL",
-        "mysql+mysqlconnector://root:@localhost:3306/greenscale_db"
+        "postgresql+psycopg://postgres:postgres@localhost:5432/Verdustry_db"
     )
+    DATABASE_URL = normalize_database_url(DATABASE_URL)
     DATABASE_ECHO: bool = os.getenv("DATABASE_ECHO", "false").lower() == "true"
 
     # API
@@ -28,7 +43,7 @@ class Settings:
     ).split(",")
 
     # JWT
-    SECRET_KEY: str = os.getenv("SECRET_KEY", "greenscale-secret-key")
+    SECRET_KEY: str = os.getenv("SECRET_KEY", "Verdustry-secret-key")
     ALGORITHM: str = os.getenv("ALGORITHM", "HS256")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 

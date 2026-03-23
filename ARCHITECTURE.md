@@ -1,6 +1,6 @@
-# GreenScale Architecture
+# Verdustry Architecture
 
-Comprehensive system architecture documentation for the GreenScale sustainability platform.
+Comprehensive system architecture documentation for the Verdustry sustainability platform.
 
 ## 🏗️ System Overview
 
@@ -25,7 +25,7 @@ Comprehensive system architecture documentation for the GreenScale sustainabilit
                              │ SQL Queries
 ┌────────────────────────────▼────────────────────────────────┐
 │           Database (MySQL 5.7+)                             │
-│           greenscale_db                                     │
+│           Verdustry_db                                     │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -57,7 +57,7 @@ Comprehensive system architecture documentation for the GreenScale sustainabilit
 
 ### Backend
 ```
-greenscale-backend/
+Verdustry-backend/
 ├── main.py                 # FastAPI app, routes
 ├── database.py            # DB config, session management
 ├── models.py              # SQLAlchemy models (User, Emission)
@@ -81,7 +81,7 @@ greenscale-backend/
 
 ### Frontend
 ```
-greenscale-frontend/
+Verdustry-frontend/
 ├── src/
 │   ├── App.tsx                    # Main app component
 │   ├── main.tsx                   # Entry point

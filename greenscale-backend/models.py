@@ -1,4 +1,4 @@
-"""SQLAlchemy ORM models for GreenScale database."""
+"""SQLAlchemy ORM models for Verdustry database."""
 
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime, Boolean, Table, Numeric, BigInteger, Text
 from sqlalchemy.orm import relationship

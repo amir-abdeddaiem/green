@@ -46,7 +46,7 @@ None currently implemented. Future versions may support:
 
 **Headers:**
 ```
-Content-Disposition: attachment; filename="greenscale_report_TestBusiness_20250123_125557.csv"
+Content-Disposition: attachment; filename="Verdustry_report_TestBusiness_20250123_125557.csv"
 Content-Type: text/csv
 Content-Length: {length of CSV data}
 ```
@@ -157,17 +157,17 @@ ORDER BY recorded_at DESC
 - **Trimming:** No extra spaces
 
 ### Filename Generation
-- **Format:** `greenscale_report_{BusinessName}_{Timestamp}.csv`
+- **Format:** `Verdustry_report_{BusinessName}_{Timestamp}.csv`
 - **BusinessName:** Business name with spaces replaced by underscores
 - **Timestamp:** `YYYYMMDD_HHMMSS` (24-hour format)
-- **Example:** `greenscale_report_Test_Company_20250123_125557.csv`
+- **Example:** `Verdustry_report_Test_Company_20250123_125557.csv`
 
 ---
 
 ## Implementation Details
 
 ### Backend Code Path
-**File:** `greenscale-backend/main.py`  
+**File:** `Verdustry-backend/main.py`  
 **Lines:** 167-234  
 **Function:** `export_data(business_id: int, db: Session = Depends(get_db))`
 

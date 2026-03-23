@@ -83,7 +83,7 @@ export function SupportTab() {
       title: "Email Support",
       description: "Send us an email and we'll respond within 24 hours",
       action: "Send Email",
-      contact: "support@greenscale.com",
+      contact: "support@Verdustry.com",
     },
     {
       id: "chat",

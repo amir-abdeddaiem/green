@@ -1,5 +1,5 @@
 """
-Scope 3 (Supply Chain) API Routes for GreenScale.
+Scope 3 (Supply Chain) API Routes for Verdustry.
 Handles supplier management, emission factor library, scope3 logging, and financial integration.
 """
 

@@ -10,7 +10,7 @@ try:
         host='localhost',
         user='root',
         password='',
-        database='greenscale_db'
+        database='Verdustry_db'
     )
     
     cursor = connection.cursor()

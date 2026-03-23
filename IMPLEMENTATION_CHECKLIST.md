@@ -339,7 +339,7 @@
 
 ## Sign-Off
 
-**System:** GreenScale Carbon Tracking Platform  
+**System:** Verdustry Carbon Tracking Platform  
 **Module:** 7.0 - Reporting & Exporting System  
 **Implementation Status:** ✅ COMPLETE  
 **Testing Status:** ✅ VERIFIED  
@@ -357,7 +357,7 @@
 ## Next Steps for User
 
 1. **Test in Browser**
-   - Log into GreenScale dashboard
+   - Log into Verdustry dashboard
    - Navigate to Recent Activity card
    - Click Download button
    - Verify file downloads

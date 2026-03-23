@@ -1,4 +1,4 @@
-# 🌿 GreenScale: Sustainability Platform
+# 🌿 Verdustry: Sustainability Platform
 
 A full-stack solution for businesses to track, analyze, and report their carbon footprint.
 

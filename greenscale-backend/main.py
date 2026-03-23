@@ -1,4 +1,4 @@
-"""FastAPI backend for GreenScale carbon emissions tracking system."""
+"""FastAPI backend for Verdustry carbon emissions tracking system."""
 
 import base64
 import csv
@@ -47,7 +47,7 @@ async def lifespan(_: FastAPI):
     """Manage application lifecycle."""
     # Startup
     try:
-        logger.info("🚀 Initializing GreenScale backend...")
+        logger.info("🚀 Initializing Verdustry backend...")
         db = next(get_db())
         try:
             logger.info("🔐 Setting up roles and permissions...")
@@ -63,11 +63,11 @@ async def lifespan(_: FastAPI):
     yield
 
     # Shutdown
-    logger.info("🛑 Shutting down GreenScale backend...")
+    logger.info("🛑 Shutting down Verdustry backend...")
 
 
 app = FastAPI(
-    title="GreenScale API",
+    title="Verdustry API",
     description="Carbon emissions tracking and sustainability platform",
     version="1.0.0",
     lifespan=lifespan
@@ -693,7 +693,7 @@ def export_data(business_id: int, db: Session = Depends(get_db)):
         output.close()
 
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        filename = f"greenscale_report_{business.business_name.replace(' ', '_')}_{timestamp}.csv"
+        filename = f"Verdustry_report_{business.business_name.replace(' ', '_')}_{timestamp}.csv"
 
         logger.info("📤 Streaming CSV: %s (%s records)", filename, len(emissions))
 
@@ -809,7 +809,7 @@ def export_pdf(business_id: int, db: Session = Depends(get_db)):
 
         # Title
         elements.append(
-            Paragraph("GreenScale Emissions Report", title_style)
+            Paragraph("Verdustry Emissions Report", title_style)
         )
         elements.append(
             Paragraph(
@@ -888,7 +888,7 @@ def export_pdf(business_id: int, db: Session = Depends(get_db)):
         pdf_buffer.seek(0)
 
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        filename = f"greenscale_report_{business.business_name.replace(' ', '_')}_{timestamp}.pdf"
+        filename = f"Verdustry_report_{business.business_name.replace(' ', '_')}_{timestamp}.pdf"
 
         logger.info("📤 Streaming PDF: %s (%s records)", filename, len(emissions))
 
@@ -950,7 +950,7 @@ async def start_chat(request: StartChatRequest, db: Session = Depends(get_db)):
         # Send welcome message
         try:
             await chatbot.send_card_message(
-                title="Welcome to GreenScale Support",
+                title="Welcome to Verdustry Support",
                 subtitle=f"Hello {business_name}!",
                 message_text="Our support team is ready to assist you with:\n"
                             "- Carbon emissions tracking\n"
@@ -1060,7 +1060,7 @@ def health_check():
     """Health check endpoint."""
     return {
         "status": "healthy",
-        "service": "GreenScale API",
+        "service": "Verdustry API",
         "timestamp": datetime.now().isoformat()
     }
 

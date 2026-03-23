@@ -19,6 +19,8 @@ import { AdminUsersPage } from "./features/dashboard/components/pages/AdminUsers
 import { AdminSettingsPage } from "./features/dashboard/components/pages/AdminSettingsPage";
 import { ProtectedAdminRoute } from "./components/ProtectedAdminRoute";
 import { HomePage } from "./pages/HomePage";
+import { DocumentScannerTab } from "./features/dashboard/components/tabs/DocsTab";
+import { DatabaseIntegrationTab } from "./features/dashboard/components/tabs/IntegrationTab";
 
 function App() {
   return (
@@ -66,6 +68,11 @@ function App() {
         {/* Regular User Dashboard Routes */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardOverview />} />
+          <Route path="docs" element={<DocumentScannerTab />} />
+          <Route path="integration" element={<DatabaseIntegrationTab />} />
+          {/* 
+          
+          <Route path="rapport" element={<AnalyticsTab />} /> */}
           <Route path="analytics" element={<AnalyticsTab />} />
           <Route path="emissions" element={<EmissionsLogTab />} />
           <Route path="reports" element={<ReportsTab />} />

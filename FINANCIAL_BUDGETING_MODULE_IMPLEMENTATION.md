@@ -444,7 +444,7 @@ Response:
 
 ## **Summary**
 
-This Financial & Budgeting Module transforms GreenScale from an environmental tracking tool into a **Business Intelligence Platform** by:
+This Financial & Budgeting Module transforms Verdustry from an environmental tracking tool into a **Business Intelligence Platform** by:
 
 1. ✅ Linking carbon emissions to monetary costs
 2. ✅ Providing multi-currency financial insights

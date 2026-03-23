@@ -1,4 +1,4 @@
-"""Role and Permission models for GreenScale."""
+"""Role and Permission models for Verdustry."""
 
 from sqlalchemy import Column, Integer, String, ForeignKey, Table, DateTime, text
 from sqlalchemy.orm import relationship

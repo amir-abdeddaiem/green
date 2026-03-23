@@ -27,7 +27,7 @@
 ## 📍 Component Locations
 
 ```
-greenscale-frontend/
+Verdustry-frontend/
 └── src/
     └── features/
         └── dashboard/
@@ -39,7 +39,7 @@ greenscale-frontend/
             └── services/
                 └── chatService.ts ✅ (API calls)
 
-greenscale-backend/
+Verdustry-backend/
 ├── chatbot_service.py ✅ (FIXED - Better logging & validation)
 └── main.py (Chat endpoints)
 ```

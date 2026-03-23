@@ -44,7 +44,7 @@ export function LoginForm() {
               <Leaf className="w-8 h-8 text-green-600" />
             </div>
             <h1 className="text-2xl font-black text-white mb-1">Welcome Back</h1>
-            <p className="text-green-100 font-medium text-sm">Sign in to GreenScale</p>
+            <p className="text-green-100 font-medium text-sm">Sign in to Verdustry</p>
           </div>
         </div>
 
@@ -129,7 +129,7 @@ export function LoginForm() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-gray-500 text-xs mt-4">© 2026 GreenScale. All rights reserved.</p>
+        <p className="text-center text-gray-500 text-xs mt-4">© 2026 Verdustry. All rights reserved.</p>
       </div>
     </div>
   )

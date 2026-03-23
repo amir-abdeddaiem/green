@@ -52,7 +52,7 @@ dist/
 *.db
 *.sqlite
 *.sqlite3
-greenscale.db
+Verdustry.db
 
 # Uploads
 uploads/

@@ -10,7 +10,7 @@ export function AuthScreen() {
   return (
     <div className="flex flex-col items-center justify-center space-y-6">
       <div className="text-center space-y-2">
-        <h1 className="text-4xl font-extrabold tracking-tight text-green-800">GreenScale</h1>
+        <h1 className="text-4xl font-extrabold tracking-tight text-green-800">Verdustry</h1>
         <p className="text-slate-500">Global Sustainability Analytics for Small Business</p>
       </div>
 

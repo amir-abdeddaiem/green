@@ -1,4 +1,4 @@
-"""Currency conversion and financial utilities for GreenScale."""
+"""Currency conversion and financial utilities for Verdustry."""
 
 import logging
 from decimal import Decimal, ROUND_HALF_UP

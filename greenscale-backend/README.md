@@ -1,4 +1,4 @@
-# GreenScale Backend API
+# Verdustry Backend API
 
 Professional carbon emissions tracking and sustainability platform backend.
 
@@ -13,7 +13,7 @@ Professional carbon emissions tracking and sustainability platform backend.
 
 1. **Clone and navigate to backend:**
    ```bash
-   cd greenscale-backend
+   cd Verdustry-backend
    ```
 
 2. **Create virtual environment:**
@@ -85,7 +85,7 @@ API docs at: `http://localhost:8000/docs`
 ### Environment Variables (.env)
 ```env
 # Database
-DATABASE_URL=mysql+mysqlconnector://user:pass@localhost:3306/greenscale_db
+DATABASE_URL=mysql+mysqlconnector://user:pass@localhost:3306/Verdustry_db
 DATABASE_ECHO=false
 
 # API
@@ -118,7 +118,7 @@ LOG_LEVEL=INFO
 ## 📂 Project Structure
 
 ```
-greenscale-backend/
+Verdustry-backend/
 ├── main.py                 # FastAPI application & routes
 ├── database.py            # Database configuration
 ├── models.py              # SQLAlchemy models
@@ -150,7 +150,7 @@ pytest
 ### Code quality:
 ```bash
 black .
-pylint greenscale-backend/
+pylint Verdustry-backend/
 flake8
 ```
 
@@ -221,4 +221,4 @@ python reset_db.py
 
 ## 📄 License
 
-Proprietary - GreenScale Inc.
+Proprietary - Verdustry Inc.

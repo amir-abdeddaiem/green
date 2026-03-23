@@ -5,7 +5,7 @@
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
 │                                                                              │
-│                         GREENSCALE PLATFORM                                │
+│                         Verdustry PLATFORM                                │
 │                                                                              │
 └────────────────────────────────────────────────────────────────────────────┘
                                       │
@@ -475,8 +475,8 @@ User Action
 ## File Organization
 
 ```
-greenscale/
-├── greenscale-frontend/
+Verdustry/
+├── Verdustry-frontend/
 │   └── src/
 │       ├── App.tsx (Routes config)
 │       ├── components/
@@ -491,7 +491,7 @@ greenscale/
 │               │   └── AdminSettingsPage.tsx
 │               └── other components...
 │
-├── greenscale-backend/
+├── Verdustry-backend/
 │   ├── main.py
 │   ├── super_admin_routes.py
 │   ├── role_utils.py

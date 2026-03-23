@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { 
   Leaf, BarChart3, Settings, Menu, X, Home, Wind, BarChart2, Target, 
-  LifeBuoy, Bell, LogOut, ChevronLeft, Search, Crown, DollarSign, TrendingUp, Globe, Truck
+  LifeBuoy, Bell, LogOut, ChevronLeft, Search, Crown, DollarSign, TrendingUp, Globe, Truck,
+  Download,
+  FileText,
+  Plug2Icon
 } from "lucide-react";
 import { ChatWidget } from "./ChatWidget";
 import { CurrencyProvider, useCurrency } from "../context/CurrencyContext";
@@ -35,6 +38,9 @@ export function DashboardLayout() {
 
   const navItems = [
     { label: "Dashboard", path: "/dashboard", icon: Home },
+    { label: "integration", path: "/dashboard/integration", icon: Plug2Icon },
+    { label: "docs", path: "/dashboard/docs", icon: Download },
+    { label: "rapport", path: "/dashboard/rapport", icon: FileText },
     { label: "Analytics", path: "/dashboard/analytics", icon: Wind },
     { label: "Emissions", path: "/dashboard/emissions", icon: BarChart2 },
     { label: "Reports", path: "/dashboard/reports", icon: BarChart3 },
@@ -115,7 +121,7 @@ function DashboardContent({
                 <Leaf className="w-5 h-5 text-white" />
               </div>
               <div className="hidden sm:block">
-                <p className="text-black font-bold text-sm leading-tight">GreenScale</p>
+                <p className="text-black font-bold text-sm leading-tight">Verdustry</p>
                 <p className="text-gray-500 text-xs">Dashboard</p>
               </div>
             </div>

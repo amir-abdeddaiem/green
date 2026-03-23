@@ -24,13 +24,13 @@
 
 ### Start Backend
 ```bash
-cd greenscale-backend
+cd Verdustry-backend
 uvicorn main:app --reload
 ```
 
 ### Start Frontend
 ```bash
-cd greenscale-frontend
+cd Verdustry-frontend
 npm run dev
 ```
 
@@ -71,11 +71,11 @@ GOOGLE_CHAT_SPACE_ID=spaces/AAAAC3lJWXo
 
 ## 📍 File Locations
 
-- ChatBot Service: `greenscale-backend/chatbot_service.py`
-- Chat Endpoints: `greenscale-backend/main.py` (lines ~530+)
-- Chat Service: `greenscale-frontend/src/features/dashboard/services/chatService.ts`
-- Chat Widget: `greenscale-frontend/src/features/dashboard/components/ChatWidget.tsx`
-- Dashboard Layout: `greenscale-frontend/src/features/dashboard/components/DashboardLayout.tsx`
+- ChatBot Service: `Verdustry-backend/chatbot_service.py`
+- Chat Endpoints: `Verdustry-backend/main.py` (lines ~530+)
+- Chat Service: `Verdustry-frontend/src/features/dashboard/services/chatService.ts`
+- Chat Widget: `Verdustry-frontend/src/features/dashboard/components/ChatWidget.tsx`
+- Dashboard Layout: `Verdustry-frontend/src/features/dashboard/components/DashboardLayout.tsx`
 
 ## 🐛 Debugging
 

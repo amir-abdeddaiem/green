@@ -38,7 +38,7 @@ The Owner Dashboard has been successfully implemented as a **completely isolated
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    GREENSCALE PLATFORM                       │
+│                    Verdustry PLATFORM                       │
 └─────────────────────────────────────────────────────────────┘
                            ↓
         ┌──────────────────────────────────────────┐

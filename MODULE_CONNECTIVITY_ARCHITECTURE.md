@@ -1,8 +1,8 @@
-# Module Connectivity Architecture - GreenScale Dashboard
+# Module Connectivity Architecture - Verdustry Dashboard
 
 ## Complete Multi-Tab System Overview
 
-Your GreenScale application is now structured as a **persistent sidebar with 5 main tabs**, each connecting to different backend modules. The sidebar stays visible while users navigate between tabs.
+Your Verdustry application is now structured as a **persistent sidebar with 5 main tabs**, each connecting to different backend modules. The sidebar stays visible while users navigate between tabs.
 
 ---
 
@@ -456,7 +456,7 @@ Next time they return, they must log in again
 
 ## Summary
 
-Your GreenScale application now has a **professional, scalable architecture** with:
+Your Verdustry application now has a **professional, scalable architecture** with:
 
 1. ✅ Persistent sidebar navigation
 2. ✅ Route-based tab switching

@@ -1,6 +1,6 @@
-# GreenScale Deployment Guide
+# Verdustry Deployment Guide
 
-Professional deployment instructions for GreenScale backend and frontend.
+Professional deployment instructions for Verdustry backend and frontend.
 
 ## 📋 Pre-Deployment Checklist
 
@@ -19,7 +19,7 @@ Professional deployment instructions for GreenScale backend and frontend.
 1. **Database Setup:**
    ```bash
    # Create production database
-   mysql -u root -p -e "CREATE DATABASE greenscale_prod CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+   mysql -u root -p -e "CREATE DATABASE Verdustry_prod CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
    ```
 
 2. **Configure Environment:**
@@ -67,25 +67,25 @@ Professional deployment instructions for GreenScale backend and frontend.
 
 2. **Build and Run:**
    ```bash
-   docker build -t greenscale-api .
-   docker run -d -p 8000:8000 --env-file .env.production greenscale-api
+   docker build -t Verdustry-api .
+   docker run -d -p 8000:8000 --env-file .env.production Verdustry-api
    ```
 
 ### Systemd Service (Linux)
 
-Create `/etc/systemd/system/greenscale-api.service`:
+Create `/etc/systemd/system/Verdustry-api.service`:
 
 ```ini
 [Unit]
-Description=GreenScale API
+Description=Verdustry API
 After=network.target
 
 [Service]
 Type=notify
 User=www-data
-WorkingDirectory=/var/www/greenscale-backend
-Environment="PATH=/var/www/greenscale-backend/venv/bin"
-ExecStart=/var/www/greenscale-backend/venv/bin/gunicorn -w 4 -b 0.0.0.0:8000 main:app
+WorkingDirectory=/var/www/Verdustry-backend
+Environment="PATH=/var/www/Verdustry-backend/venv/bin"
+ExecStart=/var/www/Verdustry-backend/venv/bin/gunicorn -w 4 -b 0.0.0.0:8000 main:app
 Restart=always
 RestartSec=10
 
@@ -95,8 +95,8 @@ WantedBy=multi-user.target
 
 Enable and start:
 ```bash
-sudo systemctl enable greenscale-api
-sudo systemctl start greenscale-api
+sudo systemctl enable Verdustry-api
+sudo systemctl start Verdustry-api
 ```
 
 ## 🎨 Frontend Deployment
@@ -104,7 +104,7 @@ sudo systemctl start greenscale-api
 ### Build for Production
 
 ```bash
-cd greenscale-frontend
+cd Verdustry-frontend
 npm install
 npm run build
 ```
@@ -138,7 +138,7 @@ netlify deploy --prod --dir=dist
        listen 80;
        server_name yourdomain.com;
        
-       root /var/www/greenscale-frontend/dist;
+       root /var/www/Verdustry-frontend/dist;
        index index.html;
        
        location / {
@@ -210,7 +210,7 @@ netlify deploy --prod --dir=dist
 
 1. **Logs:**
    ```bash
-   tail -f /var/log/greenscale-api.log
+   tail -f /var/log/Verdustry-api.log
    ```
 
 2. **Metrics:**
@@ -234,7 +234,7 @@ curl http://localhost:8000/health
 # Response:
 # {
 #   "status": "healthy",
-#   "service": "GreenScale API",
+#   "service": "Verdustry API",
 #   "timestamp": "2024-01-24T10:00:00"
 # }
 ```
@@ -266,7 +266,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh -o StrictHostKeyChecking=no user@$HOST 'cd /var/www/greenscale-backend && git pull && pip install -r requirements.txt && systemctl restart greenscale-api'
+          ssh -o StrictHostKeyChecking=no user@$HOST 'cd /var/www/Verdustry-backend && git pull && pip install -r requirements.txt && systemctl restart Verdustry-api'
       
       - name: Deploy Frontend
         run: |
@@ -326,10 +326,10 @@ npm run build
 
 ```bash
 # Daily database backup
-0 2 * * * mysqldump -u root -p greenscale_prod > /backups/greenscale_$(date +\%Y\%m\%d).sql
+0 2 * * * mysqldump -u root -p Verdustry_prod > /backups/Verdustry_$(date +\%Y\%m\%d).sql
 
 # Weekly backup to S3
-0 3 * * 0 aws s3 sync /backups s3://backup-bucket/greenscale/
+0 3 * * 0 aws s3 sync /backups s3://backup-bucket/Verdustry/
 ```
 
 ## 📈 Scaling

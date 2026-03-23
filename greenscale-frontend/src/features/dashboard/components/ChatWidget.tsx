@@ -47,7 +47,7 @@ export function ChatWidget({ businessId, userName = 'User' }: ChatWidgetProps) {
       setMessages([
         {
           role: 'bot',
-          text: '🌱 Welcome to GreenScale Support!\n\nWe\'re here to help you with:\n• Carbon emissions tracking\n• Sustainability goals\n• Data analysis & reports\n• Platform features\n\nWhat can we help you with today?',
+          text: '🌱 Welcome to Verdustry Support!\n\nWe\'re here to help you with:\n• Carbon emissions tracking\n• Sustainability goals\n• Data analysis & reports\n• Platform features\n\nWhat can we help you with today?',
           timestamp,
         },
       ]);
@@ -58,7 +58,7 @@ export function ChatWidget({ businessId, userName = 'User' }: ChatWidgetProps) {
       setMessages([
         {
           role: 'bot',
-          text: '🌱 Welcome to GreenScale Support!\n\nWe\'re here to help you with:\n• Carbon emissions tracking\n• Sustainability goals\n• Data analysis & reports\n• Platform features\n\nWhat can we help you with today?',
+          text: '🌱 Welcome to Verdustry Support!\n\nWe\'re here to help you with:\n• Carbon emissions tracking\n• Sustainability goals\n• Data analysis & reports\n• Platform features\n\nWhat can we help you with today?',
           timestamp,
         },
       ]);
@@ -123,7 +123,7 @@ export function ChatWidget({ businessId, userName = 'User' }: ChatWidgetProps) {
       console.error('Send message error:', err);
       const errorMessage: ChatMessage = {
         role: 'bot',
-        text: '❌ Error getting response. Please try again or contact support@greenscale.com',
+        text: '❌ Error getting response. Please try again or contact support@Verdustry.com',
         timestamp: new Date().toLocaleTimeString(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -143,7 +143,7 @@ export function ChatWidget({ businessId, userName = 'User' }: ChatWidgetProps) {
             <div className="flex items-center gap-2">
               <MessageCircle className="w-5 h-5" />
               <div>
-                <h3 className="font-bold text-sm md:text-base">GreenScale Support</h3>
+                <h3 className="font-bold text-sm md:text-base">Verdustry Support</h3>
                 <p className="text-xs text-green-100">Average response: 2 hours</p>
               </div>
             </div>

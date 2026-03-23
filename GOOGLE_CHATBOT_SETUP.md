@@ -1,7 +1,7 @@
-# Google Chat Bot Integration Guide for GreenScale
+# Google Chat Bot Integration Guide for Verdustry
 
 ## Overview
-This guide covers integrating Google Chat Bot API into your GreenScale sustainability platform. We'll integrate it into the "Live Chat" option on the Support page.
+This guide covers integrating Google Chat Bot API into your Verdustry sustainability platform. We'll integrate it into the "Live Chat" option on the Support page.
 
 ---
 
@@ -10,7 +10,7 @@ This guide covers integrating Google Chat Bot API into your GreenScale sustainab
 ### 1.1 Create Google Cloud Project
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Click "Select a Project" → "New Project"
-3. Name it `greenscale-chatbot`
+3. Name it `Verdustry-chatbot`
 4. Click "Create"
 
 ### 1.2 Enable Google Chat API
@@ -21,9 +21,9 @@ This guide covers integrating Google Chat Bot API into your GreenScale sustainab
 
 ### 1.3 Create Service Account
 1. Fill in:
-   - Service account name: `greenscale-bot`
+   - Service account name: `Verdustry-bot`
    - Service account ID: (auto-filled)
-   - Description: "Chat bot for GreenScale support"
+   - Description: "Chat bot for Verdustry support"
 2. Click "Create and Continue"
 3. Grant the role: "Chat Bot Creator"
 4. Click "Continue" → "Done"
@@ -33,7 +33,7 @@ This guide covers integrating Google Chat Bot API into your GreenScale sustainab
 2. Go to "Keys" tab
 3. Click "Add Key" → "Create new key"
 4. Choose "JSON"
-5. Save the file as `greenscale-bot-key.json`
+5. Save the file as `Verdustry-bot-key.json`
 6. Keep this file **secure** in your backend
 
 ---
@@ -47,7 +47,7 @@ pip install google-auth google-auth-httplib2 google-chat-api
 
 ### 2.2 Create Chat Bot Service
 
-Create file: `greenscale-backend/chatbot_service.py`
+Create file: `Verdustry-backend/chatbot_service.py`
 
 ```python
 import os
@@ -60,7 +60,7 @@ from google.chat_v1.types import Message, Attachment, AttachmentData
 class GoogleChatBotService:
     def __init__(self):
         # Load service account credentials
-        with open('greenscale-bot-key.json', 'r') as f:
+        with open('Verdustry-bot-key.json', 'r') as f:
             self.credentials_info = json.load(f)
         
         self.credentials = Credentials.from_service_account_info(
@@ -94,10 +94,10 @@ class GoogleChatBotService:
         try:
             message = Message(
                 cards_v2=[{
-                    'card_id': 'greenscale_card',
+                    'card_id': 'Verdustry_card',
                     'card': {
                         'header': {
-                            'title': card_data.get('title', 'GreenScale Support'),
+                            'title': card_data.get('title', 'Verdustry Support'),
                             'subtitle': card_data.get('subtitle', '')
                         },
                         'sections': [{
@@ -129,7 +129,7 @@ chatbot = GoogleChatBotService()
 
 ### 2.3 Create API Endpoints
 
-Add to `greenscale-backend/main.py`:
+Add to `Verdustry-backend/main.py`:
 
 ```python
 from chatbot_service import chatbot
@@ -142,9 +142,9 @@ async def start_chat(business_id: int):
         space_name = f"spaces/AAAAx_U0n3s"  # Replace with your space ID
         
         message_data = {
-            "title": "Welcome to GreenScale Support",
+            "title": "Welcome to Verdustry Support",
             "subtitle": "How can we help you today?",
-            "message": f"Hi Business #{business_id}! 👋\n\nWelcome to GreenScale Support. Our team is here to help with any questions about carbon tracking, emissions, or sustainability goals.\n\nWhat can we assist you with?"
+            "message": f"Hi Business #{business_id}! 👋\n\nWelcome to Verdustry Support. Our team is here to help with any questions about carbon tracking, emissions, or sustainability goals.\n\nWhat can we assist you with?"
         }
         
         result = chatbot.send_card_message(space_name, message_data)
@@ -171,7 +171,7 @@ async def send_chat_message(business_id: int, message: str):
 
 ### 3.1 Update Environment Variables
 
-Create/update `.env` in `greenscale-frontend/`:
+Create/update `.env` in `Verdustry-frontend/`:
 
 ```
 VITE_GOOGLE_CHAT_API_URL=http://127.0.0.1:8001
@@ -180,7 +180,7 @@ VITE_GOOGLE_CHAT_ENABLED=true
 
 ### 3.2 Create Chat Service
 
-Create file: `greenscale-frontend/src/features/dashboard/services/chatService.ts`
+Create file: `Verdustry-frontend/src/features/dashboard/services/chatService.ts`
 
 ```typescript
 const API_URL = import.meta.env.VITE_GOOGLE_CHAT_API_URL || 'http://127.0.0.1:8001';
@@ -227,7 +227,7 @@ export async function sendChatMessage(businessId: string, message: string) {
 
 ### 3.3 Create Chat Widget Component
 
-Create file: `greenscale-frontend/src/features/dashboard/components/ChatWidget.tsx`
+Create file: `Verdustry-frontend/src/features/dashboard/components/ChatWidget.tsx`
 
 ```typescript
 import { useState } from 'react';
@@ -258,7 +258,7 @@ export function ChatWidget({ businessId }: ChatWidgetProps) {
       setMessages([
         {
           role: 'bot',
-          text: '👋 Welcome to GreenScale Support! How can we help you today?',
+          text: '👋 Welcome to Verdustry Support! How can we help you today?',
         },
       ]);
     } catch (error) {
@@ -308,7 +308,7 @@ export function ChatWidget({ businessId }: ChatWidgetProps) {
         <div className="bg-white rounded-2xl shadow-2xl border border-green-200 w-96 h-96 flex flex-col mb-4 animate-in slide-in-from-bottom-4">
           {/* Header */}
           <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-4 rounded-t-2xl flex justify-between items-center">
-            <h3 className="font-bold">GreenScale Support</h3>
+            <h3 className="font-bold">Verdustry Support</h3>
             <button
               onClick={() => setIsOpen(false)}
               className="hover:bg-green-800 p-1 rounded-lg transition-all"
@@ -390,7 +390,7 @@ import { ChatWidget } from '../ChatWidget';
 
 **Backend** - Add to `.env`:
 ```
-GOOGLE_CHAT_KEY_PATH=./greenscale-bot-key.json
+GOOGLE_CHAT_KEY_PATH=./Verdustry-bot-key.json
 GOOGLE_CHAT_SPACE_ID=spaces/AAAAx_U0n3s
 ```
 
@@ -405,7 +405,7 @@ VITE_CHAT_API_ENDPOINT=http://127.0.0.1:8001
 ## Step 5: Get Your Chat Space ID
 
 1. Go to [Google Chat](https://chat.google.com/)
-2. Create a new space named "GreenScale Support"
+2. Create a new space named "Verdustry Support"
 3. Open space settings
 4. Copy the Space ID (looks like `spaces/AAAAx_U0n3s`)
 5. Use this ID in your backend configuration

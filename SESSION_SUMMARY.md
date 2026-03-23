@@ -297,7 +297,7 @@ GET    /api/super-admin/dashboard/stats
 5. `src/App.tsx` - VERIFIED
 
 ### Backend (1 File Enhanced)
-1. `greenscale-backend/super_admin_routes.py` - ENHANCED
+1. `Verdustry-backend/super_admin_routes.py` - ENHANCED
 
 ### Documentation (6 Files Created)
 1. `OWNER_DASHBOARD_SECURITY.md`

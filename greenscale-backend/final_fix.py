@@ -134,7 +134,7 @@ def fix_remaining_files():
     
     # Replace f-strings with regular strings and fix exception type
     replacements = [
-        ('print(f"GreenScale - Super Admin Initialization")', 'print("GreenScale - Super Admin Initialization")'),
+        ('print(f"Verdustry - Super Admin Initialization")', 'print("Verdustry - Super Admin Initialization")'),
         ('print(f"✅ SUCCESS!")', 'print("✅ SUCCESS!")'),
         ('print(f"   Status: Super Admin")', 'print("   Status: Super Admin")'),
         ('print(f"\\n   You can now:")', 'print("\\n   You can now:")'),

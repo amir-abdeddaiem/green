@@ -1,6 +1,6 @@
-# 🌱 GreenScale - Project Fixes Summary
+# 🌱 Verdustry - Project Fixes Summary
 
-Complete list of all fixes and improvements made to the GreenScale project.
+Complete list of all fixes and improvements made to the Verdustry project.
 
 **Date:** January 24, 2026  
 **Status:** ✅ Complete  

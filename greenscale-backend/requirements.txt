@@ -6,8 +6,7 @@ pydantic[email]==2.5.0
 
 # Database
 sqlalchemy==2.0.23
-mysqlconnector==2.2.9
-mysql-connector-python==8.2.0
+psycopg[binary]==3.2.6
 
 # Authentication & Security
 passlib[bcrypt]==1.7.4

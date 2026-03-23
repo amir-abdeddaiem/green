@@ -111,7 +111,7 @@ class GoogleChatBotService:
                 "text": f"{title} - {subtitle}",
                 "cardsV2": [
                     {
-                        "cardId": f"greenscale_{int(datetime.now().timestamp())}",
+                        "cardId": f"Verdustry_{int(datetime.now().timestamp())}",
                         "card": {
                             "header": {
                                 "title": title,

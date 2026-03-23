@@ -12,7 +12,7 @@ def initialize_super_admin(email: str, api_url: str = "http://localhost:8000"):
     endpoint = f"{api_url}/api/super-admin/initialize-super-admin"
     
     print("\n" + "="*60)
-    print("GreenScale - Super Admin Initialization")
+    print("Verdustry - Super Admin Initialization")
     print("="*60 + "\n")
     
     print(f"Attempting to promote user: {email}")
