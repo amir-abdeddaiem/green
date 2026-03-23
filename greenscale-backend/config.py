@@ -32,15 +32,26 @@ def parse_allowed_origins(raw_value: Optional[str], default_value: str) -> list[
     if not raw:
         raw = default_value
 
+    def normalize_origin(value: str) -> str:
+        origin = value.strip()
+        if (origin.startswith('"') and origin.endswith('"')) or (
+            origin.startswith("'") and origin.endswith("'")
+        ):
+            origin = origin[1:-1].strip()
+        # Origins should not include a trailing slash
+        origin = origin.rstrip("/")
+        return origin
+
     if raw.startswith("["):
         try:
             parsed = json.loads(raw)
             if isinstance(parsed, list):
-                return [str(item).strip() for item in parsed if str(item).strip()]
+                normalized = [normalize_origin(str(item)) for item in parsed]
+                return [item for item in normalized if item]
         except json.JSONDecodeError:
             pass
 
-    parts = [part.strip() for part in raw.split(",")]
+    parts = [normalize_origin(part) for part in raw.split(",")]
     return [part for part in parts if part]
 
 
