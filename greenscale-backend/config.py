@@ -73,6 +73,9 @@ class Settings:
     DEBUG: bool = os.getenv("DEBUG", "false").lower() == "true"
 
     # CORS
+    # Prototype/debug switch: allow any origin (NOT recommended for production)
+    CORS_ALLOW_ALL: bool = os.getenv("CORS_ALLOW_ALL", "false").lower() == "true"
+
     ALLOWED_ORIGINS: list[str] = parse_allowed_origins(
         os.getenv("ALLOWED_ORIGINS"),
         "http://localhost:5173,http://127.0.0.1:5173",

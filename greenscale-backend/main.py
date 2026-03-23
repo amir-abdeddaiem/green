@@ -45,7 +45,15 @@ async def lifespan(_: FastAPI):
     # Startup
     try:
         logger.info("🚀 Initializing Verdustry backend...")
-        logger.info("🌐 CORS allow_origins=%s allow_origin_regex=%s", settings.ALLOWED_ORIGINS, settings.ALLOWED_ORIGIN_REGEX)
+        if settings.CORS_ALLOW_ALL:
+            logger.info("🌐 CORS mode=ALLOW_ALL (prototype) allow_credentials=%s", False)
+        else:
+            logger.info(
+                "🌐 CORS mode=ALLOW_LIST allow_origins=%s allow_origin_regex=%s allow_credentials=%s",
+                settings.ALLOWED_ORIGINS,
+                settings.ALLOWED_ORIGIN_REGEX,
+                True,
+            )
 
         # Create all tables (including role tables)
         try:
@@ -73,6 +81,7 @@ async def lifespan(_: FastAPI):
     logger.info("🛑 Shutting down Verdustry backend...")
 
 
+
 app = FastAPI(
     title="Verdustry API",
     description="Carbon emissions tracking and sustainability platform",
@@ -93,11 +102,15 @@ app.include_router(financial_router, prefix="", tags=["financial"])
 app.include_router(scope3_router, prefix="", tags=["scope3"])
 
 # CORS Configuration
+cors_allow_origins = ["*"] if settings.CORS_ALLOW_ALL else settings.ALLOWED_ORIGINS
+cors_allow_origin_regex = None if settings.CORS_ALLOW_ALL else settings.ALLOWED_ORIGIN_REGEX
+cors_allow_credentials = False if settings.CORS_ALLOW_ALL else True
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,
-    allow_origin_regex=settings.ALLOWED_ORIGIN_REGEX,
-    allow_credentials=True,
+    allow_origins=cors_allow_origins,
+    allow_origin_regex=cors_allow_origin_regex,
+    allow_credentials=cors_allow_credentials,
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allow_headers=["*"],
 )
