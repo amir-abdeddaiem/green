@@ -1,5 +1,6 @@
 """Configuration management for Verdustry backend."""
 
+import json
 import os
 import re
 from functools import lru_cache
@@ -17,6 +18,30 @@ def normalize_database_url(database_url: str) -> str:
     if database_url.startswith("postgresql://"):
         return re.sub(r"^postgresql://", "postgresql+psycopg://", database_url, count=1)
     return database_url
+
+
+def parse_allowed_origins(raw_value: Optional[str], default_value: str) -> list[str]:
+    """Parse ALLOWED_ORIGINS from env.
+
+    Supports:
+    - Comma-separated strings: "https://a.com,https://b.com"
+    - JSON arrays: "[\"https://a.com\", \"https://b.com\"]"
+    - Single origin: "https://a.com"
+    """
+    raw = (raw_value if raw_value is not None else default_value).strip()
+    if not raw:
+        raw = default_value
+
+    if raw.startswith("["):
+        try:
+            parsed = json.loads(raw)
+            if isinstance(parsed, list):
+                return [str(item).strip() for item in parsed if str(item).strip()]
+        except json.JSONDecodeError:
+            pass
+
+    parts = [part.strip() for part in raw.split(",")]
+    return [part for part in parts if part]
 
 
 class Settings:
@@ -37,10 +62,11 @@ class Settings:
     DEBUG: bool = os.getenv("DEBUG", "false").lower() == "true"
 
     # CORS
-    ALLOWED_ORIGINS: list = os.getenv(
-        "ALLOWED_ORIGINS",
-        "http://localhost:5173,http://127.0.0.1:5173"
-    ).split(",")
+    ALLOWED_ORIGINS: list[str] = parse_allowed_origins(
+        os.getenv("ALLOWED_ORIGINS"),
+        "http://localhost:5173,http://127.0.0.1:5173",
+        "https://green-five-bice.vercel.app",
+    )
 
     # JWT
     SECRET_KEY: str = os.getenv("SECRET_KEY", "Verdustry-secret-key")

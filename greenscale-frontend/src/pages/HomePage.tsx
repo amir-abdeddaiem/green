@@ -4,6 +4,8 @@ import {
   Leaf, Menu, X, ArrowRight, BarChart3, Zap, Shield, Target, TrendingDown, Users,
   Lightbulb, CheckCircle
 } from "lucide-react";
+import heroMainImage from "../assets/heromain.png";
+import developerImage from "../assets/atiq-web.png";
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -170,7 +172,7 @@ export function HomePage() {
             {/* Hero Image */}
             <div className="relative">
               <img 
-                src="/assets/heromain.png"
+                src={heroMainImage}
                 alt="Analytics Dashboard"
                 className="w-full h-auto rounded-2xl shadow-xl object-cover"
               />
@@ -275,7 +277,7 @@ export function HomePage() {
               <div className="relative">
                 <div className="w-80 h-80 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl overflow-hidden border-4 border-green-600 shadow-2xl">
                   <img
-                    src="/assets/atiq-web.png"
+                    src={developerImage}
                     alt="Muhammad Atiq"
                     className="w-full h-full object-cover"
                   />
