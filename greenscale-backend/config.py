@@ -67,6 +67,10 @@ class Settings:
         "http://localhost:5173,http://127.0.0.1:5173",
     )
 
+    # Optional regex to match origins (useful for Vercel preview/prod domains)
+    # Example: ^https://.*\\.vercel\\.app$
+    ALLOWED_ORIGIN_REGEX: Optional[str] = os.getenv("ALLOWED_ORIGIN_REGEX")
+
     # JWT
     SECRET_KEY: str = os.getenv("SECRET_KEY", "Verdustry-secret-key")
     ALGORITHM: str = os.getenv("ALGORITHM", "HS256")

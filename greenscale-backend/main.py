@@ -45,6 +45,7 @@ async def lifespan(_: FastAPI):
     # Startup
     try:
         logger.info("🚀 Initializing Verdustry backend...")
+        logger.info("🌐 CORS allow_origins=%s allow_origin_regex=%s", settings.ALLOWED_ORIGINS, settings.ALLOWED_ORIGIN_REGEX)
 
         # Create all tables (including role tables)
         try:
@@ -95,6 +96,7 @@ app.include_router(scope3_router, prefix="", tags=["scope3"])
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.ALLOWED_ORIGINS,
+    allow_origin_regex=settings.ALLOWED_ORIGIN_REGEX,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allow_headers=["*"],
