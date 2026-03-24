@@ -55,6 +55,22 @@ def parse_allowed_origins(raw_value: Optional[str], default_value: str) -> list[
     return [part for part in parts if part]
 
 
+def merge_allowed_origins(env_value: Optional[str], defaults: list[str]) -> list[str]:
+    """Merge ALLOWED_ORIGINS env value with a safe default allow-list.
+
+    Rationale: hosting platforms sometimes set ALLOWED_ORIGINS and accidentally
+    omit the real frontend origin; merging keeps the app reachable while still
+    allowing explicit overrides.
+    """
+    parsed = parse_allowed_origins(env_value, ",".join(defaults))
+    # Preserve order: env first, then defaults; de-duplicate.
+    merged: list[str] = []
+    for origin in [*parsed, *defaults]:
+        if origin and origin not in merged:
+            merged.append(origin)
+    return merged
+
+
 class Settings:
     """Application settings loaded from environment variables."""
 
@@ -76,9 +92,15 @@ class Settings:
     # Prototype/debug switch: allow any origin (NOT recommended for production)
     CORS_ALLOW_ALL: bool = os.getenv("CORS_ALLOW_ALL", "false").lower() == "true"
 
-    ALLOWED_ORIGINS: list[str] = parse_allowed_origins(
+    _DEFAULT_ALLOWED_ORIGINS: list[str] = [
+        "https://verdustry.vercel.app",
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ]
+
+    ALLOWED_ORIGINS: list[str] = merge_allowed_origins(
         os.getenv("ALLOWED_ORIGINS"),
-        "https://green-ten-tau.vercel.app,http://localhost:5173,http://127.0.0.1:5173",
+        _DEFAULT_ALLOWED_ORIGINS,
     )
 
     # Optional regex to match origins (useful for Vercel preview/prod domains)

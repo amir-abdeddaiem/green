@@ -104,14 +104,14 @@ app.include_router(scope3_router, prefix="", tags=["scope3"])
 # CORS Configuration
 cors_allow_origins = ["*"] if settings.CORS_ALLOW_ALL else settings.ALLOWED_ORIGINS
 cors_allow_origin_regex = None if settings.CORS_ALLOW_ALL else settings.ALLOWED_ORIGIN_REGEX
-cors_allow_credentials = False if settings.CORS_ALLOW_ALL else True
+cors_allow_credentials = True
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=cors_allow_origins,
     allow_origin_regex=cors_allow_origin_regex,
     allow_credentials=cors_allow_credentials,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
