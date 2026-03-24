@@ -78,7 +78,7 @@ class Settings:
 
     ALLOWED_ORIGINS: list[str] = parse_allowed_origins(
         os.getenv("ALLOWED_ORIGINS"),
-        "http://localhost:5173,http://127.0.0.1:5173",
+        "https://green-ten-tau.vercel.app,http://localhost:5173,http://127.0.0.1:5173",
     )
 
     # Optional regex to match origins (useful for Vercel preview/prod domains)
