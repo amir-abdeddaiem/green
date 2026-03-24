@@ -179,6 +179,15 @@ class EmissionCreate(BaseModel):
         }
 
 
+@app.get("/register", tags=["auth"])
+def register_info():
+    """Human-friendly endpoint for browsers (POST is required for registration)."""
+    return {
+        "status": "ok",
+        "message": "Use POST /register with JSON: {business_name, email, password}",
+    }
+
+
 @app.post("/register", status_code=status.HTTP_201_CREATED, tags=["auth"])
 def register(user_data: UserCreate, db: Session = Depends(get_db)):
     """Register a new user (business)."""
@@ -220,6 +229,15 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Registration failed"
         ) from e
+
+
+@app.get("/login", tags=["auth"])
+def login_info():
+    """Human-friendly endpoint for browsers (POST is required for login)."""
+    return {
+        "status": "ok",
+        "message": "Use POST /login with JSON: {email, password}",
+    }
 
 
 @app.post("/login", status_code=status.HTTP_200_OK, tags=["auth"])
