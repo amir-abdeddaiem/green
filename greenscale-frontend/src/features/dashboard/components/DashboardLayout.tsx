@@ -116,20 +116,20 @@ function DashboardContent({
         {/* Logo & Hamburger */}
         <div className="flex items-center justify-between px-6 py-6 border-b border-gray-200">
           {isSidebarExpanded && (
-            <div className="flex items-center gap-3 flex-1">
-              <div className="w-8 h-8 bg-green-600 rounded-md flex items-center justify-center flex-shrink-0">
-                <Leaf className="w-5 h-5 text-white" />
-              </div>
-              <div className="hidden sm:block">
-                <p className="text-black font-bold text-sm leading-tight">Verdustry</p>
-                <p className="text-gray-500 text-xs">Dashboard</p>
-              </div>
-            </div>
+            <img
+    src="/Verdustry.svg"
+    alt="Verdustry Logo"
+    className="h-9 w-auto object-contain"
+  />
           )}
           {!isSidebarExpanded && (
             <div className="w-full flex justify-center">
-              <div className="w-8 h-8 bg-green-600 rounded-md flex items-center justify-center">
-                <Leaf className="w-5 h-5 text-white" />
+              <div className="w-10 h-10  rounded-md flex items-center justify-center">
+                <img
+    src="/verdusty.png"
+    alt="Verdustry Logo"
+    className="h-9 w-auto object-contain"
+  />
               </div>
             </div>
           )}
