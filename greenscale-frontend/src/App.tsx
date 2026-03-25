@@ -21,6 +21,8 @@ import { ProtectedAdminRoute } from "./components/ProtectedAdminRoute";
 import { HomePage } from "./pages/HomePage";
 import { DocumentScannerTab } from "./features/dashboard/components/tabs/DocsTab";
 import { DatabaseIntegrationTab } from "./features/dashboard/components/tabs/IntegrationTab";
+import { BookDemo } from "./pages/home/BookDemo";
+
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
       <Routes>
         {/* Home Page */}
         <Route path="/" element={<HomePage />} />
+         <Route path="/book-demo" element={<BookDemo />} />
 
         {/* Auth Routes */}
         <Route path="/login" element={<LoginForm />} />
