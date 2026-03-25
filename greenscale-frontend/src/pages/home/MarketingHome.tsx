@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -6,11 +6,25 @@ import MarketingNavbar from "@/components/marketing/MarketingNavbar";
 import LogoLoop from "@/components/LogoLoop";
 
 
-const STATS = [
-  { value: "3 500+", label: "Entreprises clientes" },
-  { value: "80%", label: "Réduction du temps de reporting" },
-  { value: "150k", label: "Facteurs d'émissions" },
-  { value: "Scope 1·2·3", label: "Couverture complète" },
+const IMPACT_STATS = [
+  {
+    target: 52,
+    prefix: "-",
+    suffix: "%",
+    label: "Réduction des coûts liés à la gestion carbone et conformité",
+  },
+  {
+    target: 93,
+    prefix: "-",
+    suffix: "%",
+    label: "Réduction du nombre d'employés impliqués dans le processus",
+  },
+  {
+    target: 80,
+    prefix: "-",
+    suffix: "%",
+    label: "Réduction du temps passé sur la comptabilité carbone",
+  },
 ] as const;
 
 const STEPS = [
@@ -101,16 +115,14 @@ const PARTNER_LOGOS = [
   "CBAM_Beratung_Logo.svg",
   "iso-14064.jpg",
   "ghg-protocol-logo.png",
-  
   "images.jpg",
   "iso 14067.svg",
   "csrd.svg",
-  
 ].map((src) => ({
   title: src,
   node: (
     <img
-      src={`/${src}`} 
+      src={`/${src}`}
       alt={src}
       className="h-10 w-auto object-contain"
     />
@@ -136,45 +148,38 @@ function useInView<T extends HTMLElement>(threshold = 0.15) {
   return [ref, inView] as const;
 }
 
-function AnimatedCounter({ target, duration = 1800 }: { target: string; duration?: number }) {
+function ImpactCounter({
+  target,
+  prefix = "",
+  suffix = "",
+  duration = 1800,
+}: {
+  target: number;
+  prefix?: string;
+  suffix?: string;
+  duration?: number;
+}) {
   const [count, setCount] = useState(0);
   const [ref, inView] = useInView<HTMLSpanElement>(0.3);
 
-  const numeric = useMemo(() => {
-    const digits = target.replace(/[^0-9]/g, "");
-    const numVal = Number.parseInt(digits, 10);
-    const isNum = Number.isFinite(numVal) && digits.length > 0;
-
-    const suffix = target.replace(/[0-9\s\u202F.,]/g, "");
-
-    return { isNum, numVal: isNum ? numVal : 0, suffix };
-  }, [target]);
-
   useEffect(() => {
-    if (!inView || !numeric.isNum) return;
-
+    if (!inView) return;
     let raf = 0;
     const start = performance.now();
-
     const tick = (now: number) => {
       const progress = Math.min((now - start) / duration, 1);
-      setCount(Math.floor(progress * numeric.numVal));
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * target));
       if (progress < 1) raf = requestAnimationFrame(tick);
+      else setCount(target);
     };
-
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [duration, inView, numeric.isNum, numeric.numVal]);
+  }, [inView, target, duration]);
 
-  if (!numeric.isNum) {
-    return <span ref={ref}>{target}</span>;
-  }
-
-  const formatted = count.toLocaleString("fr-FR");
   return (
     <span ref={ref}>
-      {formatted}
-      {numeric.suffix}
+      {prefix}{count}{suffix}
     </span>
   );
 }
@@ -211,12 +216,33 @@ function accentClasses(accent: Accent) {
   }
 }
 
+function ArrowDown() {
+  return (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="inline-block ml-1 -mb-1"
+    >
+      <path
+        d="M12 4v16m0 0l-6-6m6 6l6-6"
+        stroke="#4ade80"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function MarketingHome() {
   const navigate = useNavigate();
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   const [heroRef, heroInView] = useInView<HTMLDivElement>(0.1);
-  const [statsRef, statsInView] = useInView<HTMLDivElement>(0.2);
+  const [impactRef, impactInView] = useInView<HTMLDivElement>(0.15);
   const [productsRef, productsInView] = useInView<HTMLDivElement>(0.1);
   const [stepsRef, stepsInView] = useInView<HTMLDivElement>(0.1);
   const [testimonialsRef, testimonialsInView] = useInView<HTMLDivElement>(0.2);
@@ -241,134 +267,153 @@ export function MarketingHome() {
 
       <MarketingNavbar />
 
- {/* HERO - Modern White Version (2026) */}
-<section
-  ref={heroRef}
-  className="relative min-h-screen overflow-hidden bg-white flex items-center"
->
-  {/* Soft background gradient + subtle pattern */}
-  <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 via-white to-emerald-50/30" />
-  
-  <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 lg:pt-32 lg:pb-24 relative z-10">
-    <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start">
-      
-      {/* Left Content */}
-      <div className={cn(
-        "space-y-8 transition-all duration-700",
-        heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-      )}>
+      {/* ── HERO (untouched) ── */}
+      <section
+        ref={heroRef}
+        className="relative min-h-screen overflow-hidden bg-white flex items-center"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 via-white to-emerald-50/30" />
 
-        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tighter text-zinc-900 leading-none">
-          Réduisez votre<br />
-          <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
-            empreinte carbone
-          </span>
-        </h1>
+        <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 lg:pt-32 lg:pb-24 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start">
+            <div
+              className={cn(
+                "space-y-8 transition-all duration-700",
+                heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+              )}
+            >
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tighter text-zinc-900 leading-none">
+                Réduisez votre<br />
+                <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                  empreinte carbone
+                </span>
+              </h1>
 
-        <p className="max-w-lg text-xl text-zinc-600 leading-relaxed">
-          La plateforme tout-en-un pour mesurer, planifier et reporter vos émissions GES 
-          avec précision, simplicité et conformité aux normes internationales.
-        </p>
+              <p className="max-w-lg text-xl text-zinc-600 leading-relaxed">
+                La plateforme tout-en-un pour mesurer, planifier et reporter vos émissions GES
+                avec précision, simplicité et conformité aux normes internationales.
+              </p>
 
-        <div className="flex flex-wrap gap-4 pt-6">
-          <Button
-            size="lg"
-            className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-7 text-lg font-semibold rounded-2xl transition-all active:scale-[0.97] shadow-xl shadow-emerald-500/25"
-            onClick={() => navigate("/register")}
-          >
-            Commencer gratuitement
-          </Button>
+              <div className="flex flex-wrap gap-4 pt-6">
+                <Button
+                  size="lg"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-7 text-lg font-semibold rounded-2xl transition-all active:scale-[0.97] shadow-xl shadow-emerald-500/25"
+                  onClick={() => navigate("/register")}
+                >
+                  Commencer gratuitement
+                </Button>
 
-          <Button
-            variant="outline"
-            size="lg"
-            className="border-zinc-300 hover:bg-zinc-100 text-zinc-700 px-10 py-7 text-lg rounded-2xl transition-all"
-            onClick={() => navigate("/book-demo")}
-          >
-            Voir une démo
-          </Button>
-        </div>
-
-        {/* Trust bar */}
-        <div className="pt-10">
-          <p className="text-xs uppercase tracking-[2px] text-zinc-500 mb-5 font-medium">
-            CERTIFIÉ PAR LES NORMES INTERNATIONALES
-          </p>
-          <LogoLoop
-            logos={PARTNER_LOGOS}
-            speed={55}
-            direction="left"
-            logoHeight={58}
-            gap={36}
-            className="transition-all"
-          />
-        </div>
-      </div>
-
-      {/* Right Side */}
-      <div className={cn(
-        "relative transition-all duration-700 delay-150",
-        heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-      )}>
-        
-        <div className="relative mx-auto max-w-[540px]">
-          
-          <div className="relative rounded-3xl overflow-hidden border border-zinc-100 shadow-2xl shadow-zinc-200/80 bg-white">
-            
-            <div className="h-12 bg-zinc-50 border-b border-zinc-100 flex items-center px-5 gap-2">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-400" />
-                <div className="w-3 h-3 rounded-full bg-amber-400" />
-                <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-zinc-300 hover:bg-zinc-100 text-zinc-700 px-10 py-7 text-lg rounded-2xl transition-all"
+                  onClick={() => navigate("/book-demo")}
+                >
+                  Voir une démo
+                </Button>
               </div>
-              <div className="mx-auto text-[10px] font-medium text-zinc-400 tracking-wider">
-                Ver Dustry • Dashboard
+
+              <div className="pt-10">
+                <p className="text-xs uppercase tracking-[2px] text-zinc-500 mb-5 font-medium">
+                  CERTIFIÉ PAR LES NORMES INTERNATIONALES
+                </p>
+                <LogoLoop
+                  logos={PARTNER_LOGOS}
+                  speed={55}
+                  direction="left"
+                  logoHeight={58}
+                  gap={36}
+                  className="transition-all"
+                />
               </div>
             </div>
 
-            <div className="relative">
-              <video
-                src="/videoplayback.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full object-cover aspect-video"
-              />
-              
-              <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent pointer-events-none" />
+            <div
+              className={cn(
+                "relative transition-all duration-700 delay-150",
+                heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+              )}
+            >
+              <div className="relative mx-auto max-w-[540px]">
+                <div className="relative rounded-3xl overflow-hidden border border-zinc-100 shadow-2xl shadow-zinc-200/80 bg-white">
+                  <div className="h-12 bg-zinc-50 border-b border-zinc-100 flex items-center px-5 gap-2">
+                    <div className="flex gap-1.5">
+                      <div className="w-3 h-3 rounded-full bg-red-400" />
+                      <div className="w-3 h-3 rounded-full bg-amber-400" />
+                      <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                    </div>
+                    <div className="mx-auto text-[10px] font-medium text-zinc-400 tracking-wider">
+                      Ver Dustry • Dashboard
+                    </div>
+                  </div>
+
+                  <div className="relative">
+                    <video
+                      src="/videoplayback.mp4"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full object-cover aspect-video"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent pointer-events-none" />
+                  </div>
+                </div>
+
+                <div className="absolute -inset-16 -z-10 bg-gradient-to-br from-emerald-300/20 via-teal-200/10 to-transparent rounded-[5rem] blur-3xl" />
+              </div>
             </div>
           </div>
-
-          <div className="absolute -inset-16 -z-10 bg-gradient-to-br from-emerald-300/20 via-teal-200/10 to-transparent rounded-[5rem] blur-3xl" />
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-      {/* STATS */}
-      <section ref={statsRef} className="border-y bg-muted/20">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-12 sm:px-6 lg:grid-cols-4 lg:px-8">
-          {STATS.map((s, i) => (
-            <div
-              key={s.label}
-              className={cn(
-                "rounded-xl px-2 py-4 text-center transition-all duration-700",
-                statsInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
-              )}
-              style={{ transitionDelay: `${i * 90}ms` }}
-            >
-              <div className="text-3xl font-extrabold tracking-tight text-green-700 sm:text-4xl">
-                <AnimatedCounter target={s.value} />
-              </div>
-              <div className="mt-2 text-sm text-muted-foreground">{s.label}</div>
-            </div>
-          ))}
         </div>
       </section>
 
-      {/* PRODUCTS */}
+      {/* ── IMPACT (dark green section) ── */}
+      <section
+        ref={impactRef}
+        style={{ backgroundColor: "#034122", borderRadius: "2rem" }}
+        className="w-full py-20 px-4"
+      >
+        <div className="mx-auto max-w-5xl">
+          <h2
+            className={cn(
+              "text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl transition-all duration-700",
+              impactInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
+            )}
+          >
+            Plus d&apos;impact, moins de coûts.
+          </h2>
+
+          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            {IMPACT_STATS.map((stat, i) => (
+              <div
+                key={stat.label}
+                className={cn(
+                  "rounded-2xl p-8 transition-all duration-700",
+                  impactInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+                )}
+                style={{
+                  backgroundColor: "#062e1a",
+                  transitionDelay: impactInView ? `${i * 60}ms` : "0ms",
+                }}
+              >
+                <p className="text-sm leading-snug text-white/50 min-h-[3.5rem]">
+                  {stat.label}
+                </p>
+                <p className="mt-6 text-5xl font-black tracking-tight text-white lg:text-6xl">
+                  <ImpactCounter
+                    target={stat.target}
+                    prefix={stat.prefix}
+                    suffix={stat.suffix}
+                  />
+                  <ArrowDown />
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── PRODUCTS ── */}
       <section id="produits" ref={productsRef} className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="text-center">
           <div className="text-xs font-bold tracking-widest text-green-700">NOTRE PLATEFORME</div>
@@ -435,7 +480,7 @@ export function MarketingHome() {
         </div>
       </section>
 
-      {/* PROCESS */}
+      {/* ── PROCESS ── */}
       <section
         id="solutions"
         ref={stepsRef}
@@ -481,66 +526,9 @@ export function MarketingHome() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section id="ressources" ref={testimonialsRef} className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <div className="text-xs font-bold tracking-widest text-green-700">ILS NOUS FONT CONFIANCE</div>
-          <h2
-            className={cn(
-              "mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl transition-all duration-700",
-              testimonialsInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
-            )}
-          >
-            3 500+ entreprises en
-            <br />mouvement climatique
-          </h2>
-        </div>
+      
 
-        <div className="relative mx-auto mt-14 max-w-2xl">
-          {TESTIMONIALS.map((t, i) => (
-            <div
-              key={t.author}
-              className={cn(
-                "rounded-3xl border bg-card p-8 text-left shadow-sm transition-all duration-500 sm:p-10",
-                i === activeTestimonial
-                  ? "relative opacity-100 translate-x-0 scale-100"
-                  : "absolute inset-0 opacity-0 translate-x-4 scale-[0.985] pointer-events-none",
-              )}
-            >
-              <div className="text-6xl font-extrabold leading-none text-green-700/40">“</div>
-              <p className="mt-4 text-base leading-relaxed text-foreground/80 sm:text-lg">{t.quote}</p>
-              <div className="mt-7 flex items-center gap-4">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-green-600 to-emerald-500 text-white font-extrabold">
-                  {t.author[0]}
-                </div>
-                <div>
-                  <div className="text-sm font-bold">{t.author}</div>
-                  <div className="mt-0.5 text-xs text-muted-foreground">
-                    {t.role} · {t.company}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-
-          <div className="mt-8 flex justify-center gap-2">
-            {TESTIMONIALS.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                aria-label={`Témoignage ${i + 1}`}
-                className={cn(
-                  "h-2 w-2 rounded-full transition-all",
-                  i === activeTestimonial ? "bg-green-600 scale-125" : "bg-green-600/30",
-                )}
-                onClick={() => setActiveTestimonial(i)}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA FINAL */}
+      {/* ── CTA FINAL ── */}
       <section id="tarifs" className="relative border-t py-24">
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-green-500/10 blur-3xl" />
@@ -563,7 +551,10 @@ export function MarketingHome() {
             >
               Commencer maintenant
             </Button>
-            <Button variant="outline" className="px-7 py-6 text-base font-semibold" onClick={() => navigate("/book-demo")}
+            <Button
+              variant="outline"
+              className="px-7 py-6 text-base font-semibold"
+              onClick={() => navigate("/book-demo")}
             >
               Parler à un expert
             </Button>
@@ -573,7 +564,7 @@ export function MarketingHome() {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* ── FOOTER ── */}
       <footer id="apropos" className="border-t bg-muted/20">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-14 sm:px-6 lg:grid-cols-4 lg:px-8">
           <div className="lg:col-span-1">
@@ -622,4 +613,4 @@ export function MarketingHome() {
       </footer>
     </div>
   );
-}
+} 
