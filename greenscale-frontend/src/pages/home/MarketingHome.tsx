@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { MarketingNavbar } from "@/components/marketing/MarketingNavbar";
 import { cn } from "@/lib/utils";
+import MarketingNavbar from "@/components/marketing/MarketingNavbar";
+import LogoLoop from "@/components/LogoLoop";
+
 
 const STATS = [
   { value: "3 500+", label: "Entreprises clientes" },
@@ -93,6 +95,22 @@ const TESTIMONIALS = [
     company: "Energy Vault",
   },
 ] as const;
+
+const PARTNER_LOGOS = [
+  "BNP Paribas",
+  "Siemon",
+  "Energy Vault",
+  "F2A",
+  "Retail",
+  "Industrie",
+].map((label) => ({
+  title: label,
+  node: (
+    <span className="rounded-md border bg-card px-2.5 py-1 text-xs font-semibold text-muted-foreground">
+      {label}
+    </span>
+  ),
+}));
 
 function useInView<T extends HTMLElement>(threshold = 0.15) {
   const ref = useRef<T | null>(null);
@@ -216,7 +234,7 @@ export function MarketingHome() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/20 to-transparent" />
       </div>
 
-      <MarketingNavbar variant="light" />
+      <MarketingNavbar />
 
       {/* HERO */}
       <section
@@ -229,17 +247,14 @@ export function MarketingHome() {
             heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
           )}
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-4 py-2 text-xs font-semibold text-green-700">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-green-600" />
-            Conforme CSRD · CDP · GHG Protocol
-          </div>
+          
 
           <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
             Réduisez votre <br />
             <span className="bg-gradient-to-r from-green-700 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
-              empreinte carbone
+              empreinte 
             </span>
-            <br />avec précision
+            
           </h1>
 
           <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">
@@ -262,17 +277,18 @@ export function MarketingHome() {
               Voir une démo ▶
             </Button>
           </div>
-
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <span className="text-xs font-medium text-muted-foreground">Fait confiance par</span>
-            {["BNP Paribas", "Siemon", "Energy Vault", "F2A"].map((c) => (
-              <span
-                key={c}
-                className="rounded-md border bg-card px-2.5 py-1 text-xs font-semibold text-muted-foreground"
-              >
-                {c}
-              </span>
-            ))}
+            <div className="w-full">
+              <LogoLoop
+                logos={PARTNER_LOGOS}
+                speed={60}
+                direction="left"
+                logoHeight={28}
+                gap={14}
+                ariaLabel="Logos des partenaires"
+              />
+            </div>
           </div>
         </div>
 
