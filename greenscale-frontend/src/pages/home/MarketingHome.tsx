@@ -97,18 +97,23 @@ const TESTIMONIALS = [
 ] as const;
 
 const PARTNER_LOGOS = [
-  "BNP Paribas",
-  "Siemon",
-  "Energy Vault",
-  "F2A",
-  "Retail",
-  "Industrie",
-].map((label) => ({
-  title: label,
+  "14001.jpg",
+  "CBAM_Beratung_Logo.svg",
+  "iso-14064.jpg",
+  "ghg-protocol-logo.png",
+  
+  "images.jpg",
+  "iso 14067.svg",
+  "csrd.svg",
+  
+].map((src) => ({
+  title: src,
   node: (
-    <span className="rounded-md border bg-card px-2.5 py-1 text-xs font-semibold text-muted-foreground">
-      {label}
-    </span>
+    <img
+      src={`/${src}`} 
+      alt={src}
+      className="h-10 w-auto object-contain"
+    />
   ),
 }));
 
@@ -236,114 +241,111 @@ export function MarketingHome() {
 
       <MarketingNavbar />
 
-      {/* HERO */}
-      <section
-        ref={heroRef}
-        className="mx-auto grid min-h-screen max-w-6xl grid-cols-1 items-center gap-12 px-4 pb-16 pt-28 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8"
-      >
-        <div
-          className={cn(
-            "max-w-xl transition-all duration-700",
-            heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
-          )}
-        >
-          
+ {/* HERO - Modern White Version (2026) */}
+<section
+  ref={heroRef}
+  className="relative min-h-screen overflow-hidden bg-white flex items-center"
+>
+  {/* Soft background gradient + subtle pattern */}
+  <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 via-white to-emerald-50/30" />
+  
+  <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 lg:pt-32 lg:pb-24 relative z-10">
+    <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start">
+      
+      {/* Left Content */}
+      <div className={cn(
+        "space-y-8 transition-all duration-700",
+        heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      )}>
 
-          <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-            Réduisez votre <br />
-            <span className="bg-gradient-to-r from-green-700 via-emerald-600 to-teal-600 bg-clip-text text-transparent">
-              empreinte 
-            </span>
-            
-          </h1>
+        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tighter text-zinc-900 leading-none">
+          Réduisez votre<br />
+          <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
+            empreinte carbone
+          </span>
+        </h1>
 
-          <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">
-            La plateforme tout-en-un pour mesurer, planifier et reporter vos émissions GES. Propulsée par
-            l'IA, validée par des experts climatiques.
+        <p className="max-w-lg text-xl text-zinc-600 leading-relaxed">
+          La plateforme tout-en-un pour mesurer, planifier et reporter vos émissions GES 
+          avec précision, simplicité et conformité aux normes internationales.
+        </p>
+
+        <div className="flex flex-wrap gap-4 pt-6">
+          <Button
+            size="lg"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-7 text-lg font-semibold rounded-2xl transition-all active:scale-[0.97] shadow-xl shadow-emerald-500/25"
+            onClick={() => navigate("/register")}
+          >
+            Commencer gratuitement
+          </Button>
+
+          <Button
+            variant="outline"
+            size="lg"
+            className="border-zinc-300 hover:bg-zinc-100 text-zinc-700 px-10 py-7 text-lg rounded-2xl transition-all"
+            onClick={() => navigate("/book-demo")}
+          >
+            Voir une démo
+          </Button>
+        </div>
+
+        {/* Trust bar */}
+        <div className="pt-10">
+          <p className="text-xs uppercase tracking-[2px] text-zinc-500 mb-5 font-medium">
+            CERTIFIÉ PAR LES NORMES INTERNATIONALES
           </p>
-
-          <div className="mt-10 flex flex-wrap items-center gap-3">
-            <Button
-              className="bg-green-600 px-6 py-6 text-base font-extrabold text-white hover:bg-green-700"
-              onClick={() => navigate("/register")}
-            >
-              Commencer gratuitement
-            </Button>
-            <Button
-              variant="outline"
-              className="px-6 py-6 text-base font-semibold"
-              onClick={() => navigate("/book-demo")}
-            >
-              Voir une démo ▶
-            </Button>
-          </div>
-          <div className="mt-10 flex flex-wrap items-center gap-3">
-            <span className="text-xs font-medium text-muted-foreground">Fait confiance par</span>
-            <div className="w-full">
-              <LogoLoop
-                logos={PARTNER_LOGOS}
-                speed={60}
-                direction="left"
-                logoHeight={28}
-                gap={14}
-                ariaLabel="Logos des partenaires"
-              />
-            </div>
-          </div>
+          <LogoLoop
+            logos={PARTNER_LOGOS}
+            speed={55}
+            direction="left"
+            logoHeight={58}
+            gap={36}
+            className="transition-all"
+          />
         </div>
+      </div>
 
-        {/* Dashboard mockup */}
-        <div
-          className={cn(
-            "transition-all duration-700 delay-150",
-            heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10",
-          )}
-        >
-          <div className="overflow-hidden rounded-2xl border bg-card shadow-xl">
-            <div className="flex items-center gap-3 border-b bg-muted/40 px-5 py-3">
+      {/* Right Side */}
+      <div className={cn(
+        "relative transition-all duration-700 delay-150",
+        heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      )}>
+        
+        <div className="relative mx-auto max-w-[540px]">
+          
+          <div className="relative rounded-3xl overflow-hidden border border-zinc-100 shadow-2xl shadow-zinc-200/80 bg-white">
+            
+            <div className="h-12 bg-zinc-50 border-b border-zinc-100 flex items-center px-5 gap-2">
               <div className="flex gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
-                <span className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
-                <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
+                <div className="w-3 h-3 rounded-full bg-red-400" />
+                <div className="w-3 h-3 rounded-full bg-amber-400" />
+                <div className="w-3 h-3 rounded-full bg-emerald-500" />
               </div>
-              <span className="text-xs font-medium text-muted-foreground">Tableau de bord émissions</span>
+              <div className="mx-auto text-[10px] font-medium text-zinc-400 tracking-wider">
+                Ver Dustry • Dashboard
+              </div>
             </div>
 
-            <div className="p-6">
-              <div className="flex h-24 items-end gap-4">
-                {(
-                  [
-                    { scope: "Scope 1", value: "124 tCO₂e", bar: "bg-green-600", h: "h-16" },
-                    { scope: "Scope 2", value: "87 tCO₂e", bar: "bg-emerald-500", h: "h-12" },
-                    { scope: "Scope 3", value: "1 240 tCO₂e", bar: "bg-teal-500", h: "h-20" },
-                  ] as const
-                ).map((m) => (
-                  <div key={m.scope} className="flex flex-1 flex-col items-center gap-1">
-                    <div className={cn("w-full rounded-md", m.bar, m.h)} />
-                    <div className="text-[11px] font-bold text-muted-foreground">{m.value}</div>
-                    <div className="text-[10px] text-muted-foreground/70">{m.scope}</div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6">
-                <div className="text-xs font-medium text-muted-foreground">Objectif Net-Zéro 2030</div>
-                <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
-                  <div className="h-full w-[62%] rounded-full bg-gradient-to-r from-green-600 to-emerald-500" />
-                </div>
-                <div className="mt-2 text-right text-[11px] font-bold text-green-700">62% atteint</div>
-              </div>
-
-              <div className="mt-5 flex gap-3 rounded-xl border border-green-200 bg-green-50 p-4">
-                <div className="text-sm">💡</div>
-                <div className="text-xs leading-relaxed text-muted-foreground">
-                  Réduire les achats fournisseurs de 15% permettrait d'économiser 186 tCO₂e
-                </div>
-              </div>
+            <div className="relative">
+              <video
+                src="/videoplayback.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full object-cover aspect-video"
+              />
+              
+              <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
+
+          <div className="absolute -inset-16 -z-10 bg-gradient-to-br from-emerald-300/20 via-teal-200/10 to-transparent rounded-[5rem] blur-3xl" />
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* STATS */}
       <section ref={statsRef} className="border-y bg-muted/20">
