@@ -32,7 +32,7 @@ const menuItems: MenuItem[] = [
       
     ],
   },
-  { label: "Normes", submenu: [{ title: "CSRD", desc: "Découvrir nos formation", href: "/formation" }, { title: "CBAM", desc: "Voir nos programmes de Formation", href: "/formation" }] },
+  { label: "Normes", submenu: [{ title: "CSRD", desc: "eporting ESG des entreprises.", href: "/csrd" }, { title: "CBAM", desc: "Mécanisme de taxe carbone aux frontières de l’UE.", href: "/cbam" }] },
   { label: "Contacter", submenu: [{ title: "Contactez-Nous", desc: "Nous rejoindre", href: "/contact" }, { title: "Localisation", desc: "Ou nous se trouve", href: "/contact#contact" }] },
   // { label: "Demo", submenu: [{ title: "Nos Productions", desc: "Demander nos productions ", href: "/production" }, { title: "Devis", desc: "Demander un devis", href: "/production/#devis" }] },
   

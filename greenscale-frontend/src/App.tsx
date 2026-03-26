@@ -22,6 +22,8 @@ import { HomePage } from "./pages/HomePage";
 import { DocumentScannerTab } from "./features/dashboard/components/tabs/DocsTab";
 import { DatabaseIntegrationTab } from "./features/dashboard/components/tabs/IntegrationTab";
 import { BookDemo } from "./pages/home/BookDemo";
+import CbamPage from "./pages/home/Cbam";
+import CsrdPage from "./pages/home/Csrd";
 
 
 function App() {
@@ -30,7 +32,9 @@ function App() {
       <Routes>
         {/* Home Page */}
         <Route path="/" element={<HomePage />} />
-         <Route path="/book-demo" element={<BookDemo />} />
+        <Route path="/book-demo" element={<BookDemo />} />
+        <Route path="/cbam" element={<CbamPage />} />
+        <Route path="/csrd" element={<CsrdPage />} />
 
         {/* Auth Routes */}
         <Route path="/login" element={<LoginForm />} />

@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import MarketingNavbar from "@/components/marketing/MarketingNavbar";
 import LogoLoop from "@/components/LogoLoop";
-
-
+import { FAQSection } from "./Fq";
 const IMPACT_STATS = [
   {
     target: 52,
@@ -27,32 +26,152 @@ const IMPACT_STATS = [
   },
 ] as const;
 
-const STEPS = [
+const WHY_US = [
   {
     num: "01",
-    title: "Mesurez",
-    desc: "Obtenez une vue claire et précise de vos émissions sur tous les scopes grâce à notre IA et nos données sectorielles.",
-    icon: "📊",
+    tag: "PRÉCISION",
+    title: "Collecte de données sans compromis",
+    desc: "Connectez vos sources de données en quelques clics. Notre moteur de collecte automatisée élimine les erreurs manuelles et garantit une traçabilité complète de chaque émission.",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
+        <path d="M24 6L40 14L40 34L24 42L8 34L8 14Z" stroke="#4ade80" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M24 6L24 19M40 14L29 19M40 34L29 29M24 42L24 29M8 34L19 29M8 14L19 19" stroke="#4ade80" strokeWidth="1" opacity=".3" />
+        <circle cx="24" cy="24" r="5" fill="#4ade80" />
+        <circle cx="24" cy="24" r="2" fill="#132b1e" />
+      </svg>
+    ),
+    stat: "99.8%",
+    statLabel: "précision",
   },
   {
     num: "02",
-    title: "Fixez des objectifs",
-    desc: "Définissez des objectifs ambitieux alignés avec les standards climatiques SBTi, CSRD et GHG Protocol.",
-    icon: "🎯",
+    tag: "INTELLIGENCE",
+    title: "IA pour optimiser vos émissions",
+    desc: "Notre IA analyse en continu vos données pour détecter les anomalies, anticiper les dérives et vous proposer les actions à plus fort impact sur votre trajectoire de réduction.",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
+        <rect x="10" y="10" width="28" height="28" rx="6" stroke="#4ade80" strokeWidth="1.5" />
+        <circle cx="18" cy="18" r="2.5" fill="#4ade80" />
+        <circle cx="30" cy="18" r="2.5" fill="#4ade80" />
+        <circle cx="18" cy="30" r="2.5" fill="#4ade80" />
+        <circle cx="30" cy="30" r="2.5" fill="#4ade80" />
+        <circle cx="24" cy="24" r="4" fill="#4ade80" />
+        <path d="M18 18L24 24M30 18L24 24M18 30L24 24M30 30L24 24" stroke="#132b1e" strokeWidth="1.5" />
+      </svg>
+    ),
+    stat: "3×",
+    statLabel: "plus rapide",
   },
   {
     num: "03",
-    title: "Agissez",
-    desc: "Transformez votre plan en actions concrètes : énergies renouvelables, efficacité, approvisionnement durable.",
-    icon: "⚡",
+    tag: "MISE À JOUR",
+    title: "Facteurs d'émission toujours précis",
+    desc: "Accédez à plus de 150 000 facteurs d'émissions issus des meilleures bases mondiales — ADEME, IPCC, Ecoinvent — mis à jour en continu pour refléter la réalité terrain.",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
+        <circle cx="24" cy="24" r="16" stroke="#4ade80" strokeWidth="1.5" />
+        <path d="M24 8A16 16 0 0 1 40 24" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" />
+        <path d="M37 20L40 24L44 22" stroke="#4ade80" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M20 24L24 20L28 24M24 20V30" stroke="#4ade80" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    stat: "150k+",
+    statLabel: "facteurs",
   },
   {
     num: "04",
-    title: "Reportez",
-    desc: "Suivez vos progrès en temps réel et communiquez vos résultats via CDP, CSRD, TCFD et autres frameworks.",
-    icon: "📋",
+    tag: "SÉCURITÉ",
+    title: "Vos données sont en sécurité",
+    desc: "Infrastructure certifiée SOC 2 Type II, chiffrement de bout en bout, hébergement européen. Vos données ESG restent confidentielles et sous votre contrôle total.",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
+        <path d="M24 6L38 12L38 26C38 34 32 40 24 43C16 40 10 34 10 26L10 12Z" stroke="#4ade80" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M24 6L38 12L38 26C38 34 32 40 24 43C16 40 10 34 10 26L10 12Z" fill="#4ade80" fillOpacity=".06" />
+        <path d="M18 24L22 28L30 20" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+    stat: "SOC 2",
+    statLabel: "Type II",
   },
 ] as const;
+
+const STEPS = [
+  {
+    num: "01",
+    title: "Comptabilité carbone",
+    desc: "Suivez vos émissions GES et identifiez vos principaux domaines de réduction.",
+    tag: "MESURE",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10">
+        <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 2" className="text-green-200" />
+        <path d="M14 32 L19 24 L24 28 L30 18 L34 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600" />
+        <circle cx="34" cy="22" r="2.5" fill="currentColor" className="text-green-600" />
+        <path d="M12 36h24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-green-300" />
+      </svg>
+    ),
+  },
+  {
+    num: "02",
+    title: "Analyse du cycle de vie",
+    desc: "Évaluez les impacts du cycle de vie de vos produits pour une durabilité à tous les niveaux.",
+    tag: "ANALYSE",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10">
+        <path d="M24 8 C30 8 36 14 36 20 C36 28 28 32 24 40 C20 32 12 28 12 20 C12 14 18 8 24 8Z" stroke="currentColor" strokeWidth="1.5" className="text-green-300" />
+        <path d="M24 14 C27 14 30 17 30 20 C30 24 27 26 24 30 C21 26 18 24 18 20 C18 17 21 14 24 14Z" fill="currentColor" className="text-green-500" fillOpacity="0.3" />
+        <circle cx="24" cy="20" r="3" fill="currentColor" className="text-green-600" />
+        <path d="M24 8 V5M36 20 H39M12 20 H9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-green-400" />
+      </svg>
+    ),
+  },
+  {
+    num: "03",
+    title: "Reporting ESG",
+    desc: "Centralisez vos données ESG pour gagner du temps et faciliter la conformité. Bénéficiez d'analyses stratégiques et de conseils d'experts.",
+    tag: "CONFORMITÉ",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10">
+        <rect x="10" y="8" width="28" height="32" rx="3" stroke="currentColor" strokeWidth="1.5" className="text-green-300" />
+        <path d="M16 18h16M16 24h16M16 30h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="text-green-500" />
+        <circle cx="34" cy="34" r="7" fill="currentColor" className="text-green-600" />
+        <path d="M31 34l2 2 4-3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    num: "04",
+    title: "Plans d'action & Suivi",
+    desc: "Transformez vos insights en actions concrètes avec un suivi en temps réel et un accompagnement expert.",
+    tag: "ACTION",
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10">
+        <path d="M12 24L20 32L36 16" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-green-600" />
+        <circle cx="24" cy="24" r="18" stroke="currentColor" strokeWidth="1.5" className="text-green-200" />
+      </svg>
+    ),
+  },
+] as const;
+
+const SECURITY_FEATURES = [
+  { icon: "🔒", title: "Chiffrement des données", desc: "Chiffrement de bout en bout (AES-256) et TLS 1.3 sur toutes les communications" },
+  { icon: "🛡️", title: "Authentification sécurisée", desc: "MFA, SSO entreprise et authentification adaptative" },
+  { icon: "👥", title: "Gestion des accès", desc: "Contrôle granulaire par rôle, département et projet" },
+  { icon: "☁️", title: "Infrastructure cloud sécurisée", desc: "Hébergement souverain en Europe – SOC 2 Type II & ISO 27001" },
+  { icon: "💾", title: "Sauvegardes automatiques", desc: "Redondance géographique et récupération en moins de 4 heures" },
+  { icon: "📋", title: "Journalisation & Traçabilité", desc: "Audit complet de toutes les actions sur vos données" },
+  { icon: "📜", title: "Conformité réglementaire", desc: "RGPD, CSRD, EUDR, SFDR et SEC Climate Disclosure" },
+];
+
+const AI_SECTION = {
+  title: "Powered by Verdustry AI",
+  subtitle: "Une intelligence artificielle conçue par des experts climat",
+  description: "Développée avec des ingénieurs et scientifiques du climat, notre IA analyse en continu vos données pour détecter les opportunités, anticiper les risques et transformer chaque défi environnemental en avantage stratégique.",
+  stats: [
+    { value: "150 000+", label: "facteurs d'émission mis à jour quotidiennement" },
+    { value: "3×", label: "plus rapide que les approches traditionnelles" },
+    { value: "98.7%", label: "de précision dans la détection d'anomalies" },
+  ],
+};
 
 type Accent = "green" | "emerald" | "teal";
 
@@ -86,74 +205,46 @@ const PRODUCTS: Array<{
   },
 ];
 
-const TESTIMONIALS = [
-  {
-    quote:
-      "Verdustry a transformé notre approche RSE. Une plateforme intuitive et une équipe d'experts exceptionnelle.",
-    author: "Jonathan Ciccio",
-    role: "Continuous Improvement Manager",
-    company: "Siemon",
-  },
-  {
-    quote:
-      "Nous avons atteint notre objectif net-zéro. Je recommande Verdustry à toutes les entreprises sérieuses sur le climat.",
-    author: "Directeur Développement Durable",
-    role: "Climate Leader",
-    company: "F2A",
-  },
-  {
-    quote:
-      "Grâce à Verdustry, nous établissons de nouveaux standards industriels en matière de durabilité.",
-    author: "Michael Van Parys",
-    role: "Director of Sustainability",
-    company: "Energy Vault",
-  },
-] as const;
-
 const PARTNER_LOGOS = [
-  "14001.jpg",
-  "CBAM_Beratung_Logo.svg",
-  "iso-14064.jpg",
-  "ghg-protocol-logo.png",
-  "images.jpg",
-  "iso 14067.svg",
-  "csrd.svg",
+  "14001.jpg", "CBAM_Beratung_Logo.svg", "iso-14064.jpg", "ghg-protocol-logo.png",
+  "images.jpg", "iso 14067.svg", "csrd.svg",
 ].map((src) => ({
   title: src,
-  node: (
-    <img
-      src={`/${src}`}
-      alt={src}
-      className="h-10 w-auto object-contain"
-    />
-  ),
+  node: <img src={`/${src}`} alt={src} className="h-10 w-auto object-contain" />,
 }));
 
+// Custom Hook
 function useInView<T extends HTMLElement>(threshold = 0.15) {
   const ref = useRef<T | null>(null);
   const [inView, setInView] = useState(false);
 
   useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) setInView(true);
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry && entry.isIntersecting) {
+          setInView(true);
+          observer.unobserve(entry.target);
+        }
       },
-      { threshold },
+      { threshold, rootMargin: "0px 0px -10% 0px" }
     );
 
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
+    observer.observe(element);
+
+    return () => {
+      if (element) observer.unobserve(element);
+    };
   }, [threshold]);
 
   return [ref, inView] as const;
 }
 
-function ImpactCounter({
-  target,
-  prefix = "",
-  suffix = "",
-  duration = 1800,
-}: {
+// Impact Counter Component
+function ImpactCounter({ target, prefix = "", suffix = "", duration = 1800 }: {
   target: number;
   prefix?: string;
   suffix?: string;
@@ -164,8 +255,9 @@ function ImpactCounter({
 
   useEffect(() => {
     if (!inView) return;
-    let raf = 0;
+    let raf: number;
     const start = performance.now();
+
     const tick = (now: number) => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
@@ -173,6 +265,7 @@ function ImpactCounter({
       if (progress < 1) raf = requestAnimationFrame(tick);
       else setCount(target);
     };
+
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [inView, target, duration]);
@@ -185,227 +278,111 @@ function ImpactCounter({
 }
 
 function accentClasses(accent: Accent) {
-  switch (accent) {
-    case "green":
-      return {
-        text: "text-green-700",
-        pill: "border-green-200 bg-green-50 text-green-700",
-        dot: "bg-green-600",
-        link: "text-green-700",
-        glow: "from-green-500/15",
-        borderHover: "hover:border-green-300",
-      };
-    case "emerald":
-      return {
-        text: "text-emerald-700",
-        pill: "border-emerald-200 bg-emerald-50 text-emerald-700",
-        dot: "bg-emerald-500",
-        link: "text-emerald-700",
-        glow: "from-emerald-500/15",
-        borderHover: "hover:border-emerald-300",
-      };
-    case "teal":
-      return {
-        text: "text-teal-700",
-        pill: "border-teal-200 bg-teal-50 text-teal-700",
-        dot: "bg-teal-500",
-        link: "text-teal-700",
-        glow: "from-teal-500/15",
-        borderHover: "hover:border-teal-300",
-      };
-  }
+  const classes = {
+    green: { text: "text-green-700", pill: "border-green-200 bg-green-50 text-green-700", dot: "bg-green-600", glow: "from-green-500/15" },
+    emerald: { text: "text-emerald-700", pill: "border-emerald-200 bg-emerald-50 text-emerald-700", dot: "bg-emerald-500", glow: "from-emerald-500/15" },
+    teal: { text: "text-teal-700", pill: "border-teal-200 bg-teal-50 text-teal-700", dot: "bg-teal-500", glow: "from-teal-500/15" },
+  };
+  return classes[accent];
 }
 
-function ArrowDown() {
-  return (
-    <svg
-      width="28"
-      height="28"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="inline-block ml-1 -mb-1"
-    >
-      <path
-        d="M12 4v16m0 0l-6-6m6 6l6-6"
-        stroke="#4ade80"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-export function MarketingHome() {
+export  function MarketingHome() {
   const navigate = useNavigate();
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   const [heroRef, heroInView] = useInView<HTMLDivElement>(0.1);
   const [impactRef, impactInView] = useInView<HTMLDivElement>(0.15);
   const [productsRef, productsInView] = useInView<HTMLDivElement>(0.1);
   const [stepsRef, stepsInView] = useInView<HTMLDivElement>(0.1);
-  const [testimonialsRef, testimonialsInView] = useInView<HTMLDivElement>(0.2);
-
-  useEffect(() => {
-    const t = window.setInterval(
-      () => setActiveTestimonial((p) => (p + 1) % TESTIMONIALS.length),
-      4000,
-    );
-    return () => window.clearInterval(t);
-  }, []);
+  const [aiRef, aiInView] = useInView<HTMLDivElement>(0.1);
+  const [whyRef, whyInView] = useInView<HTMLDivElement>(0.1);
+  const [securityRef, securityInView] = useInView<HTMLDivElement>(0.1);
 
   return (
-    <div className="relative min-h-screen bg-background text-foreground">
-      {/* Ambient background */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute -left-24 -top-24 h-[420px] w-[420px] rounded-full bg-green-500/10 blur-3xl" />
-        <div className="absolute -right-24 top-40 h-[360px] w-[360px] rounded-full bg-emerald-500/10 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-[320px] w-[320px] rounded-full bg-teal-500/10 blur-3xl" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/20 to-transparent" />
+    <div className="relative min-h-screen bg-zinc-50 text-zinc-900 overflow-hidden">
+      {/* Ambient Background */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
+        <div className="absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="absolute -right-40 top-80 h-[500px] w-[500px] rounded-full bg-teal-500/10 blur-3xl" />
+        <div className="absolute bottom-20 left-1/3 h-[400px] w-[400px] rounded-full bg-green-500/10 blur-3xl" />
       </div>
 
       <MarketingNavbar />
 
-      {/* ── HERO (untouched) ── */}
-      <section
-        ref={heroRef}
-        className="relative min-h-screen overflow-hidden bg-white flex items-center"
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 via-white to-emerald-50/30" />
-
-        <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 lg:pt-32 lg:pb-24 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start">
-            <div
-              className={cn(
-                "space-y-8 transition-all duration-700",
-                heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
-              )}
-            >
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tighter text-zinc-900 leading-none">
-                Réduisez votre<br />
+      {/* HERO SECTION */}
+      <section ref={heroRef} className="relative min-h-screen flex items-center pt-20">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className={cn("space-y-8 transition-all duration-1000", heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12")}>
+              <h1 className="text-6xl lg:text-7xl font-semibold tracking-tighter leading-none text-balance">
+                Réduisez votre empreinte carbone<br />
                 <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
-                  empreinte carbone
+                  avec intelligence
                 </span>
               </h1>
 
               <p className="max-w-lg text-xl text-zinc-600 leading-relaxed">
-                La plateforme tout-en-un pour mesurer, planifier et reporter vos émissions GES
-                avec précision, simplicité et conformité aux normes internationales.
+                La plateforme tout-en-un pour mesurer, analyser, réduire et reporter vos émissions GES avec précision et conformité.
               </p>
 
-              <div className="flex flex-wrap gap-4 pt-6">
+              <div className="flex flex-wrap gap-4 pt-4">
                 <Button
                   size="lg"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-7 text-lg font-semibold rounded-2xl transition-all active:scale-[0.97] shadow-xl shadow-emerald-500/25"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-7 text-lg font-semibold rounded-2xl shadow-xl shadow-emerald-600/30 transition-all active:scale-[0.98]"
                   onClick={() => navigate("/register")}
                 >
                   Commencer gratuitement
                 </Button>
-
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-zinc-300 hover:bg-zinc-100 text-zinc-700 px-10 py-7 text-lg rounded-2xl transition-all"
+                  className="border-zinc-300 hover:bg-zinc-100 px-10 py-7 text-lg rounded-2xl"
                   onClick={() => navigate("/book-demo")}
                 >
                   Voir une démo
                 </Button>
               </div>
 
-              <div className="pt-10">
-                <p className="text-xs uppercase tracking-[2px] text-zinc-500 mb-5 font-medium">
-                  CERTIFIÉ PAR LES NORMES INTERNATIONALES
-                </p>
-                <LogoLoop
-                  logos={PARTNER_LOGOS}
-                  speed={55}
-                  direction="left"
-                  logoHeight={58}
-                  gap={36}
-                  className="transition-all"
-                />
+              <div>
+                <p className="uppercase text-xs tracking-[2px] text-zinc-500 mb-4">Ils nous font confiance</p>
+                <LogoLoop logos={PARTNER_LOGOS} speed={55} direction="left" logoHeight={52} gap={40} />
               </div>
             </div>
 
-            <div
-              className={cn(
-                "relative transition-all duration-700 delay-150",
-                heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
-              )}
-            >
-              <div className="relative mx-auto max-w-[540px]">
-                <div className="relative rounded-3xl overflow-hidden border border-zinc-100 shadow-2xl shadow-zinc-200/80 bg-white">
-                  <div className="h-12 bg-zinc-50 border-b border-zinc-100 flex items-center px-5 gap-2">
-                    <div className="flex gap-1.5">
-                      <div className="w-3 h-3 rounded-full bg-red-400" />
-                      <div className="w-3 h-3 rounded-full bg-amber-400" />
-                      <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                    </div>
-                    <div className="mx-auto text-[10px] font-medium text-zinc-400 tracking-wider">
-                      Ver Dustry • Dashboard
-                    </div>
-                  </div>
-
-                  <div className="relative">
-                    <video
-                      src="/videoplayback.mp4"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="w-full object-cover aspect-video"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-transparent pointer-events-none" />
-                  </div>
-                </div>
-
-                <div className="absolute -inset-16 -z-10 bg-gradient-to-br from-emerald-300/20 via-teal-200/10 to-transparent rounded-[5rem] blur-3xl" />
+            {/* Hero Visual */}
+            <div className={cn("relative transition-all duration-1000 delay-300", heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12")}>
+              <div className="relative rounded-3xl overflow-hidden border border-zinc-100 shadow-2xl bg-white">
+                <video
+                  src="/videoplayback.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full aspect-video object-cover"
+                />
               </div>
+              <div className="absolute -inset-20 -z-10 bg-gradient-to-br from-emerald-400/20 via-teal-400/15 to-transparent blur-3xl rounded-[6rem]" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── IMPACT (dark green section) ── */}
-      <section
-        ref={impactRef}
-        style={{ backgroundColor: "#034122", borderRadius: "2rem" }}
-        className="w-full py-20 px-4"
-      >
-        <div className="mx-auto max-w-5xl">
-          <h2
-            className={cn(
-              "text-center text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl transition-all duration-700",
-              impactInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
-            )}
-          >
-            Plus d&apos;impact, moins de coûts.
+      {/* IMPACT SECTION */}
+      <section ref={impactRef} style={{ backgroundColor: "#0a1f17" }} className="py-24 text-white">
+        <div className="mx-auto max-w-5xl px-6">
+          <h2 className="text-center text-5xl font-semibold tracking-tight mb-16">
+            Plus d’impact.<br />Moins de coûts.
           </h2>
 
-          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {IMPACT_STATS.map((stat, i) => (
               <div
-                key={stat.label}
-                className={cn(
-                  "rounded-2xl p-8 transition-all duration-700",
-                  impactInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
-                )}
-                style={{
-                  backgroundColor: "#062e1a",
-                  transitionDelay: impactInView ? `${i * 60}ms` : "0ms",
-                }}
+                key={i}
+                className="bg-[#132b1e] rounded-3xl p-10 transition-all hover:scale-[1.02]"
+                style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <p className="text-sm leading-snug text-white/50 min-h-[3.5rem]">
-                  {stat.label}
-                </p>
-                <p className="mt-6 text-5xl font-black tracking-tight text-white lg:text-6xl">
-                  <ImpactCounter
-                    target={stat.target}
-                    prefix={stat.prefix}
-                    suffix={stat.suffix}
-                  />
-                  <ArrowDown />
+                <p className="text-emerald-300/75 text-lg leading-snug min-h-[4.5rem]">{stat.label}</p>
+                <p className="mt-8 text-6xl lg:text-7xl font-black tracking-tighter">
+                  <ImpactCounter target={stat.target} prefix={stat.prefix} suffix={stat.suffix} />
                 </p>
               </div>
             ))}
@@ -413,204 +390,305 @@ export function MarketingHome() {
         </div>
       </section>
 
-      {/* ── PRODUCTS ── */}
-      <section id="produits" ref={productsRef} className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <div className="text-xs font-bold tracking-widest text-green-700">NOTRE PLATEFORME</div>
-          <h2
-            className={cn(
-              "mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl transition-all duration-700",
-              productsInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
-            )}
-          >
-            Une suite complète pour
-            <br />votre transition climatique
-          </h2>
-        </div>
+      {/* PRODUCTS SECTION */}
+      <section id="produits" ref={productsRef} className="py-24 bg-white">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="text-center mb-16">
+            <div className="text-emerald-600 font-bold tracking-widest text-sm">NOTRE SUITE COMPLÈTE</div>
+            <h2 className="text-5xl font-semibold tracking-tight mt-4">Une plateforme pensée pour la transition écologique</h2>
+          </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {PRODUCTS.map((p, i) => {
-            const a = accentClasses(p.accent);
-            return (
-              <div
-                key={p.title}
-                className={cn(
-                  "group relative overflow-hidden rounded-2xl border bg-card p-8 shadow-sm transition-all duration-700",
-                  a.borderHover,
-                  productsInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
-                )}
-                style={{ transitionDelay: `${i * 120}ms` }}
-              >
-                <div className={cn("inline-flex rounded-full border px-3 py-1 text-[10px] font-bold tracking-widest", a.pill)}>
-                  {p.tag}
-                </div>
-                <h3 className={cn("mt-5 text-2xl font-extrabold tracking-tight", a.text)}>{p.title}</h3>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{p.desc}</p>
-
-                <ul className="mt-6 space-y-2">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-sm text-foreground/80">
-                      <span className={cn("h-2 w-2 rounded-full", a.dot)} />
-                      <span className="font-medium">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <button
-                  type="button"
-                  className={cn(
-                    "mt-7 inline-flex items-center text-sm font-bold transition-colors",
-                    a.link,
-                    "hover:opacity-90",
-                  )}
-                >
-                  En savoir plus →
-                </button>
-
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {PRODUCTS.map((p, i) => {
+              const a = accentClasses(p.accent);
+              return (
                 <div
-                  aria-hidden
+                  key={i}
                   className={cn(
-                    "pointer-events-none absolute -bottom-24 left-0 right-0 h-56 bg-gradient-to-t to-transparent opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100",
-                    a.glow,
+                    "group rounded-3xl border bg-white p-10 transition-all duration-700 hover:shadow-2xl hover:-translate-y-1",
+                    "hover:border-emerald-200"
                   )}
-                />
-              </div>
-            );
-          })}
+                  style={{ transitionDelay: `${i * 150}ms` }}
+                >
+                  <div className={cn("inline-flex rounded-full border px-4 py-1 text-xs font-bold tracking-widest", a.pill)}>
+                    {p.tag}
+                  </div>
+                  <h3 className={cn("mt-6 text-3xl font-semibold tracking-tight", a.text)}>{p.title}</h3>
+                  <p className="mt-5 text-zinc-600 leading-relaxed">{p.desc}</p>
+
+                  <ul className="mt-8 space-y-3">
+                    {p.features.map((f, idx) => (
+                      <li key={idx} className="flex items-center gap-3 text-sm">
+                        <span className={cn("h-2 w-2 rounded-full", a.dot)} />
+                        <span className="font-medium">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button className="mt-10 text-emerald-600 font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
+                    En savoir plus →
+                  </button>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* ── PROCESS ── */}
-      <section
-        id="solutions"
-        ref={stepsRef}
-        className="border-y bg-gradient-to-b from-transparent via-green-50/40 to-transparent"
-      >
-        <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="text-xs font-bold tracking-widest text-green-700">COMMENT ÇA MARCHE</div>
-            <h2
-              className={cn(
-                "mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl transition-all duration-700",
-                stepsInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
-              )}
-            >
-              4 étapes vers la
-              <br />neutralité carbone
+      {/* AI SECTION */}
+      <section ref={aiRef} className="py-28 bg-gradient-to-br from-zinc-900 to-black text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(16,185,129,0.15),transparent)]" />
+
+        <div className="mx-auto max-w-6xl px-6 relative">
+          <div className="text-center mb-16">
+            <div className="inline-block bg-emerald-500/10 text-emerald-400 text-xs font-bold tracking-[3px] px-6 py-2 rounded-full mb-6">
+              VERDUSTRY AI
+            </div>
+            <h2 className="text-5xl font-semibold tracking-tight">L'intelligence artificielle au service du climat</h2>
+            <p className="mt-6 text-xl text-zinc-300 max-w-3xl mx-auto">
+              {AI_SECTION.description}
+            </p>
+          </div>
+
+          <div className="bg-zinc-800/50 backdrop-blur-2xl border border-white/10 rounded-3xl p-16">
+            <div className="grid lg:grid-cols-5 gap-12 items-center">
+              <div className="lg:col-span-3">
+                <h3 className="text-4xl font-semibold leading-tight">Toujours à jour.<br />Toujours plus intelligente.</h3>
+                <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
+                  {AI_SECTION.stats.map((stat, i) => (
+                    <div key={i} className="text-center sm:text-left">
+                      <div className="text-5xl font-bold text-emerald-400">{stat.value}</div>
+                      <div className="text-zinc-400 mt-2 text-sm leading-tight">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="lg:col-span-2 bg-zinc-900/80 rounded-2xl p-8 border border-emerald-500/20">
+                <div className="text-emerald-400 text-sm font-medium mb-4">Exemple d’action intelligente :</div>
+                <p className="text-lg leading-relaxed">
+                  Détection automatique d’une anomalie Scope 3 chez un fournisseur → Suggestion de 3 alternatives à -27% d’émissions avec simulation de coût.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESS / STEPS SECTION */}
+      <section id="solutions" ref={stepsRef} className="py-28" style={{ background: "linear-gradient(160deg, #f8fcf9 0%, #ffffff 50%, #f0faf4 100%)" }}>
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="max-w-2xl mb-20">
+            <h2 className="mt-6 text-5xl font-semibold tracking-tight leading-none">
+              Toute votre stratégie climat,<br />
+              <span className="text-emerald-700">à portée de main</span>
             </h2>
           </div>
 
-          <div className="mt-14 grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {STEPS.map((step, i) => (
               <div
-                key={step.num}
-                className={cn(
-                  "relative rounded-2xl border bg-card p-6 transition-all duration-700 lg:rounded-none lg:border-y-0 lg:border-l-0 lg:first:rounded-l-2xl lg:last:rounded-r-2xl",
-                  stepsInView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6",
-                )}
-                style={{ transitionDelay: `${i * 120}ms` }}
+                key={i}
+                className="group bg-white rounded-3xl p-10 border border-green-100 hover:border-emerald-300 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
               >
-                <div className="text-5xl font-extrabold tracking-tight text-green-700/15">{step.num}</div>
-                <div className="mt-4 text-2xl">{step.icon}</div>
-                <h3 className="mt-3 text-lg font-extrabold">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.desc}</p>
+                <div className="absolute top-8 right-8 text-[120px] font-black text-emerald-50 group-hover:text-emerald-100/80 transition-colors pointer-events-none">
+                  {step.num}
+                </div>
 
-                {i < STEPS.length - 1 && (
-                  <div className="absolute -right-3 top-1/2 hidden -translate-y-1/2 text-xl font-black text-green-700 lg:block">
-                    →
+                <div className="relative z-10">
+                  <div className="w-20 h-20 flex items-center justify-center bg-emerald-50 rounded-2xl mb-8 group-hover:bg-emerald-100 transition-colors">
+                    {step.icon}
                   </div>
-                )}
+                  <div className="uppercase text-xs font-bold tracking-[2px] text-emerald-700 mb-3">{step.tag}</div>
+                  <h3 className="text-2xl font-semibold mb-4 leading-tight">{step.title}</h3>
+                  <p className="text-zinc-600 leading-relaxed">{step.desc}</p>
+
+                  <div className="mt-10 text-emerald-600 font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                    En savoir plus <span className="text-lg">→</span>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      
+      {/* SECURITY SECTION */}
+      <section ref={securityRef} className="py-28 bg-zinc-900 text-white">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="text-center mb-16">
+            <div className="text-emerald-400 text-sm font-bold tracking-widest mb-3">VOS DONNÉES SONT EN SÉCURITÉ</div>
+            <h2 className="text-5xl font-semibold tracking-tight">Your data is secure with us</h2>
+            <p className="mt-4 text-zinc-400 max-w-md mx-auto">Nous protégeons vos informations avec les plus hauts standards de sécurité et de conformité.</p>
+          </div>
 
-      {/* ── CTA FINAL ── */}
-      <section id="tarifs" className="relative border-t py-24">
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-green-500/10 blur-3xl" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {SECURITY_FEATURES.map((feature, i) => (
+              <div
+                key={i}
+                className="bg-zinc-800/50 border border-zinc-700 hover:border-emerald-500/30 rounded-3xl p-8 transition-all hover:-translate-y-1 group"
+              >
+                <div className="text-5xl mb-6 group-hover:scale-110 transition-transform">{feature.icon}</div>
+                <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+                <p className="text-zinc-400 leading-relaxed">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12 text-emerald-400 text-sm">
+            SOC 2 Type II • ISO 27001 • RGPD • Hébergement en Europe
+          </div>
         </div>
+      </section>
 
-        <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <div className="text-xs font-bold tracking-widest text-green-700">REJOIGNEZ LE MOUVEMENT</div>
-          <h2 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Prêt à réduire votre
-            <br />empreinte carbone ?
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Rejoignez 3 500+ entreprises qui mesurent et réduisent leur impact climatique.
-          </p>
+      {/* FINAL CTA */}
+      <section className="py-28 border-t bg-white">
+        <div className="mx-auto max-w-3xl text-center px-6">
+          <h2 className="text-5xl font-semibold tracking-tight">Prêt à réduire votre empreinte carbone ?</h2>
+          <p className="mt-6 text-xl text-zinc-600">Rejoignez plus de 3 500 entreprises qui transforment leur impact climatique en avantage compétitif.</p>
 
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
+          <div className="mt-12 flex flex-wrap justify-center gap-4">
             <Button
-              className="bg-green-600 px-7 py-6 text-base font-extrabold text-white hover:bg-green-700"
+              size="lg"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 py-7 text-lg rounded-2xl"
               onClick={() => navigate("/register")}
             >
-              Commencer maintenant
+              Commencer gratuitement
             </Button>
             <Button
               variant="outline"
-              className="px-7 py-6 text-base font-semibold"
+              size="lg"
+              className="px-12 py-7 text-lg rounded-2xl"
               onClick={() => navigate("/book-demo")}
             >
               Parler à un expert
             </Button>
           </div>
-
-          <p className="mt-5 text-xs text-muted-foreground">Aucune carte de crédit requise · Résultats en 48h</p>
+          <p className="mt-6 text-sm text-zinc-500">Aucune carte requise • Résultats visibles en 48 heures</p>
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer id="apropos" className="border-t bg-muted/20">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-14 sm:px-6 lg:grid-cols-4 lg:px-8">
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-3">
-              <img src="/Verdustry.svg" alt="Verdustry Logo" className="h-8 w-auto object-contain" />
-            </div>
-            <p className="mt-4 text-sm text-muted-foreground">La plateforme carbone des entreprises ambitieuses.</p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {["ADEME", "GHG Protocol", "CDP", "SOC 2"].map((b) => (
-                <span
-                  key={b}
-                  className="rounded border border-green-200 bg-green-50 px-2 py-1 text-[10px] font-bold tracking-wide text-green-700"
-                >
-                  {b}
-                </span>
-              ))}
-            </div>
+      {/* WHY US SECTION */}
+      <section
+        ref={whyRef}
+        className="relative overflow-hidden w-full py-24 px-4"
+        style={{ backgroundColor: "#0d2117" }}
+      >
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -right-32 -top-32 h-[480px] w-[480px] rounded-full opacity-20" style={{ background: "radial-gradient(circle, #16a34a 0%, transparent 65%)" }} />
+          <div className="absolute -left-24 bottom-0 h-[360px] w-[360px] rounded-full opacity-10" style={{ background: "radial-gradient(circle, #4ade80 0%, transparent 65%)" }} />
+        </div>
+
+        <div className="relative mx-auto max-w-6xl">
+          <div className={cn(
+            "text-center transition-all duration-700",
+            whyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          )}>
+            <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              La différence{" "}
+              <span className="text-green-400">Verdustry</span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-base" style={{ color: "rgba(255,255,255,0.45)" }}>
+              Rigueur scientifique, intelligence artificielle et sécurité absolue — au service de votre transition climatique.
+            </p>
           </div>
 
-          {(
-            [
-              { title: "Produits", links: ["Bilan Carbone", "Plans d'action", "Reporting ESG", "LCA"] },
-              { title: "Solutions", links: ["PME", "Grandes entreprises", "Finance", "Retail"] },
-              { title: "Ressources", links: ["Blog", "Guides", "Webinars", "Centre d'aide"] },
-            ] as const
-          ).map((col) => (
-            <div key={col.title} className="space-y-3">
-              <div className="text-sm font-extrabold tracking-wide">{col.title}</div>
-              <div className="flex flex-col gap-2">
-                {col.links.map((l) => (
-                  <a key={l} href="#" className="text-sm text-muted-foreground hover:text-green-700">
-                    {l}
-                  </a>
-                ))}
+          <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {WHY_US.map((item, i) => (
+              <div
+                key={item.tag}
+                className={cn(
+                  "group relative overflow-hidden rounded-3xl p-8 transition-all duration-500 hover:-translate-y-1.5 cursor-pointer",
+                  whyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                )}
+                style={{
+                  backgroundColor: "#132b1e",
+                  border: "1px solid rgba(74,222,128,0.1)",
+                  transitionDelay: `${i * 100}ms`,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(74,222,128,0.35)";
+                  e.currentTarget.style.boxShadow = "0 20px 40px rgba(13,33,23,0.6)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(74,222,128,0.1)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                <div className="absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  style={{ background: "linear-gradient(90deg, transparent, #4ade80, transparent)" }} />
+
+                <div className="pointer-events-none absolute bottom-2 right-4 text-8xl font-black leading-none select-none"
+                  style={{ color: "rgba(74,222,128,0.04)" }}>
+                  {item.num}
+                </div>
+
+                <div className="relative">
+                  <div className="flex items-start justify-between">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110"
+                      style={{ background: "rgba(74,222,128,0.08)", border: "1px solid rgba(74,222,128,0.18)" }}>
+                      {item.icon}
+                    </div>
+                    <div className="rounded-xl px-3 py-2 text-right"
+                      style={{ background: "rgba(74,222,128,0.06)", border: "1px solid rgba(74,222,128,0.15)" }}>
+                      <div className="text-xl font-black text-green-400">{item.stat}</div>
+                      <div className="mt-0.5 text-[9px] font-semibold uppercase tracking-wider" style={{ color: "rgba(74,222,128,0.55)" }}>{item.statLabel}</div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 text-[10px] font-bold tracking-widest uppercase" style={{ color: "rgba(74,222,128,0.6)" }}>
+                    {item.tag}
+                  </div>
+
+                  <h3 className="mt-2 text-xl font-extrabold tracking-tight text-white leading-snug">
+                    {item.title}
+                  </h3>
+
+                  <p className="mt-3 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.45)" }}>
+                    {item.desc}
+                  </p>
+
+                  <div className="mt-6 flex items-center gap-1.5 text-sm font-bold text-green-400">
+                    <span>En savoir plus</span>
+                    <span className="transition-transform duration-200 group-hover:translate-x-1.5">→</span>
+                  </div>
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <FAQSection/>
+
+      {/* FOOTER */}
+      <footer className="border-t bg-zinc-50">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-16 lg:grid-cols-4">
+          <div>
+            <div className="flex items-center gap-3">
+              <img src="/Verdustry.svg" alt="Verdustry" className="h-9 w-auto" />
+            </div>
+            <p className="mt-4 text-sm text-zinc-600">La plateforme carbone des entreprises ambitieuses.</p>
+          </div>
+
+          {[
+            { title: "Produits", links: ["Bilan Carbone", "Plans d'action", "Reporting ESG", "Analyse du cycle de vie"] },
+            { title: "Solutions", links: ["PME", "Entreprises", "Secteur public", "Finance"] },
+            { title: "Ressources", links: ["Blog", "Guides", "Webinaires", "Centre d'aide"] },
+          ].map((col) => (
+            <div key={col.title} className="space-y-4">
+              <div className="font-semibold">{col.title}</div>
+              {col.links.map((link) => (
+                <a key={link} href="#" className="block text-sm text-zinc-600 hover:text-emerald-700 transition-colors">
+                  {link}
+                </a>
+              ))}
             </div>
           ))}
         </div>
 
-        <div className="border-t">
-          <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-            <span>© 2026 Verdustry · Tous droits réservés</span>
-            <span>Politique de confidentialité · CGU · Mentions légales</span>
-          </div>
+        <div className="border-t py-6 text-center text-xs text-zinc-500">
+          © 2026 Verdustry • Tous droits réservés • Politique de confidentialité • Mentions légales
         </div>
       </footer>
     </div>
   );
-} 
+}
