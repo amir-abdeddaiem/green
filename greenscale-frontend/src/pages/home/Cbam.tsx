@@ -62,70 +62,113 @@ export default function CbamPage() {
     <div className="min-h-screen bg-background text-foreground">
       <MarketingNavbar variant="dark" />
 
-      {/* HERO */}
-      <section className="relative overflow-hidden pt-28 sm:pt-32">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-zinc-900 via-black to-black" />
-        <div className="absolute -inset-24 -z-10 bg-gradient-to-br from-emerald-400/20 via-teal-400/15 to-transparent blur-3xl rounded-[6rem]" />
+     {/* HERO */}
+<section className="relative overflow-hidden border-b bg-gradient-to-b from-white to-emerald-50/40">
+  <div className="absolute -top-40 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-emerald-300/20 blur-3xl" />
 
-        <div className="mx-auto w-full max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center text-white animate-in">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
-              🌍 EU Regulation in Effect
-            </div>
+  <div className="mx-auto max-w-6xl px-4 pt-28 pb-20 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-3xl text-center">
 
-            <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl">
-              CBAM Compliance<br />
-              <span className="bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent">
-                Made Simple
-              </span>
-            </h1>
-            <p className="mt-4 text-base text-white/80 sm:text-lg">
-              Navigate EU Carbon Border Adjustment Mechanism requirements with confidence. Our AI-powered platform ensures full compliance while optimizing your carbon strategy.
-            </p>
+      
 
-            <div className="mt-8 flex items-center justify-center gap-3">
-              <Button asChild className="bg-green-600 text-white hover:bg-green-700">
-                <a href="#">Get CBAM Ready →</a>
-              </Button>
-              <Button asChild variant="outline" className="border-white/20 bg-white/5 text-white hover:bg-white/10 hover:text-white">
-                <a href="#">Learn more</a>
-              </Button>
-            </div>
-          </div>
+      <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl">
+        CBAM Compliance
+        <span className="block text-emerald-600">
+          Made Simple
+        </span>
+      </h1>
+
+      <p className="mt-5 text-base text-muted-foreground sm:text-lg">
+        The Carbon Border Adjustment Mechanism (CBAM) requires companies
+        importing goods into the EU to report their embedded carbon emissions.
+        Our platform helps you calculate, monitor, and report emissions
+        automatically — ensuring full compliance.
+      </p>
+
+      <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button className="bg-green-600 text-white hover:bg-green-700">
+          Start CBAM Assessment
+        </Button>
+
+        <Button variant="outline">
+          Learn More
+        </Button>
+      </div>
+
+      <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2">
+          🌍 EU Compliance
         </div>
-      </section>
+
+        <div className="flex items-center gap-2">
+          📊 Automated Reporting
+        </div>
+
+        <div className="flex items-center gap-2">
+          ⚡ AI Carbon Calculations
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
       {/* WARNING BANNER */}
-      <section className="bg-gradient-to-r from-amber-50 to-orange-50 border-y border-amber-200/70">
-        <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-4 rounded-2xl border border-amber-200 bg-white/70 p-6 backdrop-blur-sm sm:flex-row sm:items-start">
-            <div className="text-3xl leading-none">🇪🇺</div>
-            <div className="text-left">
-              <h2 className="text-lg font-bold text-amber-900">⚠️ CBAM is Now in Effect</h2>
-              <p className="mt-1 text-sm text-amber-900/80">The EU Carbon Border Adjustment Mechanism (CBAM) is now in effect.</p>
-              <p className="mt-2 text-sm text-amber-900/80">
-                Companies importing goods into the EU <span className="font-semibold">must report embedded carbon emissions.</span>
-              </p>
-              <p className="mt-1 text-sm text-amber-900/80">
-                Non-compliance can result in <span className="font-semibold">significant penalties and trade restrictions.</span>
-              </p>
-              <p className="mt-3 text-sm font-semibold text-amber-800">
-                Is your business prepared for CBAM requirements?
-              </p>
-            </div>
-          </div>
+<section className="bg-gradient-to-r from-amber-50 to-orange-50 border-y border-amber-200/70">
+  <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="flex flex-col gap-6 rounded-2xl border border-amber-200 bg-white/70 p-6 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
+      
+      {/* LEFT CONTENT */}
+      <div className="flex gap-4">
+        <div className="text-3xl leading-none">🇪🇺</div>
+
+        <div className="text-left">
+          <h2 className="text-lg font-bold text-amber-900">
+            ⚠️ CBAM is Now in Effect
+          </h2>
+
+          <p className="mt-1 text-sm text-amber-900/80">
+            The EU Carbon Border Adjustment Mechanism (CBAM) is now in effect.
+          </p>
+
+          <p className="mt-2 text-sm text-amber-900/80">
+            Companies importing goods into the EU{" "}
+            <span className="font-semibold">
+              must report embedded carbon emissions.
+            </span>
+          </p>
+
+          <p className="mt-1 text-sm text-amber-900/80">
+            Non-compliance can result in{" "}
+            <span className="font-semibold">
+              significant penalties and trade restrictions.
+            </span>
+          </p>
+
+          <p className="mt-3 text-sm font-semibold text-amber-800">
+            Is your business prepared for CBAM requirements?
+          </p>
         </div>
-      </section>
+      </div>
+
+      {/* RIGHT IMAGE */}
+      <div className="flex-shrink-0">
+        <img
+          src="/CBAM_Beratung_Logo.svg"
+          alt="CBAM regulation illustration"
+          className="w-40 md:w-48 lg:w-56 object-contain"
+        />
+      </div>
+
+    </div>
+  </div>
+</section>
 
       {/* SECTORS */}
       <section className="py-16">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-xs font-semibold text-green-700">
-              <span className="h-2 w-2 rounded-full bg-green-600" />
-              Covered Sectors
-            </div>
+            
             <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">CBAM Covered Sectors</h2>
             <p className="mt-3 text-base text-muted-foreground">Current and upcoming sectors under CBAM regulation</p>
           </div>
@@ -159,10 +202,7 @@ export default function CbamPage() {
       <section className="py-16 bg-muted/30">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-xs font-semibold text-emerald-700">
-              <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              Roadmap
-            </div>
+            
             <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">CBAM Implementation Timeline</h2>
             <p className="mt-3 text-base text-muted-foreground">Key milestones in the CBAM rollout process</p>
           </div>
@@ -198,54 +238,12 @@ export default function CbamPage() {
         </div>
       </section>
 
-      {/* SOLUTIONS */}
-      <section className="py-16">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-xs font-semibold text-green-700">
-              <span className="h-2 w-2 rounded-full bg-green-600" />
-              Our Platform
-            </div>
-            <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">Our CBAM Solution</h2>
-          </div>
-
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
-            {SOLUTIONS.map((s) => (
-              <Card key={s.title} className="shadow-sm">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 text-xl">
-                      {s.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold">{s.title}</h3>
-                      <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
-                    </div>
-                  </div>
-
-                  <ul className="mt-4 space-y-2 text-sm">
-                    {s.bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-2">
-                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                        <span className="text-muted-foreground">{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      
       {/* PROCESS */}
       <section className="py-16 bg-muted/30">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-xs font-semibold text-emerald-700">
-              <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              How It Works
-            </div>
+            
             <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">CBAM Compliance Process</h2>
             <p className="mt-3 text-base text-muted-foreground">Five steps to ensure full CBAM compliance</p>
           </div>
@@ -274,10 +272,7 @@ export default function CbamPage() {
       <section className="py-16">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-xs font-semibold text-green-700">
-              <span className="h-2 w-2 rounded-full bg-green-600" />
-              Why Choose Us
-            </div>
+            
             <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">Competitive Advantage</h2>
             <p className="mt-3 text-base text-muted-foreground">Turn CBAM compliance into a business opportunity</p>
           </div>
