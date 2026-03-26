@@ -125,7 +125,15 @@ const PROCESS = [
   { step: "04", title: "Optimisation", desc: "Suivi continu et amélioration de votre performance ESG", icon: "📈" },
 ];
 
-const COMPARISON_ROWS = [
+type ComparisonRow = readonly [
+  feature: string,
+  pack1: boolean,
+  pack2: boolean,
+  pack3: boolean,
+  pack4: boolean,
+];
+
+const COMPARISON_ROWS: ReadonlyArray<ComparisonRow> = [
   ["Collecte automatique (ERP, Excel)", true, true, true, true],
   ["Mesure Scope 1, 2, 3", true, true, true, true],
   ["Suivi temps réel", true, false, true, true],
