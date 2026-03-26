@@ -24,6 +24,15 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
+    label: "About Us",
+    submenu: [
+      { title: "automatisation du bilan de carbone", desc: "Découvrir", href: "/" },
+      { title: "nos valeurs", desc: "NOTRE SUITE COMPLÈTE", href: "/" },
+      { title: "pourquoi choisir verdustry", desc: "Découvrir nos événements", href: "/" }
+      
+    ],
+  },
+  {
     label: "Produits",
     submenu: [
       { title: "automatisation du bilan de carbone", desc: "Découvrir", href: "/redroy" },
@@ -33,7 +42,7 @@ const menuItems: MenuItem[] = [
     ],
   },
   { label: "Normes", submenu: [{ title: "CSRD", desc: "eporting ESG des entreprises.", href: "/csrd" }, { title: "CBAM", desc: "Mécanisme de taxe carbone aux frontières de l’UE.", href: "/cbam" }] },
-  { label: "Contacter", submenu: [{ title: "Contactez-Nous", desc: "Nous rejoindre", href: "/contact" }, { title: "Localisation", desc: "Ou nous se trouve", href: "/contact#contact" }] },
+  // { label: "Contacter", submenu: [{ title: "Contactez-Nous", desc: "Nous rejoindre", href: "/contact" }, { title: "Localisation", desc: "Ou nous se trouve", href: "/contact#contact" }] },
   // { label: "Demo", submenu: [{ title: "Nos Productions", desc: "Demander nos productions ", href: "/production" }, { title: "Devis", desc: "Demander un devis", href: "/production/#devis" }] },
   
 ];
@@ -56,66 +65,66 @@ const Logo = ({ variant }: { variant: NavbarVariant }) => (
   </div>
 );
 
-// Social Media Icons
-const SocialMediaIcons = ({ variant }: { variant: NavbarVariant }) => (
-  <div className="flex items-center space-x-5">
-    <a
-      href="https://www.blogger.com"
-      aria-label="Blogger"
-      className={cn(
-        "transition-colors duration-300",
-        variant === "light" ? "text-foreground hover:text-green-700" : "text-white hover:text-green-300"
-      )}
-    >
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+// // Social Media Icons
+// const SocialMediaIcons = ({ variant }: { variant: NavbarVariant }) => (
+//   <div className="flex items-center space-x-5">
+//     <a
+//       href="https://www.blogger.com"
+//       aria-label="Blogger"
+//       className={cn(
+//         "transition-colors duration-300",
+//         variant === "light" ? "text-foreground hover:text-green-700" : "text-white hover:text-green-300"
+//       )}
+//     >
+//       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
 
-        <path d="M12 0C5.375 0 0 5.375 0 12c0 6.625 5.375 12 12 12s12-5.375 12-12C24 5.375 18.625 0 12 0zm-1.875 18.375V5.625h5.625c3.515 0 6.375 2.86 6.375 6.375s-2.86 6.375-6.375 6.375h-5.625z" />
-      </svg>
-    </a>
-
-
+//         <path d="M12 0C5.375 0 0 5.375 0 12c0 6.625 5.375 12 12 12s12-5.375 12-12C24 5.375 18.625 0 12 0zm-1.875 18.375V5.625h5.625c3.515 0 6.375 2.86 6.375 6.375s-2.86 6.375-6.375 6.375h-5.625z" />
+//       </svg>
+//     </a>
 
 
-    <a
-      href="https://www.facebook.com/verdustry"
-      aria-label="Facebook"
-      className={cn(
-        "transition-colors duration-300",
-        variant === "light" ? "text-foreground hover:text-green-700" : "text-white hover:text-green-300"
-      )}
-    >
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-      </svg>
-    </a>
 
 
-    <a
-      href="https://www.instagram.com/verdustry/"
-      aria-label="Instagram"
-      className={cn(
-        "transition-colors duration-300",
-        variant === "light" ? "text-foreground hover:text-green-700" : "text-white hover:text-green-300"
-      )}
-    >
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2.16c3.21 0 3.58.01 4.84.07 1.17.06 1.81.25 2.23.42.56.22.97.48 1.39.9.42.42.68.83.9 1.39.17.42.36 1.06.42 2.23.06 1.26.07 1.63.07 4.84s-.01 3.58-.07 4.84c-.06 1.17-.25 1.81-.42 2.23-.22.56-.48.97-.9 1.39-.42.42-.83.68-1.39.9-.42.17-1.06.36-2.23.42-1.26.06-1.63.07-4.84.07s-3.58-.01-4.84-.07c-1.17-.06-1.81-.25-2.23-.42-.56-.22-.97-.48-1.39-.9-.42-.42-.68-.83-.9-1.39-.17-.42-.36-1.06-.42-2.23-.06-1.26-.07-1.63-.07-4.84s.01-3.58.07-4.84c.06-1.17.25-1.81.42-2.23.22-.56.48-.97.9-1.39.42-.42.83-.68 1.39-.9.42-.17 1.06-.36 2.23-.42 1.26-.06 1.63-.07 4.84-.07zm0-2.16C8.76 0 8.37.01 7.1.07 5.83.14 4.76.34 3.92.63c-.86.3-1.59.71-2.32 1.44S.59 3.4.29 4.26c-.29.84-.49 1.91-.56 3.18C.01 8.71 0 9.1 0 12.16s.01 3.45.07 4.72c.07 1.27.27 2.34.56 3.18.3.86.71 1.59 1.44 2.32s1.46 1.14 2.32 1.44c.84.29 1.91.49 3.18.56 1.27.06 1.66.07 4.72.07s3.45-.01 4.72-.07c1.27-.07 2.34-.27 3.18-.56.86-.3 1.59-.71 2.32-1.44s1.14-1.46 1.44-2.32c.29-.84.49-1.91.56-3.18.06-1.27.07-1.66.07-4.72s-.01-3.45-.07-4.72c-.07-1.27-.27-2.34-.56-3.18-.3-.86-.71-1.59-1.44-2.32s-1.46-1.14-2.32-1.44c-.84-.29-1.91-.49-3.18-.56C15.61.01 15.22 0 12.16 0zm0 5.83c-3.44 0-6.24 2.8-6.24 6.24s2.8 6.24 6.24 6.24 6.24-2.8 6.24-6.24-2.8-6.24-6.24-6.24zm0 10.3c-2.24 0-4.06-1.82-4.06-4.06s1.82-4.06 4.06-4.06 4.06 1.82 4.06 4.06-1.82 4.06-4.06 4.06zm6.54-10.76c-.8 0-1.45.65-1.45 1.45s.65 1.45 1.45 1.45 1.45-.65 1.45-1.45-.65-1.45-1.45-1.45z" />
-      </svg>
-    </a>
-    <a
-      href="https://www.linkedin.com/company/verdustry"
-      aria-label="LinkedIn"
-      className={cn(
-        "transition-colors duration-300",
-        variant === "light" ? "text-foreground hover:text-green-700" : "text-white hover:text-green-300"
-      )}
-    >
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-<path d="M16.656 1.029c1.637-0.025 3.262-0.012 4.886-0.025 0.054 2.031 0.878 3.859 2.189 5.213l-0.002-0.002c1.411 1.271 3.247 2.095 5.271 2.235l0.028 0.002v5.036c-1.912-0.048-3.71-0.489-5.331-1.247l0.082 0.034c-0.784-0.377-1.447-0.764-2.077-1.196l0.052 0.034c-0.012 3.649 0.012 7.298-0.025 10.934-0.103 1.853-0.719 3.543-1.707 4.954l0.020-0.031c-1.652 2.366-4.328 3.919-7.371 4.011l-0.014 0c-0.123 0.006-0.268 0.009-0.414 0.009-1.73 0-3.347-0.482-4.725-1.319l0.040 0.023c-2.508-1.509-4.238-4.091-4.558-7.094l-0.004-0.041c-0.025-0.625-0.037-1.25-0.012-1.862 0.49-4.779 4.494-8.476 9.361-8.476 0.547 0 1.083 0.047 1.604 0.136l-0.056-0.008c0.025 1.849-0.050 3.699-0.050 5.548-0.423-0.153-0.911-0.242-1.42-0.242-1.868 0-3.457 1.194-4.045 2.861l-0.009 0.030c-0.133 0.427-0.21 0.918-0.21 1.426 0 0.206 0.013 0.41 0.037 0.61l-0.002-0.024c0.332 2.046 2.086 3.59 4.201 3.59 0.061 0 0.121-0.001 0.181-0.004l-0.009 0c1.463-0.044 2.733-0.831 3.451-1.994l0.010-0.018c0.267-0.372 0.45-0.822 0.511-1.311l0.001-0.014c0.125-2.237 0.075-4.461 0.087-6.698 0.012-5.036-0.012-10.060 0.025-15.083z"></path>
-      </svg>
-    </a>
-  </div>
-);
+//     <a
+//       href="https://www.facebook.com/verdustry"
+//       aria-label="Facebook"
+//       className={cn(
+//         "transition-colors duration-300",
+//         variant === "light" ? "text-foreground hover:text-green-700" : "text-white hover:text-green-300"
+//       )}
+//     >
+//       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+//         <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+//       </svg>
+//     </a>
+
+
+//     <a
+//       href="https://www.instagram.com/verdustry/"
+//       aria-label="Instagram"
+//       className={cn(
+//         "transition-colors duration-300",
+//         variant === "light" ? "text-foreground hover:text-green-700" : "text-white hover:text-green-300"
+//       )}
+//     >
+//       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+//         <path d="M12 2.16c3.21 0 3.58.01 4.84.07 1.17.06 1.81.25 2.23.42.56.22.97.48 1.39.9.42.42.68.83.9 1.39.17.42.36 1.06.42 2.23.06 1.26.07 1.63.07 4.84s-.01 3.58-.07 4.84c-.06 1.17-.25 1.81-.42 2.23-.22.56-.48.97-.9 1.39-.42.42-.83.68-1.39.9-.42.17-1.06.36-2.23.42-1.26.06-1.63.07-4.84.07s-3.58-.01-4.84-.07c-1.17-.06-1.81-.25-2.23-.42-.56-.22-.97-.48-1.39-.9-.42-.42-.68-.83-.9-1.39-.17-.42-.36-1.06-.42-2.23-.06-1.26-.07-1.63-.07-4.84s.01-3.58.07-4.84c.06-1.17.25-1.81.42-2.23.22-.56.48-.97.9-1.39.42-.42.83-.68 1.39-.9.42-.17 1.06-.36 2.23-.42 1.26-.06 1.63-.07 4.84-.07zm0-2.16C8.76 0 8.37.01 7.1.07 5.83.14 4.76.34 3.92.63c-.86.3-1.59.71-2.32 1.44S.59 3.4.29 4.26c-.29.84-.49 1.91-.56 3.18C.01 8.71 0 9.1 0 12.16s.01 3.45.07 4.72c.07 1.27.27 2.34.56 3.18.3.86.71 1.59 1.44 2.32s1.46 1.14 2.32 1.44c.84.29 1.91.49 3.18.56 1.27.06 1.66.07 4.72.07s3.45-.01 4.72-.07c1.27-.07 2.34-.27 3.18-.56.86-.3 1.59-.71 2.32-1.44s1.14-1.46 1.44-2.32c.29-.84.49-1.91.56-3.18.06-1.27.07-1.66.07-4.72s-.01-3.45-.07-4.72c-.07-1.27-.27-2.34-.56-3.18-.3-.86-.71-1.59-1.44-2.32s-1.46-1.14-2.32-1.44c-.84-.29-1.91-.49-3.18-.56C15.61.01 15.22 0 12.16 0zm0 5.83c-3.44 0-6.24 2.8-6.24 6.24s2.8 6.24 6.24 6.24 6.24-2.8 6.24-6.24-2.8-6.24-6.24-6.24zm0 10.3c-2.24 0-4.06-1.82-4.06-4.06s1.82-4.06 4.06-4.06 4.06 1.82 4.06 4.06-1.82 4.06-4.06 4.06zm6.54-10.76c-.8 0-1.45.65-1.45 1.45s.65 1.45 1.45 1.45 1.45-.65 1.45-1.45-.65-1.45-1.45-1.45z" />
+//       </svg>
+//     </a>
+//     <a
+//       href="https://www.linkedin.com/company/verdustry"
+//       aria-label="LinkedIn"
+//       className={cn(
+//         "transition-colors duration-300",
+//         variant === "light" ? "text-foreground hover:text-green-700" : "text-white hover:text-green-300"
+//       )}
+//     >
+//       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+// <path d="M16.656 1.029c1.637-0.025 3.262-0.012 4.886-0.025 0.054 2.031 0.878 3.859 2.189 5.213l-0.002-0.002c1.411 1.271 3.247 2.095 5.271 2.235l0.028 0.002v5.036c-1.912-0.048-3.71-0.489-5.331-1.247l0.082 0.034c-0.784-0.377-1.447-0.764-2.077-1.196l0.052 0.034c-0.012 3.649 0.012 7.298-0.025 10.934-0.103 1.853-0.719 3.543-1.707 4.954l0.020-0.031c-1.652 2.366-4.328 3.919-7.371 4.011l-0.014 0c-0.123 0.006-0.268 0.009-0.414 0.009-1.73 0-3.347-0.482-4.725-1.319l0.040 0.023c-2.508-1.509-4.238-4.091-4.558-7.094l-0.004-0.041c-0.025-0.625-0.037-1.25-0.012-1.862 0.49-4.779 4.494-8.476 9.361-8.476 0.547 0 1.083 0.047 1.604 0.136l-0.056-0.008c0.025 1.849-0.050 3.699-0.050 5.548-0.423-0.153-0.911-0.242-1.42-0.242-1.868 0-3.457 1.194-4.045 2.861l-0.009 0.030c-0.133 0.427-0.21 0.918-0.21 1.426 0 0.206 0.013 0.41 0.037 0.61l-0.002-0.024c0.332 2.046 2.086 3.59 4.201 3.59 0.061 0 0.121-0.001 0.181-0.004l-0.009 0c1.463-0.044 2.733-0.831 3.451-1.994l0.010-0.018c0.267-0.372 0.45-0.822 0.511-1.311l0.001-0.014c0.125-2.237 0.075-4.461 0.087-6.698 0.012-5.036-0.012-10.060 0.025-15.083z"></path>
+//       </svg>
+//     </a>
+//   </div>
+// );
 
 export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
   const navigate = useNavigate();
@@ -668,10 +677,10 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
                 )}
               >
                 <div className="mb-6">
-                  <SocialMediaIcons variant={variant} />
+                  {/* <SocialMediaIcons variant={variant} /> */}
                 </div>
                 <p className={cn("text-sm", variant === "light" ? "text-muted-foreground" : "text-gray-400")}>
-                  © 2025 Crépuscule Prod. Tous droits réservés.
+                  © 2026 Verdustry. Tous droits réservés.
                 </p>
               </div>
             </motion.div>

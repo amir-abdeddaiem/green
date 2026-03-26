@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import MarketingNavbar from "@/components/marketing/MarketingNavbar";
 import LogoLoop from "@/components/LogoLoop";
 import { FAQSection } from "./Fq";
+import Footer from "./Footer";
 const IMPACT_STATS = [
   {
     target: 52,
@@ -154,12 +155,11 @@ const STEPS = [
 
 const SECURITY_FEATURES = [
   { icon: "🔒", title: "Chiffrement des données", desc: "Chiffrement de bout en bout (AES-256) et TLS 1.3 sur toutes les communications" },
-  { icon: "🛡️", title: "Authentification sécurisée", desc: "MFA, SSO entreprise et authentification adaptative" },
-  { icon: "👥", title: "Gestion des accès", desc: "Contrôle granulaire par rôle, département et projet" },
+ 
+  { icon: "👥", title: "Authentification sécurisée et Gestion des accès", desc: "Contrôle granulaire par rôle, département et projet et authentification adaptative" },
   { icon: "☁️", title: "Infrastructure cloud sécurisée", desc: "Hébergement souverain en Europe – SOC 2 Type II & ISO 27001" },
-  { icon: "💾", title: "Sauvegardes automatiques", desc: "Redondance géographique et récupération en moins de 4 heures" },
+ 
   { icon: "📋", title: "Journalisation & Traçabilité", desc: "Audit complet de toutes les actions sur vos données" },
-  { icon: "📜", title: "Conformité réglementaire", desc: "RGPD, CSRD, EUDR, SFDR et SEC Climate Disclosure" },
 ];
 
 const AI_SECTION = {
@@ -367,7 +367,7 @@ export  function MarketingHome() {
       </section>
 
       {/* IMPACT SECTION */}
-      <section ref={impactRef} style={{ backgroundColor: "#0a1f17" }} className="py-24 text-white">
+      <section ref={impactRef} style={{ backgroundColor: "#0a1f17" }} className="py-24 text-white rounded-3xl">
         <div className="mx-auto max-w-5xl px-6">
           <h2 className="text-center text-5xl font-semibold tracking-tight mb-16">
             Plus d’impact.<br />Moins de coûts.
@@ -436,43 +436,78 @@ export  function MarketingHome() {
       </section>
 
       {/* AI SECTION */}
-      <section ref={aiRef} className="py-28 bg-gradient-to-br from-zinc-900 to-black text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(16,185,129,0.15),transparent)]" />
+<section
+  ref={aiRef}
+  className="relative overflow-hidden w-full py-24 px-4 rounded-3xl"
+  style={{ backgroundColor: "#0d2117" }}
+>
+  <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div className="absolute -right-32 -top-32 h-[480px] w-[480px] rounded-full opacity-20"
+      style={{ background: "radial-gradient(circle, #16a34a 0%, transparent 65%)" }} />
+    <div className="absolute -left-24 bottom-0 h-[360px] w-[360px] rounded-full opacity-10"
+      style={{ background: "radial-gradient(circle, #4ade80 0%, transparent 65%)" }} />
+  </div>
 
-        <div className="mx-auto max-w-6xl px-6 relative">
-          <div className="text-center mb-16">
-            <div className="inline-block bg-emerald-500/10 text-emerald-400 text-xs font-bold tracking-[3px] px-6 py-2 rounded-full mb-6">
-              VERDUSTRY AI
-            </div>
-            <h2 className="text-5xl font-semibold tracking-tight">L'intelligence artificielle au service du climat</h2>
-            <p className="mt-6 text-xl text-zinc-300 max-w-3xl mx-auto">
-              {AI_SECTION.description}
-            </p>
-          </div>
+  <div className="relative mx-auto max-w-6xl">
 
-          <div className="bg-zinc-800/50 backdrop-blur-2xl border border-white/10 rounded-3xl p-16">
-            <div className="grid lg:grid-cols-5 gap-12 items-center">
-              <div className="lg:col-span-3">
-                <h3 className="text-4xl font-semibold leading-tight">Toujours à jour.<br />Toujours plus intelligente.</h3>
-                <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
-                  {AI_SECTION.stats.map((stat, i) => (
-                    <div key={i} className="text-center sm:text-left">
-                      <div className="text-5xl font-bold text-emerald-400">{stat.value}</div>
-                      <div className="text-zinc-400 mt-2 text-sm leading-tight">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="lg:col-span-2 bg-zinc-900/80 rounded-2xl p-8 border border-emerald-500/20">
-                <div className="text-emerald-400 text-sm font-medium mb-4">Exemple d’action intelligente :</div>
-                <p className="text-lg leading-relaxed">
-                  Détection automatique d’une anomalie Scope 3 chez un fournisseur → Suggestion de 3 alternatives à -27% d’émissions avec simulation de coût.
-                </p>
+    <div className={cn(
+      "text-center transition-all duration-700",
+      aiInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+    )}>
+      <div className="inline-block rounded-full border border-green-400/30 bg-green-400/10 px-6 py-2 text-xs font-bold tracking-[3px] text-green-400">
+        VERDUSTRY AI
+      </div>
+
+      <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+        L'intelligence artificielle <span className="text-green-400">au service du climat</span>
+      </h2>
+
+      <p className="mx-auto mt-4 max-w-2xl text-base"
+        style={{ color: "rgba(255,255,255,0.45)" }}>
+        {AI_SECTION.description}
+      </p>
+    </div>
+
+    <div className="mt-16 grid grid-cols-1 gap-4 lg:grid-cols-2">
+
+      <div className="group relative overflow-hidden rounded-3xl p-10 transition-all duration-500 hover:-translate-y-1.5"
+        style={{ backgroundColor: "#132b1e", border: "1px solid rgba(74,222,128,0.1)" }}>
+        
+        <h3 className="text-3xl font-extrabold text-white">
+          Toujours à jour.<br />Toujours plus intelligente.
+        </h3>
+
+        <div className="mt-10 grid grid-cols-3 gap-6">
+          {AI_SECTION.stats.map((stat, i) => (
+            <div key={i}>
+              <div className="text-4xl font-black text-green-400">{stat.value}</div>
+              <div className="mt-2 text-sm"
+                style={{ color: "rgba(255,255,255,0.5)" }}>
+                {stat.label}
               </div>
             </div>
-          </div>
+          ))}
         </div>
-      </section>
+      </div>
+
+      <div className="group relative overflow-hidden rounded-3xl p-10 transition-all duration-500 hover:-translate-y-1.5"
+        style={{ backgroundColor: "#132b1e", border: "1px solid rgba(74,222,128,0.1)" }}>
+        
+        <div className="text-xs font-bold tracking-widest uppercase"
+          style={{ color: "rgba(74,222,128,0.7)" }}>
+          Exemple d'action IA
+        </div>
+
+        <p className="mt-6 text-lg leading-relaxed text-white">
+          Détection automatique d’une anomalie Scope 3 chez un fournisseur →
+          suggestion de <span className="text-green-400 font-bold">3 alternatives</span>
+          avec <span className="text-green-400 font-bold">-27% d’émissions</span>.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
       {/* PROCESS / STEPS SECTION */}
       <section id="solutions" ref={stepsRef} className="py-28" style={{ background: "linear-gradient(160deg, #f8fcf9 0%, #ffffff 50%, #f0faf4 100%)" }}>
@@ -502,9 +537,9 @@ export  function MarketingHome() {
                   <h3 className="text-2xl font-semibold mb-4 leading-tight">{step.title}</h3>
                   <p className="text-zinc-600 leading-relaxed">{step.desc}</p>
 
-                  <div className="mt-10 text-emerald-600 font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                  {/* <div className="mt-10 text-emerald-600 font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all">
                     En savoir plus <span className="text-lg">→</span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             ))}
@@ -512,65 +547,11 @@ export  function MarketingHome() {
         </div>
       </section>
 
-      {/* SECURITY SECTION */}
-      <section ref={securityRef} className="py-28 bg-zinc-900 text-white">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="text-center mb-16">
-            <div className="text-emerald-400 text-sm font-bold tracking-widest mb-3">VOS DONNÉES SONT EN SÉCURITÉ</div>
-            <h2 className="text-5xl font-semibold tracking-tight">Your data is secure with us</h2>
-            <p className="mt-4 text-zinc-400 max-w-md mx-auto">Nous protégeons vos informations avec les plus hauts standards de sécurité et de conformité.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SECURITY_FEATURES.map((feature, i) => (
-              <div
-                key={i}
-                className="bg-zinc-800/50 border border-zinc-700 hover:border-emerald-500/30 rounded-3xl p-8 transition-all hover:-translate-y-1 group"
-              >
-                <div className="text-5xl mb-6 group-hover:scale-110 transition-transform">{feature.icon}</div>
-                <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                <p className="text-zinc-400 leading-relaxed">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12 text-emerald-400 text-sm">
-            SOC 2 Type II • ISO 27001 • RGPD • Hébergement en Europe
-          </div>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className="py-28 border-t bg-white">
-        <div className="mx-auto max-w-3xl text-center px-6">
-          <h2 className="text-5xl font-semibold tracking-tight">Prêt à réduire votre empreinte carbone ?</h2>
-          <p className="mt-6 text-xl text-zinc-600">Rejoignez plus de 3 500 entreprises qui transforment leur impact climatique en avantage compétitif.</p>
-
-          <div className="mt-12 flex flex-wrap justify-center gap-4">
-            <Button
-              size="lg"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-12 py-7 text-lg rounded-2xl"
-              onClick={() => navigate("/register")}
-            >
-              Commencer gratuitement
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="px-12 py-7 text-lg rounded-2xl"
-              onClick={() => navigate("/book-demo")}
-            >
-              Parler à un expert
-            </Button>
-          </div>
-          <p className="mt-6 text-sm text-zinc-500">Aucune carte requise • Résultats visibles en 48 heures</p>
-        </div>
-      </section>
 
       {/* WHY US SECTION */}
       <section
         ref={whyRef}
-        className="relative overflow-hidden w-full py-24 px-4"
+        className="relative overflow-hidden w-full py-24 px-4 rounded-3xl"
         style={{ backgroundColor: "#0d2117" }}
       >
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -657,38 +638,75 @@ export  function MarketingHome() {
           </div>
         </div>
       </section>
+
+      {/* SECURITY SECTION */}
+<section ref={securityRef} className="py-28 bg-white text-zinc-900">
+  <div className="mx-auto max-w-6xl px-6">
+    <div className="text-center mb-16">
+      <h2 className="text-5xl font-semibold tracking-tight">
+        Vos données sont en sécurité
+      </h2>
+      <p className="mt-4 text-zinc-600 max-w-md mx-auto">
+        Nous protégeons vos informations avec les plus hauts standards de sécurité et de conformité.
+      </p>
+    </div>
+
+    <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
+      {SECURITY_FEATURES.map((feature, i) => (
+        <div
+          key={i}
+          className="bg-green-50 border border-green-200 hover:border-emerald-300 rounded-3xl p-8 transition-all hover:-translate-y-1 group"
+        >
+          <div className="text-5xl mb-6 text-green-600 group-hover:scale-110 transition-transform">
+            {feature.icon}
+          </div>
+          <h3 className="text-xl font-semibold mb-3 text-green-700">
+            {feature.title}
+          </h3>
+          <p className="text-zinc-600 leading-relaxed">{feature.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+   {/* FINAL CTA with WHY US colors */}
+<section className="py-28 border-t rounded-3xl" style={{ backgroundColor: "#0d2117" }}>
+  <div className="mx-auto max-w-3xl text-center px-6">
+    <h2 className="text-5xl font-semibold tracking-tight text-white">
+      Prêt à réduire votre empreinte carbone ?
+    </h2>
+    <p className="mt-6 text-xl" style={{ color: "rgba(255,255,255,0.45)" }}>
+      Rejoignez plus de 3 500 entreprises qui transforment leur impact climatique en avantage compétitif.
+    </p>
+
+    <div className="mt-12 flex flex-wrap justify-center gap-4">
+      <Button
+        size="lg"
+        className="bg-green-400 hover:bg-green-500 text-white px-12 py-7 text-lg rounded-2xl"
+        onClick={() => navigate("/register")}
+      >
+        Commencer gratuitement
+      </Button>
+      <Button
+        variant="outline"
+        size="lg"
+        className="border-green-400 text-green-400 hover:bg-green-500 hover:text-white px-12 py-7 text-lg rounded-2xl"
+        onClick={() => navigate("/book-demo")}
+      >
+        Parler à un expert
+      </Button>
+    </div>
+    <p className="mt-6 text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
+      Aucune carte requise • Résultats visibles en 48 heures
+    </p>
+  </div>
+</section>
+      
       <FAQSection/>
 
-      {/* FOOTER */}
-      <footer className="border-t bg-zinc-50">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-16 lg:grid-cols-4">
-          <div>
-            <div className="flex items-center gap-3">
-              <img src="/Verdustry.svg" alt="Verdustry" className="h-9 w-auto" />
-            </div>
-            <p className="mt-4 text-sm text-zinc-600">La plateforme carbone des entreprises ambitieuses.</p>
-          </div>
-
-          {[
-            { title: "Produits", links: ["Bilan Carbone", "Plans d'action", "Reporting ESG", "Analyse du cycle de vie"] },
-            { title: "Solutions", links: ["PME", "Entreprises", "Secteur public", "Finance"] },
-            { title: "Ressources", links: ["Blog", "Guides", "Webinaires", "Centre d'aide"] },
-          ].map((col) => (
-            <div key={col.title} className="space-y-4">
-              <div className="font-semibold">{col.title}</div>
-              {col.links.map((link) => (
-                <a key={link} href="#" className="block text-sm text-zinc-600 hover:text-emerald-700 transition-colors">
-                  {link}
-                </a>
-              ))}
-            </div>
-          ))}
-        </div>
-
-        <div className="border-t py-6 text-center text-xs text-zinc-500">
-          © 2026 Verdustry • Tous droits réservés • Politique de confidentialité • Mentions légales
-        </div>
-      </footer>
+    {/* FOOTER */}
+      <Footer/>
     </div>
   );
 }

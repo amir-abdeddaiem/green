@@ -1,6 +1,7 @@
 import MarketingNavbar from "@/components/marketing/MarketingNavbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import Footer from "./Footer";
 
 const ESG_PILLARS = [
   {
@@ -415,66 +416,31 @@ export default function CsrdPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-zinc-900 via-black to-black" />
-        <div className="absolute -inset-24 -z-10 bg-gradient-to-br from-emerald-400/20 via-teal-400/15 to-transparent blur-3xl rounded-[6rem]" />
+      {/* CTA - Light Security Colors */}
+<section className="relative overflow-hidden bg-zinc-50 text-zinc-900">
+  <div className="absolute inset-0 -z-10">
+    <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 via-white to-emerald-50/30" />
+    <div className="absolute -inset-24 -z-10 bg-gradient-to-br from-emerald-400/20 via-teal-400/15 to-transparent blur-3xl rounded-[6rem]" />
+  </div>
 
-        <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center text-white">
-            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Prêt pour votre rapport CSRD ?</h2>
-            <p className="mt-4 text-base text-white/80">
-              Ne laissez pas la directive CSRD vous prendre de court. Commencez dès aujourd'hui avec notre accompagnement expert et notre plateforme IA.
-            </p>
-            <div className="mt-8 flex justify-center">
-              <Button asChild className="bg-green-600 text-white hover:bg-green-700">
-                <a href="#">Lancer ma conformité CSRD →</a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+  <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-3xl text-center">
+      <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-zinc-900">
+        Prêt pour votre rapport CSRD ?
+      </h2>
+      <p className="mt-4 text-base text-zinc-700/90">
+        Ne laissez pas la directive CSRD vous prendre de court. Commencez dès aujourd'hui avec notre accompagnement expert et notre plateforme IA.
+      </p>
+      <div className="mt-8 flex justify-center">
+        <Button asChild className="bg-emerald-600 text-white hover:bg-emerald-700">
+          <a href="#">Lancer ma conformité CSRD →</a>
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
 
-      {/* FOOTER */}
-      <footer className="border-t bg-black text-white">
-        <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="lg:col-span-2">
-              <div className="text-xl font-extrabold tracking-tight">
-                🌿 Pro<span className="text-emerald-300">Verdy</span>
-              </div>
-              <div className="mt-2 text-sm text-white/70">Lead with Purpose. Grow with Impact.</div>
-              <div className="mt-5 flex items-center gap-3">
-                <a href="#" className="text-sm font-semibold text-white/70 hover:text-white">LinkedIn</a>
-                <a href="#" className="text-sm font-semibold text-white/70 hover:text-white">Facebook</a>
-              </div>
-            </div>
-
-            <div>
-              <div className="text-sm font-bold">Entreprise</div>
-              <div className="mt-3 grid gap-2 text-sm">
-                <a href="#" className="text-white/70 hover:text-white">Cas d'usage</a>
-                <a href="#" className="text-white/70 hover:text-white">À propos</a>
-                <a href="#" className="text-white/70 hover:text-white">Contact</a>
-              </div>
-            </div>
-
-            <div>
-              <div className="text-sm font-bold">Produit</div>
-              <div className="mt-3 grid gap-2 text-sm">
-                <a href="#" className="text-white/70 hover:text-white">Bilan Carbone</a>
-                <a href="#" className="text-white/70 hover:text-white">Empreinte Produit</a>
-                <a href="#" className="text-white/70 hover:text-white">CBAM</a>
-                <a href="#" className="text-white/70 hover:text-white">CSRD</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-white/60">
-            © 2024 ProVerdy. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

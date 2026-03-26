@@ -14,6 +14,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { MarketingNavbar } from "@/components/marketing/MarketingNavbar";
+import Footer from "./Footer";
 
 const timeSlots = [
   "09:00",
@@ -579,6 +580,7 @@ export function BookDemo() {
           </div>
         )}
       </div>
+      <Footer/>
     </div>
   );
 }
