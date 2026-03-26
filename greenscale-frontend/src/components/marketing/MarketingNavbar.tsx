@@ -28,16 +28,18 @@ const menuItems: MenuItem[] = [
     submenu: [
       { title: "automatisation du bilan de carbone", desc: "Découvrir", href: "/" },
       { title: "nos valeurs", desc: "NOTRE SUITE COMPLÈTE", href: "/" },
-      { title: "pourquoi choisir verdustry", desc: "Découvrir nos événements", href: "/" }
+      { title: "pourquoi choisir verdustry", desc: "Découvrir ", href: "/" }
       
     ],
   },
   {
     label: "Produits",
     submenu: [
-      { title: "automatisation du bilan de carbone", desc: "Découvrir", href: "/redroy" },
-      { title: "Recomendation ai", desc: "Découvrir nos clubs", href: "/redroy/club" },
-      { title: "integration des capteurs", desc: "Découvrir nos événements", href: "/redroy/evenements" }
+      { title: "pack", desc: "Découvrir", href: "/solutions" },
+      { title: "automatisation du bilan de carbone", desc: "Découvrir", href: "/Packs" },
+      { title: "Recomendation ai", desc: "Découvrir", href: "/Packs" },
+      { title: "integration des capteurs", desc: "Découvrir", href: "/Packs" },
+      { title: "integration des capteurs", desc: "Découvrir", href: "/Packs" }
       
     ],
   },

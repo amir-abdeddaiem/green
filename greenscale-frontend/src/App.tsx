@@ -24,7 +24,7 @@ import { DatabaseIntegrationTab } from "./features/dashboard/components/tabs/Int
 import { BookDemo } from "./pages/home/BookDemo";
 import CbamPage from "./pages/home/Cbam";
 import CsrdPage from "./pages/home/Csrd";
-
+import { SolutionsPage } from "./pages/home/Pack";
 
 function App() {
   return (
@@ -35,7 +35,7 @@ function App() {
         <Route path="/book-demo" element={<BookDemo />} />
         <Route path="/cbam" element={<CbamPage />} />
         <Route path="/csrd" element={<CsrdPage />} />
-
+        <Route path="/solutions" element={<SolutionsPage />} />
         {/* Auth Routes */}
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegistrationForm />} />
