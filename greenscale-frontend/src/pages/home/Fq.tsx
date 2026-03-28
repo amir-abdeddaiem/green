@@ -6,56 +6,56 @@ import { useNavigate } from "react-router-dom";
 const FAQS = [
   {
     id: "q1",
-    question: "What is a carbon footprint in accounting terms?",
-    answer: "A carbon footprint, from an accounting perspective, represents the total volume of greenhouse gas emissions, including carbon dioxide and methane, that are directly and indirectly produced by an entity, event, product, or individual. It's vital for businesses to meticulously track and report these emissions as part of their commitment to environmental stewardship and sustainability.",
-    category: "Basics",
-    tags: ["carbon footprint", "accounting", "GHG"],
+    question: "Qu'est-ce qu'une empreinte carbone en termes comptables ?",
+    answer: "Une empreinte carbone, d'un point de vue comptable, représente le volume total des émissions de gaz à effet de serre, y compris le dioxyde de carbone et le méthane, directement et indirectement produites par une entité, un événement, un produit ou un individu. Il est essentiel pour les entreprises de suivre et de déclarer méticuleusement ces émissions dans le cadre de leur engagement envers la protection de l'environnement et la durabilité.",
+    category: "Bases",
+    tags: ["empreinte carbone", "comptabilité", "GES"],
   },
   {
     id: "q2",
-    question: "How can businesses account for their carbon emissions?",
-    answer: "Businesses can monitor their carbon emissions by adopting carbon accounting methodologies. This process involves pinpointing and quantifying the greenhouse gas emissions emanating from various aspects of their operations, such as energy usage, transportation, waste management, and manufacturing processes. These measurements are subsequently converted into carbon dioxide equivalents (CO2e) for comprehensive reporting and analysis.",
-    category: "Accounting",
-    tags: ["carbon accounting", "methodology", "CO2e"],
+    question: "Comment les entreprises peuvent-elles comptabiliser leurs émissions de carbone ?",
+    answer: "Les entreprises peuvent suivre leurs émissions de carbone en adoptant des méthodologies de comptabilité carbone. Ce processus consiste à identifier et quantifier les émissions de gaz à effet de serre provenant de différents aspects de leurs opérations, tels que la consommation d'énergie, les transports, la gestion des déchets et les processus de fabrication. Ces mesures sont ensuite converties en équivalents dioxyde de carbone (CO2e) pour un reporting et une analyse complets.",
+    category: "Comptabilité",
+    tags: ["comptabilité carbone", "méthodologie", "CO2e"],
   },
   {
     id: "q3",
-    question: "What are some effective strategies for carbon footprint reduction?",
-    answer: "There are several strategies businesses can employ to reduce their carbon footprint. These include implementing energy-efficient practices, encouraging remote work, optimizing logistics to reduce transportation emissions, and investing in renewable energy sources.",
-    category: "Reduction",
-    tags: ["strategies", "reduction", "energy efficiency"],
+    question: "Quelles sont les stratégies efficaces pour réduire l'empreinte carbone ?",
+    answer: "Plusieurs stratégies peuvent être mises en place par les entreprises pour réduire leur empreinte carbone. Celles-ci incluent l'adoption de pratiques énergétiquement efficaces, l'encouragement du télétravail, l'optimisation de la logistique pour réduire les émissions liées au transport et l'investissement dans des sources d'énergie renouvelables.",
+    category: "Réduction",
+    tags: ["stratégies", "réduction", "efficacité énergétique"],
   },
   {
     id: "q4",
-    question: "What is the Carbon Border Adjustment Mechanism (CBAM)?",
-    answer: "The Carbon Border Adjustment Mechanism (CBAM) is a policy initiative introduced by the European Union (EU) to tackle carbon leakage. It's designed to deter companies from shifting production to regions with less stringent climate regulations. CBAM levies tariffs on certain imported goods based on their embedded carbon emissions, ensuring that imported products bear a similar carbon cost as those produced domestically.",
-    category: "Regulation",
-    tags: ["CBAM", "EU", "regulation", "carbon leakage"],
+    question: "Qu'est-ce que le Mécanisme d'Ajustement Carbone aux Frontières (CBAM) ?",
+    answer: "Le Mécanisme d'Ajustement Carbone aux Frontières (CBAM) est une initiative politique introduite par l'Union européenne (UE) pour lutter contre la fuite de carbone. Il vise à dissuader les entreprises de délocaliser leur production vers des régions aux réglementations climatiques moins strictes. Le CBAM impose des tarifs sur certains produits importés en fonction de leurs émissions de carbone incorporées, garantissant que les produits importés supportent un coût carbone similaire à celui des produits fabriqués localement.",
+    category: "Réglementation",
+    tags: ["CBAM", "UE", "réglementation", "fuite de carbone"],
   },
   {
     id: "q5",
-    question: "What challenges do businesses face when adapting to CBAM?",
-    answer: "Businesses face several challenges when adapting to CBAM. These include accounting for CBAM-related costs, modifying supply chains to reduce carbon emissions, and ensuring compliance with stringent reporting requirements.",
-    category: "Regulation",
-    tags: ["CBAM", "compliance", "challenges"],
+    question: "Quels défis les entreprises rencontrent-elles pour s'adapter au CBAM ?",
+    answer: "Les entreprises font face à plusieurs défis pour s'adapter au CBAM. Cela inclut la comptabilisation des coûts liés au CBAM, la modification des chaînes d'approvisionnement pour réduire les émissions de carbone et le respect des exigences strictes en matière de reporting.",
+    category: "Réglementation",
+    tags: ["CBAM", "conformité", "défis"],
   },
   {
     id: "q6",
-    question: "How does ESG impact a company's reputation?",
-    answer: "Robust ESG (Environmental, Social, and Governance) practices can significantly enhance a company's reputation. They can attract customers who prioritize social responsibility, improve trust among stakeholders, and potentially lead to better financial performance.",
+    question: "Quel est l'impact de l'ESG sur la réputation d'une entreprise ?",
+    answer: "Des pratiques ESG (Environnementales, Sociales et de Gouvernance) solides peuvent améliorer considérablement la réputation d'une entreprise. Elles peuvent attirer des clients sensibles à la responsabilité sociale, renforcer la confiance des parties prenantes et potentiellement conduire à de meilleures performances financières.",
     category: "ESG",
-    tags: ["ESG", "reputation", "stakeholders"],
+    tags: ["ESG", "réputation", "parties prenantes"],
   },
   {
     id: "q7",
-    question: "What are the risks of ignoring ESG considerations?",
-    answer: "Ignoring ESG considerations can pose significant risks to a company. These include potential reputational damage, regulatory fines, and skepticism from investors, which could negatively impact the company's financial performance and market value.",
+    question: "Quels sont les risques d'ignorer les considérations ESG ?",
+    answer: "Ignorer les considérations ESG peut poser des risques importants à une entreprise. Cela inclut des dommages potentiels à la réputation, des amendes réglementaires et la méfiance des investisseurs, ce qui pourrait nuire à la performance financière et à la valeur marchande de l'entreprise.",
     category: "ESG",
-    tags: ["ESG", "risks", "compliance"],
+    tags: ["ESG", "risques", "conformité"],
   },
 ];
 
-const CATEGORIES = ["All", "Basics", "Accounting", "Reduction", "Regulation", "ESG"];
+const CATEGORIES = ["Tous", "Bases", "Comptabilité", "Réduction", "Réglementation", "ESG"];
 
 // Custom hook for intersection observer
 function useInView<T extends HTMLElement>(threshold = 0.1) {

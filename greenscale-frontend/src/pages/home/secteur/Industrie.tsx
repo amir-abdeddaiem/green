@@ -177,12 +177,12 @@ export default function IndustrieSectorPage() {
                 desc: "Automatisation complète depuis vos ERP, factures, systèmes de production et capteurs IoT. Plus de saisie manuelle."
               },
               {
-                title: "Analyse de la supply chain",
+                title: "Analyse de la chaîne d’approvisionnement",
                 desc: "Cartographie précise des émissions Scope 3 et identification des fournisseurs à fort impact carbone."
               },
               {
                 title: "Tableaux de bord & aide à la décision",
-                desc: "Visualisations claires, KPIs en temps réel et simulations pour identifier les meilleurs leviers de réduction."
+                desc: "Visualisations claires, indicateurs en temps réel et simulations pour identifier les meilleurs leviers de réduction."
               },
               {
                 title: "Stratégie de décarbonisation",
@@ -227,7 +227,7 @@ export default function IndustrieSectorPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                   <div className="space-y-4">
                     <div className="font-semibold">Direction Industrielle</div>
-                    <div className="text-sm text-slate-500">Pilotage opérationnel et optimisation des process</div>
+                    <div className="text-sm text-slate-500">Pilotage opérationnel et optimisation des processus</div>
                   </div>
                   <div className="space-y-4">
                     <div className="font-semibold">Équipe RSE / ESG</div>
@@ -253,7 +253,7 @@ export default function IndustrieSectorPage() {
       Prêt à réduire votre empreinte carbone ?
     </h2>
     <p className="mt-6 text-white  rounded-[3rem] " >
-      Rejoignez nous pour transformer l'impact climatique en avantage compétitif.
+      Rejoignez-nous pour transformer l’impact climatique en avantage compétitif.
     </p>
 
     <div className="mt-12 flex flex-wrap justify-center gap-4">

@@ -37,7 +37,7 @@ export default function FinanceSectorPage() {
 
               <ul className="grid sm:grid-cols-2 gap-2 text-sm text-slate-600 list-disc pl-5">
                 <li>Conformité CSRD & SFDR</li>
-                <li>Analyse Portfolio Carbon Footprint</li>
+                <li>Analyse de l’empreinte carbone du portefeuille</li>
               </ul>
             </div>
 
@@ -171,7 +171,7 @@ export default function FinanceSectorPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               "Améliorer la gestion des risques climatiques physiques et de transition",
-              "Assurer la conformité aux réglementations SFDR, CSRD et Taxonomy",
+              "Assurer la conformité aux réglementations SFDR, CSRD et Taxonomie",
               "Prendre des décisions d’investissement plus responsables et éclairées",
               "Renforcer la transparence envers vos investisseurs et régulateurs",
               "Soutenir la transition vers une économie bas carbone",
@@ -212,7 +212,7 @@ export default function FinanceSectorPage() {
       Prêt à réduire votre empreinte carbone ?
     </h2>
     <p className="mt-6 text-white  rounded-[3rem] " >
-      Rejoignez nous pour transformer l'impact climatique en avantage compétitif.
+      Rejoignez-nous pour transformer l’impact climatique en avantage compétitif.
     </p>
 
     <div className="mt-12 flex flex-wrap justify-center gap-4">
