@@ -1,8 +1,9 @@
 import MarketingNavbar from "@/components/marketing/MarketingNavbar";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import Footer from "./Footer";
-
+import Footer from "./Footer";  
+import { motion } from "framer-motion";
 const ESG_PILLARS = [
   {
     icon: "🌍",
@@ -18,7 +19,7 @@ const ESG_PILLARS = [
   },
   {
     icon: "🌱",
-    tone: "emerald",
+    tone: "green",
     title: "Impact Environnemental",
     subtitle: "Environnement — Biodiversité & Ressources",
     desc: "Évaluation de l'impact sur la biodiversité, l'eau, la pollution et l'utilisation des ressources naturelles.",
@@ -64,25 +65,25 @@ const TIMELINE = [
 
 const SOLUTIONS = [
   {
-    icon: "🤖",
+    
     title: "Collecte Automatisée",
     desc: "Collectez automatiquement vos données ESG depuis vos systèmes existants.",
     bullets: ["Connexion ERP & SI", "Import multi-sources", "Validation en temps réel"],
   },
   {
-    icon: "📑",
+   
     title: "Rapport ESRS Conforme",
     desc: "Générez des rapports conformes aux normes ESRS approuvées par l'UE.",
     bullets: ["Standards ESRS E1–S4–G1", "Prêt pour l'audit", "Format XBRL inclus"],
   },
   {
-    icon: "🎯",
+    
     title: "Double Matérialité",
     desc: "Réalisez votre analyse de double matérialité avec notre assistant IA.",
     bullets: ["Matérialité financière", "Matérialité d'impact", "Cartographie des parties prenantes"],
   },
   {
-    icon: "📊",
+    
     title: "Tableaux de Bord ESG",
     desc: "Suivez vos indicateurs ESG en temps réel et pilotez votre performance.",
     bullets: ["KPIs personnalisables", "Alertes automatiques", "Benchmarks sectoriels"],
@@ -98,26 +99,27 @@ const STEPS = [
 ];
 
 const ADVANTAGES = [
-  { icon: "⚡", title: "Gain de Temps", desc: "Réduisez jusqu'à 70% le temps de préparation de votre rapport de durabilité." },
-  { icon: "✅", title: "Conformité Garantie", desc: "Toujours aligné avec les dernières normes ESRS et mises à jour réglementaires." },
-  { icon: "🔍", title: "Audit-Ready", desc: "Documentation structurée et traçable, prête pour la vérification tierce partie." },
-  { icon: "🌐", title: "Vision Intégrée", desc: "Pilotez vos performances ESG et CBAM depuis une plateforme unifiée." },
+  {  title: "Gain de Temps", desc: "Réduisez jusqu'à 70% le temps de préparation de votre rapport de durabilité." },
+  {  title: "Conformité Garantie", desc: "Toujours aligné avec les dernières normes ESRS et mises à jour réglementaires." },
+  {  title: "Audit-Ready", desc: "Documentation structurée et traçable, prête pour la vérification tierce partie." },
+  {  title: "Vision Intégrée", desc: "Pilotez vos performances ESG et CBAM depuis une plateforme unifiée." },
 ];
 
 const ESRS_STANDARDS = [
   { code: "ESRS E1", label: "Changement climatique", tone: "green" },
-  { code: "ESRS E2", label: "Pollution", tone: "emerald" },
-  { code: "ESRS E3", label: "Eau & ressources marines", tone: "cyan" },
-  { code: "ESRS E4", label: "Biodiversité", tone: "lime" },
-  { code: "ESRS E5", label: "Économie circulaire", tone: "amber" },
-  { code: "ESRS S1", label: "Effectifs propres", tone: "blue" },
-  { code: "ESRS S2", label: "Travailleurs chaîne valeur", tone: "violet" },
-  { code: "ESRS S3", label: "Communautés locales", tone: "pink" },
-  { code: "ESRS S4", label: "Consommateurs & utilisateurs", tone: "red" },
-  { code: "ESRS G1", label: "Conduite des affaires", tone: "amber" },
+  { code: "ESRS E2", label: "Pollution", tone: "green" },
+  { code: "ESRS E3", label: "Eau & ressources marines", tone: "green" },
+  { code: "ESRS E4", label: "Biodiversité", tone: "green" },
+  { code: "ESRS E5", label: "Économie circulaire", tone: "green" },
+  { code: "ESRS S1", label: "Effectifs propres", tone: "green" },
+  { code: "ESRS S2", label: "Travailleurs chaîne valeur", tone: "green" },
+  { code: "ESRS S3", label: "Communautés locales", tone: "green" },
+  { code: "ESRS S4", label: "Consommateurs & utilisateurs", tone: "green" },
+  { code: "ESRS G1", label: "Conduite des affaires", tone: "green" },
 ];
 
 export default function CsrdPage() {
+  const navigate = useNavigate();
   const pillarTone: Record<string, { pill: string; icon: string; borderTop: string; dot: string }> = {
     green: {
       pill: "border-green-200 bg-green-50 text-green-700",
@@ -125,12 +127,12 @@ export default function CsrdPage() {
       borderTop: "border-t-green-500",
       dot: "bg-green-600",
     },
-    emerald: {
-      pill: "border-emerald-200 bg-emerald-50 text-emerald-700",
-      icon: "bg-emerald-100 text-emerald-700",
-      borderTop: "border-t-emerald-500",
-      dot: "bg-emerald-500",
-    },
+    // green: {
+    //   pill: "border-green-200 bg-green-50 text-green-700",
+    //   icon: "bg-green-100 text-green-700",
+    //   borderTop: "border-t-green-500",
+    //   dot: "bg-green-500",
+    // },
     amber: {
       pill: "border-amber-200 bg-amber-50 text-amber-800",
       icon: "bg-amber-100 text-amber-800",
@@ -147,7 +149,7 @@ export default function CsrdPage() {
 
   const esrsTone: Record<string, string> = {
     green: "border-green-200 bg-green-50 text-green-800",
-    emerald: "border-emerald-200 bg-emerald-50 text-emerald-800",
+    // green: "border-green-200 bg-green-50 text-green-800",
     cyan: "border-cyan-200 bg-cyan-50 text-cyan-900",
     lime: "border-lime-200 bg-lime-50 text-lime-900",
     amber: "border-amber-200 bg-amber-50 text-amber-900",
@@ -159,146 +161,143 @@ export default function CsrdPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <MarketingNavbar variant="dark" />
+      <MarketingNavbar variant="light" />
 
-     {/* HERO */}
-<section className="relative overflow-hidden border-b bg-gradient-to-b from-white to-emerald-50/40 pt-28 pb-20 sm:pt-32">
-  
-  {/* background glow */}
-  <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-emerald-300/20 blur-3xl" />
+   {/* HERO SECTION */}
+<section className="relative overflow-hidden border-b bg-gradient-to-b from-green-100/40 via-green-50/20 to-green-50/40 pt-28 pb-20 sm:pt-32 min-h-screen">
+  {/* Background glow */}
+  <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-green-300/20 blur-3xl animate-pulse" />
 
-  <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-    <div className="mx-auto max-w-3xl text-center">
+  <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-center gap-10 h-full">
 
-      
-
-      <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl">
-        CSRD Compliance
-        <span className="block text-emerald-600">
-          Made Simple
-        </span>
+    {/* LEFT: TEXT */}
+    <motion.div
+      className="max-w-2xl text-center lg:text-left"
+      initial={{ opacity: 0, x: -50 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.8 }}
+    >
+      <br /><br /><br />
+      <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+         Conformité CSRD 
+        <span className="block text-green-600">Simplifié</span>
       </h1>
 
-      <p className="mt-5 text-base text-muted-foreground sm:text-lg">
-        The Corporate Sustainability Reporting Directive (CSRD) requires companies
-        to publish standardized ESG disclosures under the ESRS framework.
-        Our platform helps you collect data, analyze double materiality,
-        and generate audit-ready sustainability reports.
-      </p>
+      <motion.p
+        className="mt-4 text-base text-muted-foreground sm:text-lg"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+      >
+        Collectez des données ESG, analysez la matérialité et générez des rapports prêts pour l'audit.
+      </motion.p>
 
-      <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-        <Button className="bg-green-600 text-white hover:bg-green-700">
-          Start CSRD Assessment
+      <motion.p
+        className="mt-4 text-sm text-green-700/80 sm:text-base"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+      >
+        La Directive sur le Reporting de Durabilité des Entreprises (CSRD) garantit que les entreprises rendent compte de leurs impacts environnementaux, sociaux et de gouvernance de manière normalisée. La conformité n'est pas seulement une obligation légale, elle renforce également la confiance des investisseurs et des parties prenantes. Commencez tôt pour simplifier le reporting et éviter le stress de dernière minute.
+      </motion.p>
+
+      <motion.div
+        className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-start"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
+      >
+        <Button className="bg-green-600 text-white hover:bg-green-700 shadow-lg shadow-green-200 hover:scale-105 transition-transform" onClick={() => navigate("/book-demo")}>
+          Demo
         </Button>
 
-        <Button variant="outline">
-          Explore the Platform
-        </Button>
-      </div>
+        <Button variant="outline">En savoir plus</Button>
+      </motion.div>
 
-      {/* quick highlights */}
-      <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-        <div className="flex items-center gap-2">
-          📑 ESRS-Compliant Reporting
-        </div>
+      {/* Quick badges / highlights */}
+      <motion.div
+        className="mt-8 flex flex-wrap justify-center lg:justify-start gap-4 text-sm text-green-700 font-medium"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.9, duration: 0.8 }}
+      >
+        <span className="px-3 py-1 bg-green-100 rounded-full">Conforme aux ESRS</span>
+        <span className="px-3 py-1 bg-green-100 rounded-full">Double matérialité</span>
+        <span className="px-3 py-1 bg-green-100 rounded-full">Automatisation ESG</span>
+      </motion.div>
+    </motion.div>
 
-        <div className="flex items-center gap-2">
-          🎯 Double Materiality Analysis
-        </div>
+    {/* RIGHT: IMAGE */}
+    <motion.div
+      className="flex-shrink-0"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1, duration: 1, type: "spring", stiffness: 100 }}
+    >
+      <img
+        src="/csrd.svg"
+        alt="CSRD illustration"
+        className="w-48 md:w-56 lg:w-64 object-contain animate-float"
+      />
+    </motion.div>
 
-        <div className="flex items-center gap-2">
-          📊 ESG Data Automation
-        </div>
-      </div>
-
-    </div>
   </div>
 </section>
-
-      {/* ALERT BANNER */}
-<section className="border-y bg-gradient-to-r from-blue-50 to-indigo-50">
-  <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
-    <div className="flex flex-col gap-4 rounded-2xl border bg-white/70 p-5 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
+     <section className="py-16 bg-green-50/20">
+  <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-3xl text-center">
       
-      {/* LEFT CONTENT */}
-      <div className="flex items-start gap-3">
-        <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
-          ⚡
-        </div>
 
-        <p className="text-sm text-blue-900/80 max-w-xl">
-          <span className="font-semibold">
-            La CSRD est en vigueur depuis janvier 2024.
-          </span>{" "}
-          Les premières entreprises concernées doivent publier leur rapport de
-          durabilité au titre de l'exercice 2024. Êtes-vous prêt ?
-        </p>
-      </div>
+      <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl text-green-800">
+        Ce que la CSRD impose de publier
+      </h2>
+      <p className="mt-3 text-base text-green-900/70">
+        La directive couvre l'ensemble des enjeux ESG selon un cadre structuré de double matérialité
+      </p>
+    </div>
 
-      {/* RIGHT IMAGE */}
-      <div className="flex-shrink-0">
-        <img
-          src="/csrd.svg"
-          alt="CSRD regulation"
-          className="w-32 md:w-36 lg:w-40 object-contain"
-        />
-      </div>
+    <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {ESG_PILLARS.map((p) => {
+        const tone = {
+          borderTop: "border-t-4 border-green-600",
+          icon: "text-green-600",
+          pill: "bg-green-100 text-green-800",
+          dot: "bg-green-600"
+        };
 
+        return (
+          <Card
+            key={p.title}
+            className={
+              "shadow-md border border-green-100 rounded-2xl bg-white/90 hover:shadow-lg transition-shadow duration-300 " +
+              tone.borderTop
+            }
+          >
+            <CardContent className="p-6">
+              <h3 className="mt-3 text-lg font-extrabold text-green-800">{p.title}</h3>
+              <p className="mt-2 text-sm text-green-900/70">{p.desc}</p>
+
+              <ul className="mt-4 space-y-2 text-sm">
+                {p.bullets.map((b) => (
+                  <li key={b} className="flex items-start gap-2">
+                    <span className={"mt-2 h-1.5 w-1.5 rounded-full " + tone.dot} />
+                    <span className="text-green-900/80">{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        );
+      })}
     </div>
   </div>
 </section>
-
-      {/* ESG PILLARS */}
-      <section className="py-16">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-xs font-semibold text-green-700">
-              <span className="h-2 w-2 rounded-full bg-green-600" />
-              Les 4 Piliers
-            </div>
-            <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">Ce que la CSRD impose de publier</h2>
-            <p className="mt-3 text-base text-muted-foreground">La directive couvre l'ensemble des enjeux ESG selon un cadre structuré de double matérialité</p>
-          </div>
-
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {ESG_PILLARS.map((p) => {
-              const tone = pillarTone[p.tone] ?? pillarTone.green;
-              return (
-                <Card key={p.title} className={"shadow-sm border-t-4 " + tone.borderTop}>
-                  <CardContent className="p-6">
-                    <div className={"flex h-12 w-12 items-center justify-center rounded-xl text-xl " + tone.icon}>
-                      {p.icon}
-                    </div>
-                    <div className={"mt-4 inline-flex items-center rounded-full border px-3 py-1 text-[11px] font-bold " + tone.pill}>
-                      {p.subtitle}
-                    </div>
-                    <h3 className="mt-3 text-base font-extrabold">{p.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
-
-                    <ul className="mt-4 space-y-2 text-sm">
-                      {p.bullets.map((b) => (
-                        <li key={b} className="flex items-start gap-2">
-                          <span className={"mt-2 h-1.5 w-1.5 rounded-full " + tone.dot} />
-                          <span className="text-muted-foreground">{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
       {/* ESRS STANDARDS */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-16 bg-muted/30 bg-gradient-to-b from-green-100 to-muted/50">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-xs font-semibold text-emerald-700">
-              <span className="h-2 w-2 rounded-full bg-emerald-500" />
-              Normes ESRS
-            </div>
+            
             <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">Les 10 Standards ESRS Obligatoires</h2>
             <p className="mt-3 text-base text-muted-foreground">European Sustainability Reporting Standards — publiés par la Commission Européenne</p>
           </div>
@@ -317,65 +316,65 @@ export default function CsrdPage() {
         </div>
       </section>
 
-      {/* TIMELINE */}
-      <section className="py-16">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-xs font-semibold text-green-700">
-              <span className="h-2 w-2 rounded-full bg-green-600" />
-              Calendrier
+     <section className="py-16 bg-green-50/10">
+  <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    {/* Header */}
+    <div className="mx-auto max-w-3xl text-center">
+      
+      <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl text-green-800">
+        Calendrier de déploiement CSRD
+      </h2>
+      <p className="mt-3 text-base text-green-900/70">
+        Les étapes clés du déploiement progressif de la directive
+      </p>
+    </div>
+
+    {/* Timeline horizontal */}
+    <div className="mt-10 flex gap-6 overflow-x-auto py-6 px-2">
+      {TIMELINE.map((t) => (
+        <Card
+          key={t.year}
+          className="min-w-[220px] flex-shrink-0 shadow-md rounded-2xl bg-white/90 border border-green-100"
+        >
+          <CardContent className="p-6">
+            <div className="flex flex-col gap-3 items-start">
+              <div
+                className={
+                  "flex h-12 w-12 items-center justify-center rounded-full text-xs font-extrabold text-center px-2 " +
+                  (t.active ? "bg-green-600 text-white" : "bg-green-100 text-green-800 border")
+                }
+              >
+                {t.year}
+              </div>
+
+              <div>
+                <div
+                  className={
+                    "inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-bold " +
+                    (t.active
+                      ? "border-green-200 bg-green-50 text-green-700"
+                      : "border-green-100 bg-white text-green-800/70")
+                  }
+                >
+                  {t.active ? "✓ En vigueur" : "À venir"}
+                </div>
+                <div className="mt-2 text-base font-bold text-green-800">{t.label}</div>
+                <div className="mt-1 text-sm text-green-900/70">{t.sub}</div>
+              </div>
             </div>
-            <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">Calendrier de déploiement CSRD</h2>
-            <p className="mt-3 text-base text-muted-foreground">Les étapes clés du déploiement progressif de la directive</p>
-          </div>
-
-          <div className="mt-10 grid gap-4">
-            {TIMELINE.map((t) => (
-              <Card key={t.year} className="shadow-sm">
-                <CardContent className="p-6">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex items-start gap-4">
-                      <div
-                        className={
-                          "flex h-12 w-12 items-center justify-center rounded-full text-xs font-extrabold text-center px-2 " +
-                          (t.active ? "bg-green-600 text-white" : "bg-muted text-muted-foreground border")
-                        }
-                      >
-                        {t.year}
-                      </div>
-                      <div>
-                        <div
-                          className={
-                            "inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-bold " +
-                            (t.active
-                              ? "border-green-200 bg-green-50 text-green-700"
-                              : "border-border bg-card text-muted-foreground")
-                          }
-                        >
-                          {t.active ? "✓ En vigueur" : "À venir"}
-                        </div>
-                        <div className="mt-2 text-base font-bold">{t.label}</div>
-                        <div className="mt-1 text-sm text-muted-foreground">{t.sub}</div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
       
 
       {/* PROCESS */}
       <section className="py-16">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-xs font-semibold text-green-700">
-              <span className="h-2 w-2 rounded-full bg-green-600" />
-              Comment ça marche
-            </div>
+            
             <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">Le processus CSRD en 5 étapes</h2>
             <p className="mt-3 text-base text-muted-foreground">Un parcours guidé de la collecte des données à la publication</p>
           </div>
@@ -402,41 +401,37 @@ export default function CsrdPage() {
 
      
 
-      {/* CBAM CROSSLINK */}
-      <section className="py-10">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-start justify-between gap-4 rounded-2xl border border-green-200 bg-green-50 p-6 sm:flex-row sm:items-center">
-            <p className="text-sm text-green-800">
-              🔗 <span className="font-extrabold text-green-900">CSRD & CBAM vont de pair.</span> Gérez votre conformité carbone et votre reporting ESG depuis une seule plateforme intégrée.
-            </p>
-            <Button asChild className="bg-green-600 text-white hover:bg-green-700">
-              <a href="/cbam">Découvrir notre solution CBAM →</a>
-            </Button>
-          </div>
-        </div>
-      </section>
+      
 
-      {/* CTA - Light Security Colors */}
-<section className="relative overflow-hidden bg-zinc-50 text-zinc-900">
-  <div className="absolute inset-0 -z-10">
-    <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 via-white to-emerald-50/30" />
-    <div className="absolute -inset-24 -z-10 bg-gradient-to-br from-emerald-400/20 via-teal-400/15 to-transparent blur-3xl rounded-[6rem]" />
-  </div>
+ 
+   {/* FINAL CTA  */}
+<section className="py-28 border-t rounded-[2rem] bg-green-600" >
+  <div className=" min-w-xl text-center px-6">
+    <h2 className="text-5xl font-semibold tracking-tight text-white">
+      Prêt à réduire votre empreinte carbone ?
+    </h2>
+    <p className="mt-6 text-white  rounded-[3rem] " >
+      Rejoignez nous pour transformer l'impact climatique en avantage compétitif.
+    </p>
 
-  <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-    <div className="mx-auto max-w-3xl text-center">
-      <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-zinc-900">
-        Prêt pour votre rapport CSRD ?
-      </h2>
-      <p className="mt-4 text-base text-zinc-700/90">
-        Ne laissez pas la directive CSRD vous prendre de court. Commencez dès aujourd'hui avec notre accompagnement expert et notre plateforme IA.
-      </p>
-      <div className="mt-8 flex justify-center">
-        <Button asChild className="bg-emerald-600 text-white hover:bg-emerald-700">
-          <a href="#">Lancer ma conformité CSRD →</a>
-        </Button>
-      </div>
+    <div className="mt-12 flex flex-wrap justify-center gap-4">
+      <Button
+        size="lg"
+        className="bg-green-900/95 hover:bg-green-500 text-white px-12 py-7 text-lg rounded-2xl"
+        onClick={() => navigate("/register")}
+      >
+        Commencer gratuitement
+      </Button>
+      <Button
+        variant="outline"
+        size="lg"
+        className="border-green-400 text-green-600 hover:bg-green-500 hover:text-white px-12 py-7 text-lg rounded-2xl"
+        onClick={() => navigate("/book-demo")}
+      >
+        Parler à un expert
+      </Button>
     </div>
+    
   </div>
 </section>
 

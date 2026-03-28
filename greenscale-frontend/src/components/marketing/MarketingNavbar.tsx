@@ -24,28 +24,29 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
-    label: "About Us",
+    label: "A propos",
     submenu: [
-      { title: "automatisation du bilan de carbone", desc: "Découvrir", href: "/" },
-      { title: "nos valeurs", desc: "NOTRE SUITE COMPLÈTE", href: "/" },
-      { title: "pourquoi choisir verdustry", desc: "Découvrir ", href: "/" }
+      { title: "Pourquoi Verdustry Solutions", desc: "", href: "/" },
+      { title: "Stratégie climatique", desc: " ", href: "/" },
+      { title: "Q&A", desc: "questions fréquentes", href: "/" }
+
       
     ],
   },
   {
-    label: "Produits",
+    label: "Solutions",
     submenu: [
-      { title: "pack", desc: "Découvrir", href: "/solutions" },
-      { title: "automatisation du bilan de carbone", desc: "Découvrir", href: "/Packs" },
-      { title: "Recomendation ai", desc: "Découvrir", href: "/Packs" },
-      { title: "integration des capteurs", desc: "Découvrir", href: "/Packs" },
-      { title: "integration des capteurs", desc: "Découvrir", href: "/Packs" }
-      
+      { title: "Notre solution", desc: "", href: "/solutions" },
+      { title: "Mesure de l'Émission Carbone", desc: "", href: "/solutions/packs/1" },
+      { title: "Édition de Rapport ESG", desc: "", href: "/solutions/packs/2" },
+      { title: "Package Personnalisé", desc: "", href: "/solutions/packs/3" }
+
     ],
   },
+  { label: "Secteurs", submenu: [{ title: "Industrie ", desc: "plateforme pour les entreprises industrielles", href: "/industrie" }, { title: "Finance ", desc: "Solution pour les institutions financières", href: "/finance" }] },
   { label: "Normes", submenu: [{ title: "CSRD", desc: "eporting ESG des entreprises.", href: "/csrd" }, { title: "CBAM", desc: "Mécanisme de taxe carbone aux frontières de l’UE.", href: "/cbam" }] },
-  // { label: "Contacter", submenu: [{ title: "Contactez-Nous", desc: "Nous rejoindre", href: "/contact" }, { title: "Localisation", desc: "Ou nous se trouve", href: "/contact#contact" }] },
-  // { label: "Demo", submenu: [{ title: "Nos Productions", desc: "Demander nos productions ", href: "/production" }, { title: "Devis", desc: "Demander un devis", href: "/production/#devis" }] },
+  
+  { label: "Contact", submenu: [{ title: "Nous contacter", desc: "pour plus d'informations", href: "/contact" }, { title: "Demo", desc: "Demander un demo", href: "/demo" }] },
   
 ];
 
@@ -53,16 +54,7 @@ const menuItems: MenuItem[] = [
 const Logo = ({ variant }: { variant: NavbarVariant }) => (
   <div className="flex items-center space-x-3">
     <div className="relative">
-      <span
-        className={cn(
-          "text-xl md:text-2xl font-bold tracking-wider relative",
-          variant === "light" ? "text-foreground" : "text-white"
-        )}
-      >
-        Ver
-        <span className="text-green-400"> Dustry</span>
-        <span className="absolute -inset-1 blur-lg opacity-50 text-green-400">Verdustry</span>
-      </span>
+      <img src="/LOGO_-_Verdustry-removebg-preview.png" alt="_Verdustry" />
     </div>
   </div>
 );
@@ -234,17 +226,17 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
           "fixed top-0 left-0 w-full z-40 transition-all duration-500 overflow-visible",
           variant === "light"
             ? scrolled
-              ? "bg-background/90 text-foreground backdrop-blur-xl border-b shadow-sm py-3 md:py-4"
-              : "bg-background/70 text-foreground backdrop-blur-md py-4 md:py-6"
+              ? "bg-gradient-to-b from-green-600/10 via-green-600/15 to-green-600/30-600/15 to-green-600 text-foreground backdrop-blur-xl border-b shadow-sm py-3 md:py-4"
+              : "bg-gradient-to-b from-green-600/10 via-green-600/15 to-green-600/30-600/15 to-green-600 text-foreground backdrop-blur-md py-4 md:py-6"
             : scrolled
-              ? "bg-green-700/95 text-white backdrop-blur-xl shadow-2xl py-3 md:py-4"
-              : "bg-green-700 text-white py-4 md:py-6 hover:bg-green-800",
-          isMobileOpen && (variant === "light" ? "bg-background" : "bg-green-700")
+              ? "bg-gradient-to-b from-green-600/10 via-green-600/15 to-green-600/30-600/15 to-green-600text-white backdrop-blur-xl shadow-2xl py-3 md:py-4"
+              : "bg-gradient-to-b from-green-600/10 via-green-600/15 to-green-600/30-600/15 to-green-600x text-white backdrop-blur-xl shadow-2xl py-3 md:py-4",
+          isMobileOpen && (variant === "light" ? "bg-background" : "bg-background")
         )}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
+         <div className="max-w-7xl mx-auto pl-2 sm:pl-0 flex justify-start items-center space-x-8">
           {/* Logo */}
-          <a href="/" className="z-50 relative">
+          <a href="/" className="z-50 relative -ml-5">
             <Logo variant={variant} />
           </a>
 
@@ -295,7 +287,7 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
               <button
                 onClick={toggleSearch}
                 className={cn(
-                  "p-2 md:p-3 rounded-full transition-all duration-300 backdrop-blur-md",
+                  "p-2 md:p-3 rounded-full  transition-all duration-300 backdrop-blur-md",
                   variant === "light"
                     ? "text-foreground hover:bg-muted/60"
                     : "text-white hover:bg-white/10"
@@ -443,8 +435,8 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
               className={cn(
-                "hidden lg:block absolute inset-x-0 top-full backdrop-blur-2xl border-t overflow-hidden",
-                variant === "light" ? "bg-background/95 border-border" : "bg-green-800/95 border-white/10"
+                "hidden lg:block absolute inset-x-0 top-full backdrop-blur-xl border-t overflow-hidden",
+                variant === "light" ? "bg-green-600 text-green-600 hover:bg-green-600" : "bg-green-600 text-green-600 hover:bg-green-600"
               )}
               onMouseEnter={() => setHovered(hovered)}
               onMouseLeave={() => setHovered(null)}
@@ -463,7 +455,7 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
                       href={sub.href}
                       className={cn(
                         "group block p-4 md:p-6 rounded-xl md:rounded-2xl transition-all duration-300 border border-transparent hover:border-green-400/30",
-                        variant === "light" ? "hover:bg-muted/40" : "hover:bg-white/5"
+                        variant === "light" ? " hover:bg-muted/40" : "hover:bg-white/5"
                       )}
                       onMouseEnter={() => sub.imageUrl && setActiveImage(sub.imageUrl)}
                     >
@@ -471,8 +463,8 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
                         className={cn(
                           "text-lg md:text-xl font-bold transition-colors",
                           variant === "light"
-                            ? "text-foreground group-hover:text-green-700"
-                            : "text-white group-hover:text-green-300"
+                            ? "text-white group-hover:text-white"
+                            : "text-white group-hover:text-white"
                         )}
                       >
                         {sub.title}
@@ -481,7 +473,7 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
                         <p
                           className={cn(
                             "mt-2 text-xs md:text-sm",
-                            variant === "light" ? "text-muted-foreground" : "text-gray-200"
+                            variant === "light" ? "text-white" : "text-white"
                           )}
                         >
                           {sub.desc}

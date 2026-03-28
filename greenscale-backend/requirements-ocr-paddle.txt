@@ -1,0 +1,14 @@
+# Optional PaddleOCR dependencies
+#
+# Use when you want OCR_ENGINE=paddle.
+# Note: Paddle/PaddleOCR availability varies by OS + Python version.
+# If install fails, keep OCR_ENGINE=tesseract.
+#
+# Heads-up: PaddleOCR currently pins/downgrades protobuf (often to 3.20.x), which can conflict
+# with google/grpc packages expecting protobuf>=4.x. If you rely on Gemini/Google APIs in the
+# same environment and hit issues, use a separate venv just for PaddleOCR/CLI.
+
+paddleocr==2.7.3
+# Use CPU by default on Windows. If you have CUDA, switch to paddlepaddle-gpu.
+paddlepaddle==2.6.2
+numpy==1.26.4

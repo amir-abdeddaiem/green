@@ -1,0 +1,71 @@
+05/10/202115:26
+STEG-Facture ref:017639081
+[Imprimer la page]
+Societé Tunisienne
+gall
+del'Electriciteet duGaz
+017639081
+Facture
+MRAMORHAMMAMI,IMMARGENTINAAPA62
+6ET,TUNIS
+FACTURE INTERMEDIAIRE
+du 2021.07.26 au 2021.09.27
+Consommation/Deiy
+Index
+Red.
+Nbre.
+TOTAL
+Fixes
+Montant
+P.U.
+Consom.
+Ancienall
+Nouv.
+Mois
+LIBELLE
+78.688
+28.000
+50.688
+23398
+2
+ECLAIRAGE
+66.762
+1.500
+65.262
+8637
+GAZ-NATUR
+145.450
+Sous Total Consommation
+Services/
+1.440
+Surtaxe Municipale
+0.288
+Fonds de la transition energetique electricite
+0.350
+Fonds de la transition energetique gaz
+2.078
+Sous Total Services
+Taxes/sy
+24.594
+TVA
+2.800
+RTT
+27.394
+Sous Total Taxes
+Solde/
+0
+A déduire
++0.570
+Arrieres
+aa
+0.570
+Sous Total Solde
+E
+175.000
+CENT SOIXANTE-QUENZE DINARS ZERO MLLIMES, TTC
+Montantapayer
+2021.10.25
+2021.11.26
+[Fermer la fenetre]
+https:/www.steg.com.tn/fr/espace/cons ult_fact.php?s id=d9p1mYd9mYIDyfk OrxOO32bx88mYa988320Og@bx&idcompt=O17639081
+1/1

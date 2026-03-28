@@ -1,16 +1,12 @@
-import { useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Card } from "@/components/ui/card";
+import { apiUrl } from "@/config/api";
 import {
   Upload,
   FileText,
   Scan,
   Trash2,
-  Eye,
-  Download,
-  CheckCircle2,
   AlertCircle,
-  Clock,
-  Search,
   Zap,
   FileImage,
   File,
@@ -38,10 +34,31 @@ interface ScannedDocument {
     date?: string;
     vendor?: string;
     co2Equivalent?: string;
+    activityValue?: number;
+    activityUnit?: string;
+    activityType?: string;
+    consumptionRows?: Array<{
+      libelle: string;
+      consommation: string | null;
+      montant: string | null;
+      periode: string | null;
+    }>;
+    invoiceType?: string;
+    invoicePeriod?: string;
     confidence?: number;
   };
   previewUrl?: string;
   fileType: "pdf" | "image" | "other";
+  errorMessage?: string;
+}
+
+interface SavedExtractedDoc {
+  id: number;
+  document_id: number;
+  filename: string;
+  category: DocumentCategory;
+  created_at: string | null;
+  extractedData: ScannedDocument["extractedData"] | null;
 }
 
 const CATEGORY_CONFIG: Record<
@@ -51,7 +68,7 @@ const CATEGORY_CONFIG: Record<
   invoice: {
     label: "Invoice",
     icon: <Receipt className="w-5 h-5" />,
-    color: "bg-emerald-100 text-emerald-700 border-emerald-300",
+    color: "bg-green-100 text-green-700 border-green-300",
     description: "Utility bills, supplier invoices",
   },
   company: {
@@ -74,29 +91,36 @@ const CATEGORY_CONFIG: Record<
   },
 };
 
-// Mock AI extraction — replace with real API call
-const mockExtractFromDocument = async (
+async function extractFromDocument(
   file: File,
-  category: DocumentCategory
-): Promise<ScannedDocument["extractedData"]> => {
-  await new Promise((r) => setTimeout(r, 2200));
-  if (category === "invoice") {
-    return {
-      totalAmount: `${(Math.random() * 2000 + 100).toFixed(2)} TND`,
-      date: new Date(Date.now() - Math.random() * 30 * 86400000)
-        .toLocaleDateString("en-GB"),
-      vendor: ["STEG", "SONEDE", "Total Energies", "Tunisie Telecom"][
-        Math.floor(Math.random() * 4)
-      ],
-      co2Equivalent: `${(Math.random() * 500 + 20).toFixed(1)} kg CO₂`,
-      confidence: Math.round(85 + Math.random() * 13),
-    };
+  category: DocumentCategory,
+  businessId: string | null
+): Promise<ScannedDocument["extractedData"]> {
+  if (!businessId) {
+    throw new Error("Missing business_id (please login again)");
   }
-  return {
-    date: new Date().toLocaleDateString("en-GB"),
-    confidence: Math.round(70 + Math.random() * 20),
-  };
-};
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("business_id", businessId);
+  formData.append("category", category);
+
+  const response = await fetch(apiUrl("/documents/scan"), {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = (await response.json().catch(() => null)) as any;
+
+  if (!response.ok) {
+    const message =
+      (data && typeof data.detail === "string" && data.detail) ||
+      "OCR extraction failed";
+    throw new Error(message);
+  }
+
+  return (data?.extractedData || null) as ScannedDocument["extractedData"];
+}
 
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -107,6 +131,22 @@ function formatBytes(bytes: number): string {
 function getFileType(file: File): "pdf" | "image" | "other" {
   if (file.type === "application/pdf") return "pdf";
   if (file.type.startsWith("image/")) return "image";
+  return "other";
+}
+
+function getFileTypeFromFilename(filename: string): "pdf" | "image" | "other" {
+  const lower = filename.toLowerCase();
+  if (lower.endsWith(".pdf")) return "pdf";
+  if (
+    lower.endsWith(".png") ||
+    lower.endsWith(".jpg") ||
+    lower.endsWith(".jpeg") ||
+    lower.endsWith(".webp") ||
+    lower.endsWith(".tif") ||
+    lower.endsWith(".tiff") ||
+    lower.endsWith(".heic")
+  )
+    return "image";
   return "other";
 }
 
@@ -132,18 +172,76 @@ export function DocumentScannerTab() {
   const [selectedCategory, setSelectedCategory] =
     useState<DocumentCategory>("invoice");
   const [scanStatus, setScanStatus] = useState<ScanStatus>("idle");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterCategory, setFilterCategory] = useState<
-    DocumentCategory | "all"
-  >("all");
   const [previewDoc, setPreviewDoc] = useState<ScannedDocument | null>(null);
   const [deleteId, setDeleteId] = useState<number | null>(null);
-  const [uploadQueue, setUploadQueue] = useState<File[]>([]);
+  const [savedExtracts, setSavedExtracts] = useState<SavedExtractedDoc[]>([]);
+  const [savedLoading, setSavedLoading] = useState(false);
+  const [savedError, setSavedError] = useState<string | null>(null);
+  const [lastScanError, setLastScanError] = useState<string | null>(null);
+
+  const refreshSavedExtracts = useCallback(async () => {
+    if (!businessId) {
+      setSavedExtracts([]);
+      setSavedError("Missing business_id (please login again)");
+      return;
+    }
+
+    setSavedLoading(true);
+    setSavedError(null);
+    try {
+      const resp = await fetch(
+        apiUrl(`/documents/extracted?business_id=${encodeURIComponent(businessId)}&limit=50`)
+      );
+      const data = (await resp.json().catch(() => null)) as any;
+      if (!resp.ok) {
+        const message =
+          (data && typeof data.detail === "string" && data.detail) ||
+          "Failed to load saved extracts";
+        throw new Error(message);
+      }
+
+      const items = Array.isArray(data?.items) ? data.items : [];
+      const normalized: SavedExtractedDoc[] = items
+        .map((it: any) => {
+          const cat: DocumentCategory =
+            it?.category === "invoice" ||
+            it?.category === "company" ||
+            it?.category === "report" ||
+            it?.category === "other"
+              ? it.category
+              : "other";
+
+          return {
+            id: Number(it?.id),
+            document_id: Number(it?.document_id),
+            filename: String(it?.filename || "document"),
+            category: cat,
+            created_at: typeof it?.created_at === "string" ? it.created_at : null,
+            extractedData: (it?.extractedData || null) as SavedExtractedDoc["extractedData"],
+          };
+        })
+        .filter((it: SavedExtractedDoc) => Number.isFinite(it.id) && Number.isFinite(it.document_id));
+
+      setSavedExtracts(normalized);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error("Failed to load saved extracts", e);
+      setSavedError(e instanceof Error ? e.message : "Failed to load saved extracts");
+    } finally {
+      setSavedLoading(false);
+    }
+  }, [businessId]);
+
+  useEffect(() => {
+    refreshSavedExtracts();
+  }, [refreshSavedExtracts]);
 
   const handleFiles = useCallback(
     async (files: FileList | File[]) => {
       const fileArray = Array.from(files);
       if (!fileArray.length) return;
+
+      setLastScanError(null);
 
       for (const file of fileArray) {
         const tempId = Date.now() + Math.random();
@@ -173,9 +271,10 @@ export function DocumentScannerTab() {
         setScanStatus("scanning");
 
         try {
-          const extracted = await mockExtractFromDocument(
+          const extracted = await extractFromDocument(
             file,
-            selectedCategory
+            selectedCategory,
+            businessId
           );
           setDocuments((prev) =>
             prev.map((d) =>
@@ -185,17 +284,27 @@ export function DocumentScannerTab() {
             )
           );
           setScanStatus("done");
-        } catch {
+          refreshSavedExtracts();
+        } catch (e) {
+          // Keep UI simple but make debugging possible via console.
+          // (Backend error strings are already human readable.)
+          // eslint-disable-next-line no-console
+          console.error("Document scan failed", e);
+          const message =
+            e instanceof Error
+              ? e.message
+              : "Document scan failed (unknown error)";
+          setLastScanError(message);
           setDocuments((prev) =>
             prev.map((d) =>
-              d.id === tempId ? { ...d, status: "error" } : d
+              d.id === tempId ? { ...d, status: "error", errorMessage: message } : d
             )
           );
           setScanStatus("error");
         }
       }
     },
-    [selectedCategory]
+    [selectedCategory, businessId, refreshSavedExtracts]
   );
 
   const onDrop = useCallback(
@@ -207,19 +316,18 @@ export function DocumentScannerTab() {
     [handleFiles]
   );
 
-  const filtered = documents.filter((d) => {
-    const matchCat = filterCategory === "all" || d.category === filterCategory;
-    const matchSearch = d.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    return matchCat && matchSearch;
+  const invoiceRows = documents.flatMap((doc) => {
+    const rows = doc.extractedData?.consumptionRows;
+    if (!rows || rows.length === 0) return [];
+    return rows.map((r) => ({
+      docId: doc.id,
+      libelle: r.libelle,
+      consommation: r.consommation,
+      montant: r.montant,
+    }));
   });
 
   const totalDocs = documents.length;
-  const readyDocs = documents.filter((d) => d.status === "ready").length;
-  const co2Docs = documents.filter(
-    (d) => d.extractedData?.co2Equivalent
-  ).length;
 
   return (
     <div className="min-h-screen bg-white p-4 sm:p-6 md:p-8 lg:p-12 space-y-8 md:space-y-10">
@@ -240,6 +348,109 @@ export function DocumentScannerTab() {
             AI-Powered OCR
           </span>
         </div>
+      </div>
+
+      {scanStatus === "error" && lastScanError && (
+        <div className="py-3 px-4 bg-white border border-red-200 rounded-xl">
+          <p className="text-red-600 text-sm font-semibold">Scan failed: {lastScanError}</p>
+        </div>
+      )}
+
+      {/* Saved Extractions (from DB) */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold text-green-700 uppercase tracking-widest">
+              Saved Extractions
+            </p>
+            <p className="text-green-600 text-sm">
+              These are stored in the database table <span className="font-semibold">extracted_Doc</span>
+            </p>
+          </div>
+          {savedLoading && (
+            <div className="flex items-center gap-2 text-green-600">
+              <div className="w-4 h-4 border-2 border-green-400 border-t-transparent rounded-full animate-spin" />
+              <span className="text-xs font-semibold">Loading…</span>
+            </div>
+          )}
+        </div>
+
+        {savedError && (
+          <div className="py-3 px-4 bg-white border border-red-200 rounded-xl">
+            <p className="text-red-600 text-sm font-semibold">{savedError}</p>
+          </div>
+        )}
+
+        {savedExtracts.length > 0 ? (
+          <Card className="overflow-hidden rounded-xl shadow-lg bg-white border border-green-300">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-green-50 border-b border-green-300">
+                  <tr>
+                    <th className="text-left px-6 py-4 font-bold text-green-900">FILE</th>
+                    <th className="text-left px-6 py-4 font-bold text-green-900">CATEGORY</th>
+                    <th className="text-left px-6 py-4 font-bold text-green-900">DATE</th>
+                    <th className="text-left px-6 py-4 font-bold text-green-900">VENDOR</th>
+                    <th className="text-left px-6 py-4 font-bold text-green-900">PERIOD</th>
+                    <th className="text-right px-6 py-4 font-bold text-green-900">TOTAL</th>
+                    <th className="text-right px-6 py-4 font-bold text-green-900">ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {savedExtracts.map((it) => {
+                    const vendor = it.extractedData?.vendor || "—";
+                    const period = it.extractedData?.invoicePeriod || "—";
+                    const total = it.extractedData?.totalAmount || "—";
+                    const when = it.created_at
+                      ? new Date(it.created_at).toLocaleString()
+                      : "—";
+                    return (
+                      <tr
+                        key={it.id}
+                        className="border-b border-green-100 hover:bg-green-50 transition-colors"
+                      >
+                        <td className="px-6 py-4 text-green-900 font-semibold">{it.filename}</td>
+                        <td className="px-6 py-4 text-green-800">{CATEGORY_CONFIG[it.category].label}</td>
+                        <td className="px-6 py-4 text-green-800">{when}</td>
+                        <td className="px-6 py-4 text-green-800">{vendor}</td>
+                        <td className="px-6 py-4 text-green-800">{period}</td>
+                        <td className="px-6 py-4 text-right text-green-800">{total}</td>
+                        <td className="px-6 py-4 text-right">
+                          <button
+                            onClick={() => {
+                              const doc: ScannedDocument = {
+                                id: it.document_id,
+                                name: it.filename,
+                                category: it.category,
+                                size: "Saved",
+                                uploadedAt: when,
+                                status: "ready",
+                                extractedData: it.extractedData || undefined,
+                                previewUrl: undefined,
+                                fileType: getFileTypeFromFilename(it.filename),
+                              };
+                              setPreviewDoc(doc);
+                            }}
+                            className="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-bold rounded-lg transition-colors"
+                          >
+                            View
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        ) : (
+          <div className="py-6 px-4 bg-white border border-green-200 rounded-xl">
+            <p className="text-green-700 text-sm font-semibold">No saved extractions yet.</p>
+            <p className="text-green-500 text-sm mt-1">
+              Upload a document above to create one.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Category selector */}
@@ -363,227 +574,98 @@ export function DocumentScannerTab() {
         </button>
       </div>
 
-      {/* Search & Filter */}
-      {documents.length > 0 && (
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-400" />
-            <input
-              type="text"
-              placeholder="Search documents..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 bg-white border border-green-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600"
-            />
+      {/* Extracted Data */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-xs font-bold text-green-700 uppercase tracking-widest">
+              Extracted Data
+            </p>
+            <p className="text-green-600 text-sm">
+              LIBELLE / CONSOMMATION / MONTANT
+            </p>
           </div>
-          <select
-            value={filterCategory}
-            onChange={(e) =>
-              setFilterCategory(e.target.value as DocumentCategory | "all")
-            }
-            className="px-4 py-2.5 bg-white border border-green-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600"
-          >
-            <option value="all">All Categories</option>
-            {(Object.keys(CATEGORY_CONFIG) as DocumentCategory[]).map((c) => (
-              <option key={c} value={c}>
-                {CATEGORY_CONFIG[c].label}
-              </option>
-            ))}
-          </select>
+          {scanStatus === "scanning" && (
+            <div className="flex items-center gap-2 text-green-600">
+              <div className="w-4 h-4 border-2 border-green-400 border-t-transparent rounded-full animate-spin" />
+              <span className="text-xs font-semibold">Extracting…</span>
+            </div>
+          )}
         </div>
-      )}
 
-      {/* Documents List */}
-      {filtered.length > 0 ? (
-        <Card className="overflow-hidden rounded-xl shadow-lg bg-white border border-green-300">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-green-50 border-b border-green-300">
-                <tr>
-                  <th className="text-left px-6 py-4 font-bold text-green-900">
-                    Document
-                  </th>
-                  <th className="text-left px-6 py-4 font-bold text-green-900 hidden sm:table-cell">
-                    Category
-                  </th>
-                  <th className="text-left px-6 py-4 font-bold text-green-900 hidden md:table-cell">
-                    Extracted Info
-                  </th>
-                  <th className="text-center px-6 py-4 font-bold text-green-900">
-                    Status
-                  </th>
-                  <th className="text-center px-6 py-4 font-bold text-green-900">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((doc, idx) => (
-                  <tr
-                    key={doc.id}
-                    className="border-b border-green-100 hover:bg-green-50 transition-colors"
-                  >
-                    {/* Doc name + size */}
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-lg bg-green-100 border border-green-300 flex items-center justify-center flex-shrink-0">
-                          <FileTypeIcon
-                            type={doc.fileType}
-                            className="w-4 h-4 text-green-700"
-                          />
-                        </div>
-                        <div className="min-w-0">
-                          <p className="font-semibold text-green-900 truncate max-w-[160px] sm:max-w-[220px]">
-                            {doc.name}
-                          </p>
-                          <p className="text-xs text-green-500">
-                            {doc.size} · {doc.uploadedAt}
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-
-                    {/* Category */}
-                    <td className="px-6 py-4 hidden sm:table-cell">
-                      <div
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${CATEGORY_CONFIG[doc.category].color}`}
-                      >
-                        {CATEGORY_CONFIG[doc.category].icon}
-                        {CATEGORY_CONFIG[doc.category].label}
-                      </div>
-                    </td>
-
-                    {/* Extracted data */}
-                    <td className="px-6 py-4 hidden md:table-cell">
-                      {doc.status === "processing" ? (
-                        <div className="flex items-center gap-2 text-green-500">
-                          <div className="w-3.5 h-3.5 border-2 border-green-400 border-t-transparent rounded-full animate-spin" />
-                          <span className="text-xs">Scanning…</span>
-                        </div>
-                      ) : doc.status === "ready" && doc.extractedData ? (
-                        <div className="space-y-0.5">
-                          {doc.extractedData.vendor && (
-                            <p className="text-xs text-green-800 font-medium">
-                              🏢 {doc.extractedData.vendor}
-                            </p>
-                          )}
-                          {doc.extractedData.totalAmount && (
-                            <p className="text-xs text-green-700">
-                              💰 {doc.extractedData.totalAmount}
-                            </p>
-                          )}
-                          {doc.extractedData.co2Equivalent && (
-                            <p className="text-xs font-bold text-green-800">
-                              🌿 {doc.extractedData.co2Equivalent}
-                            </p>
-                          )}
-                          {doc.extractedData.confidence && (
-                            <div className="flex items-center gap-1.5 mt-1">
-                              <div className="flex-1 h-1 bg-green-100 rounded-full overflow-hidden max-w-[60px]">
-                                <div
-                                  className="h-full bg-green-500 rounded-full"
-                                  style={{
-                                    width: `${doc.extractedData.confidence}%`,
-                                  }}
-                                />
-                              </div>
-                              <span className="text-[10px] text-green-500">
-                                {doc.extractedData.confidence}% confidence
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      ) : doc.status === "error" ? (
-                        <span className="text-xs text-red-500">
-                          Extraction failed
-                        </span>
-                      ) : null}
-                    </td>
-
-                    {/* Status badge */}
-                    <td className="px-6 py-4 text-center">
-                      {doc.status === "processing" ? (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-amber-50 border border-amber-300 text-amber-700 rounded-full text-xs font-bold">
-                          <Clock className="w-3 h-3" />
-                          Processing
-                        </span>
-                      ) : doc.status === "ready" ? (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-100 border border-green-300 text-green-700 rounded-full text-xs font-bold">
-                          <CheckCircle2 className="w-3 h-3" />
-                          Ready
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-red-50 border border-red-200 text-red-600 rounded-full text-xs font-bold">
-                          <AlertCircle className="w-3 h-3" />
-                          Error
-                        </span>
-                      )}
-                    </td>
-
-                    {/* Actions */}
-                    <td className="px-6 py-4">
-                      <div className="flex items-center justify-center gap-2">
-                        <button
-                          onClick={() => setPreviewDoc(doc)}
-                          disabled={doc.status === "processing"}
-                          className="p-2 text-green-400 hover:text-green-600 hover:bg-green-100 rounded-lg transition-colors border border-green-300 disabled:opacity-30"
-                          title="Preview"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </button>
-                        <button
-                          className="p-2 text-green-400 hover:text-green-600 hover:bg-green-100 rounded-lg transition-colors border border-green-300"
-                          title="Download"
-                        >
-                          <Download className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => setDeleteId(doc.id)}
-                          className="p-2 text-green-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors border border-green-300"
-                          title="Delete"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </td>
+        {invoiceRows.length > 0 ? (
+          <Card className="overflow-hidden rounded-xl shadow-lg bg-white border border-green-300">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-green-50 border-b border-green-300">
+                  <tr>
+                    <th className="text-left px-6 py-4 font-bold text-green-900">
+                      LIBELLE
+                    </th>
+                    <th className="text-right px-6 py-4 font-bold text-green-900">
+                      CONSOMMATION
+                    </th>
+                    <th className="text-right px-6 py-4 font-bold text-green-900">
+                      MONTANT
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {invoiceRows.map((r, idx) => (
+                    <tr
+                      key={`${r.docId}-${r.libelle}-${idx}`}
+                      className="border-b border-green-100 hover:bg-green-50 transition-colors"
+                    >
+                      <td className="px-6 py-4 text-green-900 font-semibold">
+                        {r.libelle}
+                      </td>
+                      <td className="px-6 py-4 text-right text-green-800">
+                        {r.consommation ?? "—"}
+                      </td>
+                      <td className="px-6 py-4 text-right text-green-800">
+                        {r.montant ?? "—"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        ) : documents.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-10 gap-3 text-center">
+            <div className="w-16 h-16 rounded-full bg-green-50 border border-green-200 flex items-center justify-center">
+              <FileText className="w-7 h-7 text-green-300" />
+            </div>
+            <p className="text-green-700 font-semibold">No scans yet</p>
+            <p className="text-green-500 text-sm max-w-xs">
+              Upload an invoice to extract line items.
+            </p>
           </div>
-        </Card>
-      ) : documents.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-10 gap-3 text-center">
-          <div className="w-16 h-16 rounded-full bg-green-50 border border-green-200 flex items-center justify-center">
-            <FileText className="w-7 h-7 text-green-300" />
+        ) : scanStatus === "scanning" ? (
+          <div className="flex items-center gap-3 py-6 px-4 bg-green-50 border border-green-200 rounded-xl">
+            <div className="w-5 h-5 border-2 border-green-400 border-t-transparent rounded-full animate-spin" />
+            <span className="text-green-700 text-sm font-semibold">
+              Extracting invoice data…
+            </span>
           </div>
-          <p className="text-green-700 font-semibold">No documents yet</p>
-          <p className="text-green-500 text-sm max-w-xs">
-            Upload your invoices and company documents to extract emissions data
-            automatically.
-          </p>
-        </div>
-      ) : null}
+        ) : (
+          <div className="py-6 px-4 bg-white border border-green-200 rounded-xl">
+            <p className="text-green-700 text-sm font-semibold">
+              No extracted rows found for the last scan.
+            </p>
+            <p className="text-green-500 text-sm mt-1">
+              Try a clearer image or a STEG/utility invoice.
+            </p>
+          </div>
+        )}
+      </div>
 
       {/* Stats Footer */}
       {documents.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
           <Card className="p-4 rounded-lg bg-white border border-green-300">
-            <p className="text-xs text-green-600 font-medium">Total Documents</p>
+            <p className="text-xs text-green-600 font-medium">Total Scans</p>
             <p className="text-2xl font-black text-green-900">{totalDocs}</p>
-          </Card>
-          <Card className="p-4 rounded-lg bg-white border border-green-300">
-            <p className="text-xs text-green-600 font-medium">Successfully Scanned</p>
-            <p className="text-2xl font-black text-green-900">
-              {readyDocs}
-              <span className="text-sm font-medium text-green-500 ml-1">
-                / {totalDocs}
-              </span>
-            </p>
-          </Card>
-          <Card className="p-4 rounded-lg bg-white border border-green-300">
-            <p className="text-xs text-green-600 font-medium">With CO₂ Data</p>
-            <p className="text-2xl font-black text-green-900">{co2Docs}</p>
           </Card>
         </div>
       )}
@@ -663,6 +745,11 @@ export function DocumentScannerTab() {
                       icon: "💰",
                     },
                     {
+                      key: "activityValue",
+                      label: "Activity",
+                      icon: "⚡",
+                    },
+                    {
                       key: "co2Equivalent",
                       label: "CO₂ Equivalent",
                       icon: "🌿",
@@ -672,7 +759,7 @@ export function DocumentScannerTab() {
                       previewDoc.extractedData?.[
                         key as keyof typeof previewDoc.extractedData
                       ];
-                    if (!val || typeof val === "number") return null;
+                    if (!val) return null;
                     return (
                       <div
                         key={key}
@@ -682,11 +769,73 @@ export function DocumentScannerTab() {
                           {icon} {label}
                         </span>
                         <span className="text-sm font-bold text-green-900">
-                          {val}
+                          {key === "activityValue"
+                            ? `${val}${
+                                previewDoc.extractedData?.activityUnit
+                                  ? ` ${previewDoc.extractedData.activityUnit}`
+                                  : ""
+                              }${
+                                previewDoc.extractedData?.activityType
+                                  ? ` (${previewDoc.extractedData.activityType})`
+                                  : ""
+                              }`
+                            : (val as any)}
                         </span>
                       </div>
                     );
                   })}
+
+                  {previewDoc.extractedData.consumptionRows &&
+                    previewDoc.extractedData.consumptionRows.length > 0 && (
+                      <div className="mt-3">
+                        <p className="text-xs font-bold text-green-700 uppercase tracking-widest mb-2">
+                          Consumption
+                        </p>
+                        <div className="overflow-hidden rounded-lg border border-green-200">
+                          <table className="w-full text-xs">
+                            <thead className="bg-green-50 text-green-800">
+                              <tr>
+                                <th className="px-3 py-2 text-left font-bold">
+                                  LIBELLE
+                                </th>
+                                <th className="px-3 py-2 text-right font-bold">
+                                  CONSOMMATION
+                                </th>
+                                <th className="px-3 py-2 text-right font-bold">
+                                  MONTANT
+                                </th>
+                                <th className="px-3 py-2 text-right font-bold">
+                                  PERIODE
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody className="bg-white">
+                              {previewDoc.extractedData.consumptionRows.map(
+                                (r, i) => (
+                                  <tr
+                                    key={`${r.libelle}-${i}`}
+                                    className="border-t border-green-100"
+                                  >
+                                    <td className="px-3 py-2 text-green-900 font-semibold">
+                                      {r.libelle}
+                                    </td>
+                                    <td className="px-3 py-2 text-right text-green-800">
+                                      {r.consommation ?? "—"}
+                                    </td>
+                                    <td className="px-3 py-2 text-right text-green-800">
+                                      {r.montant ?? "—"}
+                                    </td>
+                                    <td className="px-3 py-2 text-right text-green-800">
+                                      {r.periode ?? "—"}
+                                    </td>
+                                  </tr>
+                                )
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )}
 
                   {previewDoc.extractedData.confidence && (
                     <div className="mt-3">

@@ -7,7 +7,7 @@ interface CategoryChartProps {
 }
 
 const COLORS = {
-  'Electricity': '#10b981',    // Emerald
+  'Electricity': '#10b981',    // green
   'Natural Gas': '#f97316',    // Orange
   'Fuel': '#8b5cf6',           // Violet
   'Waste': '#06b6d4'           // Cyan
@@ -19,7 +19,7 @@ const CustomTooltip = ({ active, payload }: any) => {
     return (
       <div className="bg-white p-3 rounded-lg shadow-lg border border-slate-200">
         <p className="font-semibold text-slate-900">{data.name}</p>
-        <p className="text-emerald-600 font-bold">{formatCO2(data.value)}</p>
+        <p className="text-green-600 font-bold">{formatCO2(data.value)}</p>
         <p className="text-xs text-slate-500">
           {((data.value / payload[0].payload.total) * 100).toFixed(1)}%
         </p>
@@ -33,7 +33,7 @@ export function CategoryChart({ data, loading }: CategoryChartProps) {
   if (loading) {
     return (
       <div className="w-full h-80 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500" />
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500" />
       </div>
     );
   }

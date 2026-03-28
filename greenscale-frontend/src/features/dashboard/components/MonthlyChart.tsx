@@ -12,7 +12,7 @@ const CustomTooltip = ({ active, payload }: any) => {
     return (
       <div className="bg-white p-3 rounded-lg shadow-lg border border-slate-200">
         <p className="font-semibold text-slate-900">{data.month} {data.year}</p>
-        <p className="text-emerald-600 font-bold">{formatCO2(data.impact)}</p>
+        <p className="text-green-600 font-bold">{formatCO2(data.impact)}</p>
       </div>
     );
   }
@@ -23,7 +23,7 @@ export function MonthlyChart({ data, loading }: MonthlyChartProps) {
   if (loading) {
     return (
       <div className="w-full h-80 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500" />
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500" />
       </div>
     );
   }

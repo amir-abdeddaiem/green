@@ -107,7 +107,7 @@ const CONNECTOR_META: Record<
   excel: {
     label: "Excel / XLSX",
     icon: <FileSpreadsheet className="w-5 h-5" />,
-    color: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    color: "bg-green-50 text-green-700 border-green-200",
     fields: ["Sheet Name", "Header Row Number", "Data Range"],
   },
   json: {

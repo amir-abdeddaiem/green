@@ -3,10 +3,11 @@
 import os
 import logging
 import asyncio
+from pathlib import Path
 from typing import AsyncGenerator
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path=Path(__file__).with_name(".env"))
 
 try:
     import google.generativeai as genai
@@ -19,6 +20,16 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+
+def _normalize_gemini_model_name(model_name: str) -> str:
+    value = (model_name or "").strip()
+    if value.startswith("models/"):
+        return value[len("models/") :]
+    return value
+
+
+GEMINI_MODEL = _normalize_gemini_model_name(os.getenv("GEMINI_MODEL", "gemini-pro-latest"))
 
 # Verdustry Product Knowledge Base
 Verdustry_SYSTEM_PROMPT = """You are an expert support agent for Verdustry, a comprehensive sustainability platform designed to help businesses track, manage, and reduce their carbon emissions. Provide detailed, helpful, and actionable answers about the platform.
@@ -95,8 +106,11 @@ class AIChattBotService:
             try:
                 logger.info("Configuring Google Gemini API with provided key")
                 genai.configure(api_key=self.api_key)
-                self.model = genai.GenerativeModel('gemini-pro')
-                logger.info("✅ AI Chatbot Service Initialized Successfully with Google Gemini (Real-time Streaming)")
+                self.model = genai.GenerativeModel(GEMINI_MODEL)
+                logger.info(
+                    "✅ AI Chatbot Service Initialized Successfully with Google Gemini model=%s (Real-time Streaming)",
+                    GEMINI_MODEL,
+                )
             except Exception as e:  # pylint: disable=broad-except
                 logger.error("❌ Failed to initialize Gemini: %s", str(e), exc_info=True)
         else:

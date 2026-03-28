@@ -30,21 +30,21 @@ const SOCIAL_ICONS = [
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-green-900 text-white">
+    <footer className="bg-green-600/30 text-white">
       <div className="mx-auto max-w-6xl px-6 py-16 lg:grid lg:grid-cols-4 gap-10">
         {/* Logo & Description */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <img src="/Verdustry.svg" alt="Verdustry" className="h-10 w-auto" />
+            <img src="/LOGO_-_Verdustry-removebg-preview.png" alt="_Verdustry" />
             
           </div>
-          <p className="text-sm text-green-200">
+          <p className="text-sm text-green-900/70">
             La plateforme carbone des entreprises ambitieuses.
           </p>
           {/* Social Icons */}
           <div className="flex gap-4 mt-2">
             {SOCIAL_ICONS.map((icon) => (
-              <a key={icon.name} href={icon.href} className="hover:text-emerald-400 transition-colors">
+              <a key={icon.name} href={icon.href} className="hover:text-green-400 transition-colors">
                 {icon.svg}
               </a>
             ))}
@@ -59,7 +59,7 @@ const Footer: React.FC = () => {
               <a
                 key={link}
                 href="#"
-                className="block text-green-200 hover:text-emerald-400 transition-colors"
+                className="block text-green-900 hover:text-green-800 transition-colors"
               >
                 {link}
               </a>
@@ -69,7 +69,7 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Footer Bottom */}
-      <div className="border-t border-green-800 py-6 text-center text-sm text-green-300">
+      <div className="border-t border-green-800 py-6 text-center text-sm text-green-900">
         © 2026 Verdustry • Tous droits réservés • Politique de confidentialité • Mentions légales
       </div>
     </footer>

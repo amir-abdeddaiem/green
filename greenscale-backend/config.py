@@ -4,11 +4,12 @@ import json
 import os
 import re
 from functools import lru_cache
+from pathlib import Path
 from typing import Optional
 
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path=Path(__file__).with_name(".env"))
 
 
 def normalize_database_url(database_url: str) -> str:
@@ -82,6 +83,17 @@ class Settings:
     DATABASE_URL = normalize_database_url(DATABASE_URL)
     DATABASE_ECHO: bool = os.getenv("DATABASE_ECHO", "false").lower() == "true"
 
+    # Startup DB initialization behavior
+    # When true, the app will attempt to create/verify tables on startup.
+    DB_INIT_ON_STARTUP: bool = os.getenv("DB_INIT_ON_STARTUP", "true").lower() == "true"
+    # Hard timeout for startup DB init (seconds). Prevents uvicorn from waiting forever.
+    DB_INIT_TIMEOUT_SECONDS: float = float(os.getenv("DB_INIT_TIMEOUT_SECONDS", "30"))
+
+    # Connection and statement timeouts (PostgreSQL only)
+    DB_CONNECT_TIMEOUT_SECONDS: int = int(os.getenv("DB_CONNECT_TIMEOUT_SECONDS", "10"))
+    # Server-side statement timeout (milliseconds). Applies to DDL during create_all.
+    DB_STATEMENT_TIMEOUT_MS: int = int(os.getenv("DB_STATEMENT_TIMEOUT_MS", "15000"))
+
     # API
     API_HOST: str = os.getenv("API_HOST", "0.0.0.0")
     API_PORT: int = int(os.getenv("API_PORT", "8000"))
@@ -123,6 +135,34 @@ class Settings:
     # Upload
     MAX_UPLOAD_SIZE_MB: int = int(os.getenv("MAX_UPLOAD_SIZE_MB", "10"))
     UPLOAD_DIR: str = os.getenv("UPLOAD_DIR", "uploads")
+
+    # OCR (Tesseract)
+    # Full path to tesseract binary if it's not in PATH (Windows often needs this)
+    TESSERACT_CMD: Optional[str] = os.getenv("TESSERACT_CMD")
+    # Where to find traineddata files (tessdata). If set, we propagate it to OCR calls.
+    TESSDATA_PREFIX: Optional[str] = os.getenv("TESSDATA_PREFIX")
+    # Languages for OCR. Arabic requires the 'ara' traineddata.
+    TESSERACT_LANGUAGES: str = os.getenv("TESSERACT_LANGUAGES", "eng+fra+ara")
+    # Limit rendered PDF pages for OCR to keep latency reasonable
+    OCR_PDF_MAX_PAGES: int = int(os.getenv("OCR_PDF_MAX_PAGES", "2"))
+
+    # OCR engine selection
+    OCR_ENGINE: str = os.getenv("OCR_ENGINE", "tesseract").strip().lower()
+
+    # PaddleOCR
+    PADDLE_OCR_LANGS: str = os.getenv("PADDLE_OCR_LANGS", "fr ar")
+    PADDLE_PDF_MAX_PAGES: int = int(os.getenv("PADDLE_PDF_MAX_PAGES", str(OCR_PDF_MAX_PAGES)))
+
+    # Ollama (local) extraction
+    OLLAMA_EXTRACTION_ENABLED: bool = os.getenv("OLLAMA_EXTRACTION_ENABLED", "false").strip().lower() in (
+        "1",
+        "true",
+        "yes",
+        "y",
+        "on",
+    )
+    OLLAMA_BASE_URL: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434").strip()
+    OLLAMA_MODEL: str = os.getenv("OLLAMA_MODEL", "qwen2.5:7b-instruct").strip()
 
     # Logging
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")

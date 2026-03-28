@@ -1,11 +1,12 @@
 import os
 import logging
 from datetime import datetime
+from pathlib import Path
 from typing import Dict, Any
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv(dotenv_path=Path(__file__).with_name(".env"))
 
 try:
     import httpx  # type: ignore # pylint: disable=import-error

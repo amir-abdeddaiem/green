@@ -74,7 +74,7 @@
 - [x] Button added to Recent Activity card header
 - [x] Button positioned next to "Live" badge
 - [x] Uses Download icon from lucide-react
-- [x] Gradient emerald-cyan styling
+- [x] Gradient green-cyan styling
 - [x] Hover effects implemented
 - [x] Active/pressed state (scale-95)
 

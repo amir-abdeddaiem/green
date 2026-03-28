@@ -173,7 +173,7 @@ const AI_SECTION = {
   ],
 };
 
-type Accent = "green" | "emerald" | "teal";
+type Accent = "green" | "green" | "teal";
 
 const PRODUCTS: Array<{
   tag: string;
@@ -182,26 +182,50 @@ const PRODUCTS: Array<{
   features: string[];
   accent: Accent;
 }> = [
-  {
-    tag: "CŒUR DE PLATEFORME",
-    title: "Bilan Carbone®",
-    desc: "Calculez précisément vos émissions scopes 1, 2 et 3. Notre IA détecte les anomalies et automatise la collecte de données.",
-    features: ["GHG Protocol", "ADEME certifié", "IA intégrée"],
+{
+    "tag": "CŒUR DE PLATEFORME",
+    "title": "Bilan Carbone automatisé",
+    "desc": "Calculez précisément vos émissions de GES (Scopes 1, 2 et 3) grâce à une collecte automatisée via ERP, capteurs IoT et documents.",
+    "features": [
+      "Calcul carbone automatisé",
+      "Intégration ERP & IoT",
+      "IA pour détection d’anomalies"
+    ],
+    accent: "green",
+  },
+  
+    {
+    "tag": "PILOTAGE & OPTIMISATION",
+    "title": "Recommandations & plans d’action",
+    "desc": "Identifiez les leviers de réduction, simulez des scénarios et optimisez votre performance environnementale grâce à l’intelligence artificielle.",
+    "features": [
+      "Recommandations IA personnalisées",
+      "Simulation d’impact environnemental",
+      "Suivi des indicateurs ESG"
+    ],
     accent: "green",
   },
   {
-    tag: "PLANIFICATION",
-    title: "Plans d'action",
-    desc: "Accédez à notre bibliothèque d'actions, simulez des trajectoires et pilotez votre décarbonisation avec des experts dédiés.",
-    features: ["Bibliothèque SBTi", "Simulateur de coûts", "Ateliers experts"],
-    accent: "emerald",
+    "tag": "INTELLIGENCE & AUTOMATISATION",
+    "title": "Chatbot ESG intelligent",
+    "desc": "Interagissez avec vos données via un assistant IA pour analyser vos performances, comprendre vos indicateurs et faciliter le reporting.",
+    "features": [
+      "Assistant IA intégré",
+      "Analyse en temps réel",
+      "Support à la décision"
+    ],
+    accent: "green",
   },
   {
-    tag: "CONFORMITÉ",
-    title: "ESG & Reporting",
-    desc: "Répondez aux exigences CSRD, CDP, TCFD et EU Taxonomy avec des rapports audit-ready générés automatiquement.",
-    features: ["CSRD ready", "EU Taxonomy", "CDP disclosure"],
-    accent: "teal",
+    "tag": "SÉCURITÉ",
+    "title": "Protection des données & accès",
+    "desc": "Assurez la sécurité de vos données ESG grâce à des mécanismes avancés de protection et de gestion des accès.",
+    "features": [
+      "Chiffrement des données",
+      "Gestion des rôles utilisateurs",
+      "Accès sécurisé"
+    ],
+    accent: "green",
   },
 ];
 
@@ -280,7 +304,7 @@ function ImpactCounter({ target, prefix = "", suffix = "", duration = 1800 }: {
 function accentClasses(accent: Accent) {
   const classes = {
     green: { text: "text-green-700", pill: "border-green-200 bg-green-50 text-green-700", dot: "bg-green-600", glow: "from-green-500/15" },
-    emerald: { text: "text-emerald-700", pill: "border-emerald-200 bg-emerald-50 text-emerald-700", dot: "bg-emerald-500", glow: "from-emerald-500/15" },
+    // green: { text: "text-green-700", pill: "border-green-200 bg-green-50 text-green-700", dot: "bg-green-500", glow: "from-green-500/15" },
     teal: { text: "text-teal-700", pill: "border-teal-200 bg-teal-50 text-teal-700", dot: "bg-teal-500", glow: "from-teal-500/15" },
   };
   return classes[accent];
@@ -301,13 +325,12 @@ export  function MarketingHome() {
     <div className="relative min-h-screen bg-zinc-50 text-zinc-900 overflow-hidden">
       {/* Ambient Background */}
       <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="absolute -left-40 -top-40 h-[600px] w-[600px] rounded-full bg-green-500/10 blur-3xl" />
         <div className="absolute -right-40 top-80 h-[500px] w-[500px] rounded-full bg-teal-500/10 blur-3xl" />
         <div className="absolute bottom-20 left-1/3 h-[400px] w-[400px] rounded-full bg-green-500/10 blur-3xl" />
       </div>
 
-      <MarketingNavbar />
-
+      <MarketingNavbar variant="light" />
       {/* HERO SECTION */}
       <section ref={heroRef} className="relative min-h-screen flex items-center pt-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
@@ -315,7 +338,7 @@ export  function MarketingHome() {
             <div className={cn("space-y-8 transition-all duration-1000", heroInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12")}>
               <h1 className="text-6xl lg:text-7xl font-semibold tracking-tighter leading-none text-balance">
                 Réduisez votre empreinte carbone<br />
-                <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                <span className="bg-green-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
                   avec intelligence
                 </span>
               </h1>
@@ -327,7 +350,7 @@ export  function MarketingHome() {
               <div className="flex flex-wrap gap-4 pt-4">
                 <Button
                   size="lg"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-7 text-lg font-semibold rounded-2xl shadow-xl shadow-emerald-600/30 transition-all active:scale-[0.98]"
+                  className="bg-green-600 hover:bg-green-700 text-white px-10 py-7 text-lg font-semibold rounded-2xl shadow-xl shadow-green-600/30 transition-all active:scale-[0.98]"
                   onClick={() => navigate("/register")}
                 >
                   Commencer gratuitement
@@ -343,7 +366,7 @@ export  function MarketingHome() {
               </div>
 
               <div>
-                <p className="uppercase text-xs tracking-[2px] text-zinc-500 mb-4">Ils nous font confiance</p>
+                
                 <LogoLoop logos={PARTNER_LOGOS} speed={55} direction="left" logoHeight={52} gap={40} />
               </div>
             </div>
@@ -360,14 +383,14 @@ export  function MarketingHome() {
                   className="w-full aspect-video object-cover"
                 />
               </div>
-              <div className="absolute -inset-20 -z-10 bg-gradient-to-br from-emerald-400/20 via-teal-400/15 to-transparent blur-3xl rounded-[6rem]" />
+              <div className="absolute -inset-20 -z-10 bg-gradient-to-br from-green-400/20 via-teal-400/15 to-transparent blur-3xl rounded-[6rem]" />
             </div>
           </div>
         </div>
       </section>
 
       {/* IMPACT SECTION */}
-      <section ref={impactRef} style={{ backgroundColor: "#0a1f17" }} className="py-24 text-white rounded-3xl">
+      {/* <section ref={impactRef} className="py-24 text-white rounded-[2rem] bg-green-600">
         <div className="mx-auto max-w-5xl px-6">
           <h2 className="text-center text-5xl font-semibold tracking-tight mb-16">
             Plus d’impact.<br />Moins de coûts.
@@ -377,10 +400,10 @@ export  function MarketingHome() {
             {IMPACT_STATS.map((stat, i) => (
               <div
                 key={i}
-                className="bg-[#132b1e] rounded-3xl p-10 transition-all hover:scale-[1.02]"
+                className="bg-green-900/95 rounded-3xl p-10 transition-all hover:scale-[1.02]"
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <p className="text-emerald-300/75 text-lg leading-snug min-h-[4.5rem]">{stat.label}</p>
+                <p className="text-green-300/75 text-white leading-snug min-h-[4.5rem]">{stat.label}</p>
                 <p className="mt-8 text-6xl lg:text-7xl font-black tracking-tighter">
                   <ImpactCounter target={stat.target} prefix={stat.prefix} suffix={stat.suffix} />
                 </p>
@@ -388,17 +411,17 @@ export  function MarketingHome() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* PRODUCTS SECTION */}
       <section id="produits" ref={productsRef} className="py-24 bg-white">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center mb-16">
-            <div className="text-emerald-600 font-bold tracking-widest text-sm">NOTRE SUITE COMPLÈTE</div>
+            
             <h2 className="text-5xl font-semibold tracking-tight mt-4">Une plateforme pensée pour la transition écologique</h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {PRODUCTS.map((p, i) => {
               const a = accentClasses(p.accent);
               return (
@@ -406,13 +429,13 @@ export  function MarketingHome() {
                   key={i}
                   className={cn(
                     "group rounded-3xl border bg-white p-10 transition-all duration-700 hover:shadow-2xl hover:-translate-y-1",
-                    "hover:border-emerald-200"
+                    "hover:border-green-200"
                   )}
                   style={{ transitionDelay: `${i * 150}ms` }}
                 >
-                  <div className={cn("inline-flex rounded-full border px-4 py-1 text-xs font-bold tracking-widest", a.pill)}>
+                  {/* <div className={cn("inline-flex rounded-full border px-4 py-1 text-xs font-bold tracking-widest", a.pill)}>
                     {p.tag}
-                  </div>
+                  </div> */}
                   <h3 className={cn("mt-6 text-3xl font-semibold tracking-tight", a.text)}>{p.title}</h3>
                   <p className="mt-5 text-zinc-600 leading-relaxed">{p.desc}</p>
 
@@ -425,64 +448,55 @@ export  function MarketingHome() {
                     ))}
                   </ul>
 
-                  <button className="mt-10 text-emerald-600 font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
+                  {/* <button className="mt-10 text-green-600 font-semibold flex items-center gap-2 group-hover:gap-3 transition-all">
                     En savoir plus →
-                  </button>
+                  </button> */}
                 </div>
               );
             })}
           </div>
         </div>
       </section>
+            {/* AI SECTION */}
+{/* <section ref={aiRef} className="py-24 text-white rounded-[2rem] bg-green-600">
+  <div className="mx-auto max-w-6xl px-6">
 
-      {/* AI SECTION */}
-<section
-  ref={aiRef}
-  className="relative overflow-hidden w-full py-24 px-4 rounded-3xl"
-  style={{ backgroundColor: "#0d2117" }}
->
-  <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-    <div className="absolute -right-32 -top-32 h-[480px] w-[480px] rounded-full opacity-20"
-      style={{ background: "radial-gradient(circle, #16a34a 0%, transparent 65%)" }} />
-    <div className="absolute -left-24 bottom-0 h-[360px] w-[360px] rounded-full opacity-10"
-      style={{ background: "radial-gradient(circle, #4ade80 0%, transparent 65%)" }} />
-  </div>
+    <div
+      className={cn(
+        "text-center transition-all duration-700",
+        aiInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      )}
+    >
+     
 
-  <div className="relative mx-auto max-w-6xl">
-
-    <div className={cn(
-      "text-center transition-all duration-700",
-      aiInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-    )}>
-      <div className="inline-block rounded-full border border-green-400/30 bg-green-400/10 px-6 py-2 text-xs font-bold tracking-[3px] text-green-400">
-        VERDUSTRY AI
-      </div>
-
-      <h2 className="mt-6 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
-        L'intelligence artificielle <span className="text-green-400">au service du climat</span>
+      <h2 className="mt-6 text-5xl font-semibold tracking-tight">
+        L'intelligence artificielle{" "}
+        <span className="text-green-100 tracking-tighter">au service du climat</span>
       </h2>
 
-      <p className="mx-auto mt-4 max-w-2xl text-base"
-        style={{ color: "rgba(255,255,255,0.45)" }}>
+      <p className="mx-auto mt-4 max-w-2xl text-lg text-white/80">
         {AI_SECTION.description}
       </p>
     </div>
 
-    <div className="mt-16 grid grid-cols-1 gap-4 lg:grid-cols-2">
+    <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-      <div className="group relative overflow-hidden rounded-3xl p-10 transition-all duration-500 hover:-translate-y-1.5"
-        style={{ backgroundColor: "#132b1e", border: "1px solid rgba(74,222,128,0.1)" }}>
-        
-        <h3 className="text-3xl font-extrabold text-white">
+      {/* CARD 1 
+      <div
+        className="bg-green-900/95 rounded-3xl p-10 transition-all hover:scale-[1.02]"
+      >
+        <h3 className="text-3xl font-bold text-white">
           Toujours à jour.<br />Toujours plus intelligente.
         </h3>
 
         <div className="mt-10 grid grid-cols-3 gap-6">
           {AI_SECTION.stats.map((stat, i) => (
             <div key={i}>
-              <div className="text-4xl font-black text-green-400">{stat.value}</div>
-              <div className="mt-2 text-sm"
-                style={{ color: "rgba(255,255,255,0.5)" }}>
+              <div className="text-5xl font-black text-green-100 tracking-tighter">
+                {stat.value}
+              </div>
+
+              <div className="mt-2 text-sm text-green-100 tracking-tighter">
                 {stat.label}
               </div>
             </div>
@@ -490,24 +504,30 @@ export  function MarketingHome() {
         </div>
       </div>
 
-      <div className="group relative overflow-hidden rounded-3xl p-10 transition-all duration-500 hover:-translate-y-1.5"
-        style={{ backgroundColor: "#132b1e", border: "1px solid rgba(74,222,128,0.1)" }}>
-        
-        <div className="text-xs font-bold tracking-widest uppercase"
-          style={{ color: "rgba(74,222,128,0.7)" }}>
+      {/* CARD 2 
+      <div
+        className="bg-green-900/95 rounded-3xl p-10 transition-all hover:scale-[1.02]"
+      >
+        <div className="text-xs font-bold tracking-widest uppercase text-green-100 tracking-tighter">
           Exemple d'action IA
         </div>
 
         <p className="mt-6 text-lg leading-relaxed text-white">
           Détection automatique d’une anomalie Scope 3 chez un fournisseur →
-          suggestion de <span className="text-green-400 font-bold">3 alternatives</span>
-          avec <span className="text-green-400 font-bold">-27% d’émissions</span>.
+          suggestion de{" "}
+          <span className="text-green-100 tracking-tighter font-bold">
+            3 alternatives
+          </span>{" "}
+          avec{" "}
+          <span className="text-green-100 tracking-tighter font-bold">
+            -27% d’émissions
+          </span>.
         </p>
       </div>
 
     </div>
   </div>
-</section>
+</section> */}
 
       {/* PROCESS / STEPS SECTION */}
       <section id="solutions" ref={stepsRef} className="py-28" style={{ background: "linear-gradient(160deg, #f8fcf9 0%, #ffffff 50%, #f0faf4 100%)" }}>
@@ -515,7 +535,7 @@ export  function MarketingHome() {
           <div className="max-w-2xl mb-20">
             <h2 className="mt-6 text-5xl font-semibold tracking-tight leading-none">
               Toute votre stratégie climat,<br />
-              <span className="text-emerald-700">à portée de main</span>
+              <span className="text-green-600">à portée de main</span>
             </h2>
           </div>
 
@@ -523,21 +543,21 @@ export  function MarketingHome() {
             {STEPS.map((step, i) => (
               <div
                 key={i}
-                className="group bg-white rounded-3xl p-10 border border-green-100 hover:border-emerald-300 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
+                className="group bg-white rounded-3xl p-10 border border-green-100 hover:border-green-300 hover:shadow-xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
               >
-                <div className="absolute top-8 right-8 text-[120px] font-black text-emerald-50 group-hover:text-emerald-100/80 transition-colors pointer-events-none">
+                <div className="absolute top-8 right-8 text-[120px] font-black text-green-100 group-hover:text-green-100/80 transition-colors pointer-events-none">
                   {step.num}
                 </div>
 
                 <div className="relative z-10">
-                  <div className="w-20 h-20 flex items-center justify-center bg-emerald-50 rounded-2xl mb-8 group-hover:bg-emerald-100 transition-colors">
+                  <div className="w-20 h-20 flex items-center justify-center bg-green-300 rounded-2xl mb-8 group-hover:bg-green-100 transition-colors">
                     {step.icon}
                   </div>
-                  <div className="uppercase text-xs font-bold tracking-[2px] text-emerald-700 mb-3">{step.tag}</div>
+                  <div className="uppercase text-xs font-bold tracking-[2px] text-green-600 mb-3">{step.tag}</div>
                   <h3 className="text-2xl font-semibold mb-4 leading-tight">{step.title}</h3>
-                  <p className="text-zinc-600 leading-relaxed">{step.desc}</p>
+                  <p className="text-green-600 leading-relaxed">{step.desc}</p>
 
-                  {/* <div className="mt-10 text-emerald-600 font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                  {/* <div className="mt-10 text-green-600 font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all">
                     En savoir plus <span className="text-lg">→</span>
                   </div> */}
                 </div>
@@ -550,95 +570,113 @@ export  function MarketingHome() {
 
       {/* WHY US SECTION */}
       <section
-        ref={whyRef}
-        className="relative overflow-hidden w-full py-24 px-4 rounded-3xl"
-        style={{ backgroundColor: "#0d2117" }}
-      >
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -right-32 -top-32 h-[480px] w-[480px] rounded-full opacity-20" style={{ background: "radial-gradient(circle, #16a34a 0%, transparent 65%)" }} />
-          <div className="absolute -left-24 bottom-0 h-[360px] w-[360px] rounded-full opacity-10" style={{ background: "radial-gradient(circle, #4ade80 0%, transparent 65%)" }} />
-        </div>
+  ref={whyRef}
+  className="relative overflow-hidden w-full py-24 px-4 rounded-[2rem] text-white bg-green-600/10"
+  
+>
+  <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2rem]">
+    <div className="absolute -right-32 -top-32 h-[480px] w-[480px] rounded-full opacity-15"
+      style={{ background: "radial-gradient(circle, #4ade80 0%, transparent 65%)" }} />
+    <div className="absolute -left-24 bottom-0 h-[360px] w-[360px] rounded-full opacity-10"
+      style={{ background: "radial-gradient(circle, #bbf7d0 0%, transparent 65%)" }} />
+  </div>
 
-        <div className="relative mx-auto max-w-6xl">
-          <div className={cn(
-            "text-center transition-all duration-700",
-            whyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          )}>
-            <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
-              La différence{" "}
-              <span className="text-green-400">Verdustry</span>
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base" style={{ color: "rgba(255,255,255,0.45)" }}>
-              Rigueur scientifique, intelligence artificielle et sécurité absolue — au service de votre transition climatique.
-            </p>
+  <div className="relative mx-auto max-w-6xl">
+    <div className={cn(
+      "text-center transition-all duration-700",
+      whyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+    )}>
+      <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-green-900 sm:text-4xl lg:text-5xl">
+        La différence{" "}
+        <span style={{ color: "#00200b" }}>Verdustry</span> {/* green-200 — lisible sur green-600 */}
+      </h2>
+      <p className="mx-auto mt-4 max-w-xl text-base" style={{ color: "rgba(0, 73, 26, 0.65)" }}>
+        Rigueur scientifique, intelligence artificielle et sécurité absolue — au service de votre transition climatique.
+      </p>
+    </div>
+
+    <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {WHY_US.map((item, i) => (
+        <div
+          key={item.tag}
+          className={cn(
+            "group relative overflow-hidden rounded-3xl p-8 transition-all duration-500 hover:-translate-y-1.5 cursor-pointer",
+            whyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          )}
+          style={{
+            backgroundColor: "rgba(20, 51, 30, 0.95)", 
+            border: "1px solid rgba(134,239,172,0.12)", 
+            transitionDelay: `${i * 100}ms`,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = "rgba(134,239,172,0.35)";
+            e.currentTarget.style.boxShadow = "0 20px 40px rgba(10, 30, 18, 0.7)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = "rgba(134,239,172,0.12)";
+            e.currentTarget.style.boxShadow = "none";
+          }}
+        >
+          {/* Ligne de lumière au survol */}
+          <div className="absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            style={{ background: "linear-gradient(90deg, transparent, #86efac, transparent)" }} />
+
+          {/* Numéro décoratif */}
+          <div className="pointer-events-none absolute bottom-2 right-4 text-8xl font-black leading-none select-none"
+            style={{ color: "rgba(134,239,172,0.05)" }}>
+            {item.num}
           </div>
 
-          <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {WHY_US.map((item, i) => (
-              <div
-                key={item.tag}
-                className={cn(
-                  "group relative overflow-hidden rounded-3xl p-8 transition-all duration-500 hover:-translate-y-1.5 cursor-pointer",
-                  whyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                )}
+          <div className="relative">
+            <div className="flex items-start justify-between">
+              {/* Icône */}
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110"
                 style={{
-                  backgroundColor: "#132b1e",
-                  border: "1px solid rgba(74,222,128,0.1)",
-                  transitionDelay: `${i * 100}ms`,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(74,222,128,0.35)";
-                  e.currentTarget.style.boxShadow = "0 20px 40px rgba(13,33,23,0.6)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(74,222,128,0.1)";
-                  e.currentTarget.style.boxShadow = "none";
-                }}
-              >
-                <div className="absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{ background: "linear-gradient(90deg, transparent, #4ade80, transparent)" }} />
-
-                <div className="pointer-events-none absolute bottom-2 right-4 text-8xl font-black leading-none select-none"
-                  style={{ color: "rgba(74,222,128,0.04)" }}>
-                  {item.num}
-                </div>
-
-                <div className="relative">
-                  <div className="flex items-start justify-between">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110"
-                      style={{ background: "rgba(74,222,128,0.08)", border: "1px solid rgba(74,222,128,0.18)" }}>
-                      {item.icon}
-                    </div>
-                    <div className="rounded-xl px-3 py-2 text-right"
-                      style={{ background: "rgba(74,222,128,0.06)", border: "1px solid rgba(74,222,128,0.15)" }}>
-                      <div className="text-xl font-black text-green-400">{item.stat}</div>
-                      <div className="mt-0.5 text-[9px] font-semibold uppercase tracking-wider" style={{ color: "rgba(74,222,128,0.55)" }}>{item.statLabel}</div>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 text-[10px] font-bold tracking-widest uppercase" style={{ color: "rgba(74,222,128,0.6)" }}>
-                    {item.tag}
-                  </div>
-
-                  <h3 className="mt-2 text-xl font-extrabold tracking-tight text-white leading-snug">
-                    {item.title}
-                  </h3>
-
-                  <p className="mt-3 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.45)" }}>
-                    {item.desc}
-                  </p>
-
-                  <div className="mt-6 flex items-center gap-1.5 text-sm font-bold text-green-400">
-                    <span>En savoir plus</span>
-                    <span className="transition-transform duration-200 group-hover:translate-x-1.5">→</span>
-                  </div>
-                </div>
+                  background: "rgba(134,239,172,0.08)",
+                  border: "1px solid rgba(134,239,172,0.2)"
+                }}>
+                {item.icon}
               </div>
-            ))}
+
+              {/* Stat badge */}
+              <div className="rounded-xl px-3 py-2 text-right"
+                style={{
+                  background: "rgba(134,239,172,0.07)",
+                  border: "1px solid rgba(134,239,172,0.18)"
+                }}>
+                <div className="text-xl font-black" style={{ color: "#86efac" }}>{item.stat}</div>
+                <div className="mt-0.5 text-[9px] font-semibold uppercase tracking-wider"
+                  style={{ color: "rgba(134,239,172,0.5)" }}>{item.statLabel}</div>
+              </div>
+            </div>
+
+            {/* Tag */}
+            <div className="mt-6 text-[10px] font-bold tracking-widest uppercase"
+              style={{ color: "rgba(134,239,172,0.55)" }}>
+              {item.tag}
+            </div>
+
+            {/* Titre */}
+            <h3 className="mt-2 text-xl font-extrabold tracking-tight text-white leading-snug">
+              {item.title}
+            </h3>
+
+            {/* Description */}
+            <p className="mt-3 text-sm leading-relaxed" style={{ color: "rgba(187,247,208,0.5)" }}>
+              {item.desc}
+            </p>
+
+            {/* CTA */}
+            <div className="mt-6 flex items-center gap-1.5 text-sm font-bold" style={{ color: "#86efac" }}>
+              <span>En savoir plus</span>
+              <span className="transition-transform duration-200 group-hover:translate-x-1.5">→</span>
+            </div>
           </div>
         </div>
-      </section>
-
+      ))}
+    </div>
+  </div>
+</section>
       {/* SECURITY SECTION */}
 <section ref={securityRef} className="py-28 bg-white text-zinc-900">
   <div className="mx-auto max-w-6xl px-6">
@@ -655,7 +693,7 @@ export  function MarketingHome() {
       {SECURITY_FEATURES.map((feature, i) => (
         <div
           key={i}
-          className="bg-green-50 border border-green-200 hover:border-emerald-300 rounded-3xl p-8 transition-all hover:-translate-y-1 group"
+          className="bg-green-600/10 border border-green-200 hover:border-green-300 rounded-3xl p-8 transition-all hover:-translate-y-1 group"
         >
           <div className="text-5xl mb-6 text-green-600 group-hover:scale-110 transition-transform">
             {feature.icon}
@@ -670,20 +708,20 @@ export  function MarketingHome() {
   </div>
 </section>
 
-   {/* FINAL CTA with WHY US colors */}
-<section className="py-28 border-t rounded-3xl" style={{ backgroundColor: "#0d2117" }}>
-  <div className="mx-auto max-w-3xl text-center px-6">
+   {/* FINAL CTA  */}
+<section className="py-28 border-t rounded-[2rem] bg-green-600" >
+  <div className=" min-w-xl text-center px-6">
     <h2 className="text-5xl font-semibold tracking-tight text-white">
       Prêt à réduire votre empreinte carbone ?
     </h2>
-    <p className="mt-6 text-xl" style={{ color: "rgba(255,255,255,0.45)" }}>
-      Rejoignez plus de 3 500 entreprises qui transforment leur impact climatique en avantage compétitif.
+    <p className="mt-6 text-white  rounded-[3rem] " >
+      Rejoignez nous pour transformer l'impact climatique en avantage compétitif.
     </p>
 
     <div className="mt-12 flex flex-wrap justify-center gap-4">
       <Button
         size="lg"
-        className="bg-green-400 hover:bg-green-500 text-white px-12 py-7 text-lg rounded-2xl"
+        className="bg-green-900/95 hover:bg-green-500 text-white px-12 py-7 text-lg rounded-2xl"
         onClick={() => navigate("/register")}
       >
         Commencer gratuitement
@@ -691,15 +729,13 @@ export  function MarketingHome() {
       <Button
         variant="outline"
         size="lg"
-        className="border-green-400 text-green-400 hover:bg-green-500 hover:text-white px-12 py-7 text-lg rounded-2xl"
+        className="border-green-400 text-green-600 hover:bg-green-500 hover:text-white px-12 py-7 text-lg rounded-2xl"
         onClick={() => navigate("/book-demo")}
       >
         Parler à un expert
       </Button>
     </div>
-    <p className="mt-6 text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
-      Aucune carte requise • Résultats visibles en 48 heures
-    </p>
+    
   </div>
 </section>
       

@@ -206,7 +206,7 @@ DANGER ZONE:
 />
 ```
 
-- Current tab is highlighted in emerald color
+- Current tab is highlighted in green color
 - Icon + label shown (or just icon when collapsed)
 - Smooth animations on hover
 
@@ -373,7 +373,7 @@ location.pathname changes
   ↓
 NavItem re-renders with active={true} for Analytics
   ↓
-Sidebar highlights Analytics in emerald color
+Sidebar highlights Analytics in green color
   ↓
 <Outlet /> renders AnalyticsTab component
   ↓
@@ -423,7 +423,7 @@ Next time they return, they must log in again
 ### 2. Active Tab Highlighting
 - Use `location.pathname` from React Router
 - Compare with route path in NavItem
-- Emerald background + color for active state
+- green background + color for active state
 
 ### 3. Responsive Design
 - Tailwind breakpoints: sm, md, lg

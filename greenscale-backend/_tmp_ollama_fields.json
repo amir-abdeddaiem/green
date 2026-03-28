@@ -1,0 +1,28 @@
+{
+  "vendor": "Société Tunisienne de l'Electricité et du Gaz",
+  "documentCategory": "invoice",
+  "date": null,
+  "invoicePeriod": "du 2021.07.26 au 2021.09.27",
+  "totalAmount": {
+    "amount": "175.000",
+    "currency": "TND"
+  },
+  "activities": [
+    {
+      "type": "electricity_kwh",
+      "quantity": "145450",
+      "unit": "kWh",
+      "amount": null,
+      "currency": null,
+      "sign": "+"
+    },
+    {
+      "type": "natural_gas_m3",
+      "quantity": "66762",
+      "unit": "m3",
+      "amount": null,
+      "currency": null,
+      "sign": "+"
+    }
+  ]
+}

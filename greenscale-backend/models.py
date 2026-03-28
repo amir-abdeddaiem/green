@@ -41,6 +41,13 @@ class User(Base):
     # Relationship to budgets (for budget tracking)
     budgets = relationship("Budget", back_populates="user", cascade="all, delete-orphan")
 
+    # Relationship to OCR-scanned documents
+    document_scans = relationship(
+        "DocumentScan",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
+
 
 class Emission(Base):
     """Emission log model for tracking carbon emissions."""
@@ -187,3 +194,73 @@ class Scope3Log(Base):
     user = relationship("User")
     supplier = relationship("Supplier", back_populates="scope3_logs")
     emission_factor = relationship("EmissionFactor")
+
+
+class DocumentScan(Base):
+    """OCR-scanned document store (raw text + sustainability-focused extraction)."""
+
+    __tablename__ = "document_scans"
+
+    id = Column(BigInteger, primary_key=True, index=True)
+    business_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+
+    filename = Column(String(255), nullable=False)
+    category = Column(String(50), nullable=False, default="other")
+    content_type = Column(String(100), nullable=True)
+
+    ocr_language = Column(String(40), nullable=True)
+    detected_language = Column(String(40), nullable=True)
+
+    ocr_text = Column(Text, nullable=True)
+    filtered_text = Column(Text, nullable=True)
+    extracted_json = Column(Text, nullable=True)
+
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    user = relationship("User", back_populates="document_scans")
+
+
+class InvoiceLineItem(Base):
+    """Extracted invoice line item (Tunisian utility bills, etc.)."""
+
+    __tablename__ = "invoice_line_items"
+
+    id = Column(BigInteger, primary_key=True, index=True)
+    document_scan_id = Column(
+        BigInteger,
+        ForeignKey("document_scans.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    libelle = Column(String(255), nullable=False)
+    consommation = Column(String(100), nullable=True)
+    montant = Column(String(100), nullable=True)
+
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    document_scan = relationship("DocumentScan", backref="invoice_line_items")
+
+
+class ExtractedDoc(Base):
+    """Persisted extracted document payload for later display/export."""
+
+    __tablename__ = "extracted_Doc"
+
+    id = Column(BigInteger, primary_key=True, index=True)
+    business_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    document_scan_id = Column(
+        BigInteger,
+        ForeignKey("document_scans.id", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+
+    filename = Column(String(255), nullable=False)
+    category = Column(String(50), nullable=False, default="other")
+    extracted_json = Column(Text, nullable=True)
+
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    user = relationship("User")
+    document_scan = relationship("DocumentScan")

@@ -17,6 +17,16 @@ bcrypt==4.1.1
 python-multipart==0.0.6
 reportlab==4.0.9
 
+# OCR (Tesseract)
+pytesseract==0.3.10
+Pillow==10.3.0
+# Optional but recommended to OCR PDFs (renders pages to images)
+pypdfium2==4.30.0
+
+# OCR (PaddleOCR) - OPTIONAL (higher accuracy for tables/AR)
+# Install only if you want OCR_ENGINE=paddle and your platform/Python is supported:
+#   pip install -r requirements-ocr-paddle.txt
+
 # API Integration
 httpx==0.25.2
 requests==2.31.0

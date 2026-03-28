@@ -94,7 +94,7 @@ function StepDots({ step }: { step: Step }) {
           step === "form"
             ? "w-6 bg-green-600"
             : step === "success"
-              ? "w-2 bg-emerald-500"
+              ? "w-2 bg-green-500"
               : "w-2 bg-muted-foreground/50"
         )}
       />

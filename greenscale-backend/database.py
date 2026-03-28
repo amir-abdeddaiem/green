@@ -16,13 +16,29 @@ logger = logging.getLogger(__name__)
 # Database URL
 SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
 
+
+def _build_connect_args(database_url: str) -> dict:
+    """Build driver-specific connect args.
+
+    For PostgreSQL + psycopg, enforce low-level connection timeout and an optional
+    server-side statement timeout to avoid long hangs during startup DDL.
+    """
+    if database_url.startswith("postgresql+psycopg://"):
+        # NOTE: Neon pooled endpoints reject startup parameters in `options`
+        # (including statement_timeout). Keep only connect_timeout here.
+        return {"connect_timeout": settings.DB_CONNECT_TIMEOUT_SECONDS}
+
+    return {}
+
 # Create engine with connection pooling
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     echo=settings.DATABASE_ECHO,
+    connect_args=_build_connect_args(SQLALCHEMY_DATABASE_URL),
     poolclass=QueuePool,
     pool_size=5,
     max_overflow=10,
+    pool_timeout=30,
     pool_recycle=3600,  # Recycle connections every hour
     pool_pre_ping=True,  # Test connection before using
 )

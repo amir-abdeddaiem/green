@@ -80,7 +80,7 @@ January 22, 2025 at 11:30 AM,Natural Gas,450.0,m³,900.0
 ### UI Components Added
 - **Button Location:** Recent Activity card header
 - **Button Styling:** 
-  - Gradient: emerald-500 to cyan-500
+  - Gradient: green-500 to cyan-500
   - Hover: Darker shades with scale transform
   - Disabled: Slate 400-500 (during export)
   - Responsive: Icon-only on mobile, text visible on desktop/tablet
@@ -99,7 +99,7 @@ January 22, 2025 at 11:30 AM,Natural Gas,450.0,m³,900.0
 <button
   onClick={handleDownloadReport}
   disabled={isDownloading}
-  className="flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-emerald-500 to-cyan-500..."
+  className="flex items-center gap-2 px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-green-500 to-cyan-500..."
 >
   {isDownloading ? (
     <>

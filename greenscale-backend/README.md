@@ -111,6 +111,20 @@ GEMINI_API_KEY=your-gemini-api-key
 MAX_UPLOAD_SIZE_MB=10
 UPLOAD_DIR=uploads
 
+# OCR
+# Default engine is Tesseract. Install the Tesseract binary on the host OS and either add it to PATH
+# or set the full path (Windows example shown).
+OCR_ENGINE=tesseract
+TESSERACT_CMD=C:\\Program Files\\Tesseract-OCR\\tesseract.exe
+TESSERACT_LANGUAGES=eng+fra+ara
+OCR_PDF_MAX_PAGES=2
+
+# Optional PaddleOCR (higher accuracy on some invoices/tables)
+# 1) Install: pip install -r requirements-ocr-paddle.txt
+# 2) Set: OCR_ENGINE=paddle
+PADDLE_OCR_LANGS=fr ar
+PADDLE_PDF_MAX_PAGES=2
+
 # Logging
 LOG_LEVEL=INFO
 ```

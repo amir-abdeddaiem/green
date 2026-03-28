@@ -25,6 +25,10 @@ import { BookDemo } from "./pages/home/BookDemo";
 import CbamPage from "./pages/home/Cbam";
 import CsrdPage from "./pages/home/Csrd";
 import { SolutionsPage } from "./pages/home/Pack";
+import { PackDetailPage } from "./pages/home/PackDetail";
+import  ContactPage  from "./pages/home/Contact";
+import IndustrieSectorPage from "./pages/home/secteur/Industrie";
+import FinanceSectorPage from "./pages/home/secteur/Finance";
 
 function App() {
   return (
@@ -36,9 +40,13 @@ function App() {
         <Route path="/cbam" element={<CbamPage />} />
         <Route path="/csrd" element={<CsrdPage />} />
         <Route path="/solutions" element={<SolutionsPage />} />
+        <Route path="/solutions/packs/:packId" element={<PackDetailPage />} />
         {/* Auth Routes */}
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/industrie" element={<IndustrieSectorPage />} />
+        <Route path="/finance" element={<FinanceSectorPage />} />
 
         {/* Super Admin Dashboard Routes (PROTECTED - Owner Only) */}
         <Route

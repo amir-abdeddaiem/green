@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MarketingNavbar } from "@/components/marketing/MarketingNavbar";
 import Footer from "./Footer";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const SECTORS = [
   { name: "Steel", desc: "Iron and steel products", price: "€45/tonne CO₂", icon: "🏗️" },
@@ -59,111 +61,84 @@ const ADVANTAGES = [
 ];
 
 export default function CbamPage() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <MarketingNavbar variant="dark" />
+      <MarketingNavbar variant="light" />
 
-     {/* HERO */}
-<section className="relative overflow-hidden border-b bg-gradient-to-b from-white to-emerald-50/40">
-  <div className="absolute -top-40 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-emerald-300/20 blur-3xl" />
+{/* HERO */}
+<section className="relative overflow-hidden border-b bg-gradient-to-b from-white via-green-50/20 to-green-50/40 min-h-screen pt-28 pb-20 sm:pt-32">
+  {/* Background glow */}
+  <div className="absolute -top-40 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-green-300/20 blur-3xl animate-pulse" />
 
-  <div className="mx-auto max-w-6xl px-4 pt-28 pb-20 sm:px-6 lg:px-8">
-    <div className="mx-auto max-w-3xl text-center">
+  <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-center gap-10 h-full">
 
-      
-
-      <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl">
-        CBAM Compliance
-        <span className="block text-emerald-600">
-          Made Simple
-        </span>
+    {/* LEFT: TEXT & CTA */}
+    <motion.div
+      className="max-w-2xl text-center lg:text-left"
+      initial={{ opacity: 0, x: -50 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.8 }}
+    >
+      <br/><br/><br/>
+      <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+        Conformité CBAM 
+        <span className="block text-green-600">Simplifié</span>
       </h1>
 
-      <p className="mt-5 text-base text-muted-foreground sm:text-lg">
-        The Carbon Border Adjustment Mechanism (CBAM) requires companies
-        importing goods into the EU to report their embedded carbon emissions.
-        Our platform helps you calculate, monitor, and report emissions
-        automatically — ensuring full compliance.
-      </p>
+      <motion.p
+        className="mt-5 text-base text-muted-foreground sm:text-lg"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+      >
+        Le Mécanisme d'Ajustement Carbone aux Frontières (CBAM) oblige les entreprises importatrices de biens dans l'UE à déclarer leurs émissions de carbone intégrées. Notre plateforme vous aide à calculer, surveiller et déclarer les émissions automatiquement — garantissant une conformité totale.
+      </motion.p>
 
-      <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-        <Button className="bg-green-600 text-white hover:bg-green-700">
-          Start CBAM Assessment
+      {/* BUTTONS */}
+      <motion.div
+        className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-start"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
+      >
+        <Button className="bg-green-600 text-white hover:bg-green-700 shadow-lg shadow-green-200 hover:scale-105 transition-transform" onClick={() => navigate("/book-demo")}>
+          Demo
         </Button>
+        <Button variant="outline">En savoir plus</Button>
+      </motion.div>
 
-        <Button variant="outline">
-          Learn More
-        </Button>
-      </div>
+      {/* BADGES */}
+      <motion.div
+        className="mt-10 flex flex-wrap justify-center lg:justify-start gap-6 text-sm text-green-700 font-medium"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.9, duration: 0.8 }}
+      >
+        <div className="flex items-center gap-2">Conformité à l'UE</div>
+        <div className="flex items-center gap-2">Rapports automatisés</div>
+        <div className="flex items-center gap-2"> Calculs de carbone par IA</div>
+      </motion.div>
+    </motion.div>
 
-      <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-        <div className="flex items-center gap-2">
-          🌍 EU Compliance
-        </div>
+    {/* RIGHT: LOGO / IMAGE */}
+    <motion.div
+      className="flex-shrink-0"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1, duration: 1, type: "spring", stiffness: 100 }}
+    >
+      <img
+        src="/CBAM_Beratung_Logo.svg"
+        alt="CBAM regulation illustration"
+        className="w-48 md:w-56 lg:w-64 object-contain animate-float"
+      />
+    </motion.div>
 
-        <div className="flex items-center gap-2">
-          📊 Automated Reporting
-        </div>
-
-        <div className="flex items-center gap-2">
-          ⚡ AI Carbon Calculations
-        </div>
-      </div>
-
-    </div>
   </div>
 </section>
 
-      {/* WARNING BANNER */}
-<section className="bg-gradient-to-r from-amber-50 to-orange-50 border-y border-amber-200/70">
-  <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-    <div className="flex flex-col gap-6 rounded-2xl border border-amber-200 bg-white/70 p-6 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
-      
-      {/* LEFT CONTENT */}
-      <div className="flex gap-4">
-        <div className="text-3xl leading-none">🇪🇺</div>
 
-        <div className="text-left">
-          <h2 className="text-lg font-bold text-amber-900">
-            ⚠️ CBAM is Now in Effect
-          </h2>
-
-          <p className="mt-1 text-sm text-amber-900/80">
-            The EU Carbon Border Adjustment Mechanism (CBAM) is now in effect.
-          </p>
-
-          <p className="mt-2 text-sm text-amber-900/80">
-            Companies importing goods into the EU{" "}
-            <span className="font-semibold">
-              must report embedded carbon emissions.
-            </span>
-          </p>
-
-          <p className="mt-1 text-sm text-amber-900/80">
-            Non-compliance can result in{" "}
-            <span className="font-semibold">
-              significant penalties and trade restrictions.
-            </span>
-          </p>
-
-          <p className="mt-3 text-sm font-semibold text-amber-800">
-            Is your business prepared for CBAM requirements?
-          </p>
-        </div>
-      </div>
-
-      {/* RIGHT IMAGE */}
-      <div className="flex-shrink-0">
-        <img
-          src="/CBAM_Beratung_Logo.svg"
-          alt="CBAM regulation illustration"
-          className="w-40 md:w-48 lg:w-56 object-contain"
-        />
-      </div>
-
-    </div>
-  </div>
-</section>
 
       {/* SECTORS */}
       <section className="py-16">
@@ -184,9 +159,7 @@ export default function CbamPage() {
                       <h3 className="mt-3 text-lg font-bold">{s.name}</h3>
                       <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
                     </div>
-                    <span className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">
-                      {s.price}
-                    </span>
+                    
                   </div>
                 </CardContent>
               </Card>
@@ -199,122 +172,112 @@ export default function CbamPage() {
         </div>
       </section>
 
-      {/* TIMELINE */}
-      <section className="py-16 bg-muted/30">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            
-            <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">CBAM Implementation Timeline</h2>
-            <p className="mt-3 text-base text-muted-foreground">Key milestones in the CBAM rollout process</p>
-          </div>
+     {/* TIMELINE - HORIZONTAL SCROLL */}
+<section className="py-16 bg-green-50/20">
+  <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-3xl text-center">
+      <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl text-green-800">
+        CBAM Implementation Timeline
+      </h2>
+      <p className="mt-3 text-base text-green-900/70">
+        Key milestones in the CBAM rollout process
+      </p>
+    </div>
 
-          <div className="mt-10 grid gap-4">
-            {TIMELINE.map((t, i) => (
-              <div
-                key={t.year}
-                className="flex flex-col gap-3 rounded-2xl border bg-card p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 text-sm font-extrabold">
-                    {i + 1}
-                  </div>
-                  <div>
-                    <div className="text-sm font-semibold text-muted-foreground">{t.year}</div>
-                    <div className="text-lg font-bold">{t.label}</div>
-                  </div>
-                </div>
-
-                {t.next && (
-                  <div className="text-sm font-semibold text-emerald-700">→ {t.next}</div>
-                )}
-              </div>
-            ))}
+    {/* Horizontal scroll container */}
+    <div className="mt-10 flex gap-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-green-300 scrollbar-track-green-50">
+      {TIMELINE.map((t, i) => (
+        <motion.div
+          key={t.year}
+          className="min-w-[250px] flex-shrink-0 rounded-2xl border-t-4 border-green-600 bg-white/90 shadow-md p-6 hover:shadow-lg transition-shadow"
+          whileHover={{ y: -5 }}
+        >
+          <div className="flex items-center gap-4 mb-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 text-green-600 text-sm font-extrabold">
+              {i + 1}
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-green-900/70">{t.year}</div>
+              <div className="text-lg font-bold text-green-800">{t.label}</div>
+            </div>
           </div>
+          {t.next && (
+            <div className="text-sm font-semibold text-green-600 mt-2">→ {t.next}</div>
+          )}
+        </motion.div>
+      ))}
+    </div>
 
-          <div className="mt-10 flex justify-center">
-            <Button asChild className="bg-green-600 text-white hover:bg-green-700">
-              <a href="#">Prepare for CBAM →</a>
-            </Button>
-          </div>
-        </div>
-      </section>
+    
+  </div>
+</section>
+
+
 
       
-      {/* PROCESS */}
-      <section className="py-16 bg-muted/30">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            
-            <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">CBAM Compliance Process</h2>
-            <p className="mt-3 text-base text-muted-foreground">Five steps to ensure full CBAM compliance</p>
-          </div>
-
-          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {STEPS.map((s) => (
-              <Card key={s.num} className="shadow-sm">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-600 text-white text-sm font-extrabold">
-                      {s.num}
-                    </div>
-                    <div>
-                      <h3 className="text-base font-bold">{s.title}</h3>
-                      <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ADVANTAGES */}
-      <section className="py-16">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            
-            <h2 className="mt-6 text-3xl font-extrabold tracking-tight sm:text-4xl">Competitive Advantage</h2>
-            <p className="mt-3 text-base text-muted-foreground">Turn CBAM compliance into a business opportunity</p>
-          </div>
-
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {ADVANTAGES.map((a) => (
-              <Card key={a.title} className="shadow-sm">
-                <CardContent className="p-6">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 text-xl">
-                    {a.icon}
-                  </div>
-                  <h3 className="mt-3 text-base font-bold">{a.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{a.desc}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-     {/* CTA - Security Section Colors */}
-<section className="relative overflow-hidden bg-zinc-50 text-zinc-900">
-  <div className="absolute inset-0 -z-10">
-    <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 via-white to-emerald-50/30" />
-    <div className="absolute -inset-24 -z-10 bg-gradient-to-br from-emerald-400/20 via-teal-400/15 to-transparent blur-3xl rounded-[6rem]" />
-  </div>
-
-  <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-    <div className="mx-auto max-w-3xl text-center">
-      <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-zinc-900">
-        Ready for CBAM Compliance?
+   {/* PROCESS - Simplified & Modern */}
+<section className="py-16 bg-green-50">
+  <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-3xl text-center space-y-4">
+      <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-green-900">
+        CBAM Compliance Process
       </h2>
-      <p className="mt-4 text-base text-zinc-700/90">
-        Don't let CBAM requirements catch you unprepared. Start your compliance journey today with our expert guidance and AI-powered solutions.
+      <p className="text-green-800/70">
+        Five steps to ensure full CBAM compliance
       </p>
-      <div className="mt-8 flex justify-center">
-        <Button asChild className="bg-emerald-600 text-white hover:bg-emerald-700">
-          <a href="#">Get CBAM Ready Now →</a>
-        </Button>
-      </div>
     </div>
+
+    <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {STEPS.map((s) => (
+        <div
+          key={s.num}
+          className="group p-6 bg-white rounded-2xl shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+        >
+          <div className="flex items-start gap-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-600 text-white font-bold">
+              {s.num}
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-green-900">{s.title}</h3>
+              <p className="mt-1 text-sm text-green-800/70">{s.desc}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+      
+
+     {/* FINAL CTA  */}
+<section className="py-28 border-t rounded-[2rem] bg-green-600" >
+  <div className=" min-w-xl text-center px-6">
+    <h2 className="text-5xl font-semibold tracking-tight text-white">
+      Prêt à réduire votre empreinte carbone ?
+    </h2>
+    <p className="mt-6 text-white  rounded-[3rem] " >
+      Rejoignez nous pour transformer l'impact climatique en avantage compétitif.
+    </p>
+
+    <div className="mt-12 flex flex-wrap justify-center gap-4">
+      <Button
+        size="lg"
+        className="bg-green-900/95 hover:bg-green-500 text-white px-12 py-7 text-lg rounded-2xl"
+        onClick={() => navigate("/register")}
+      >
+        Commencer gratuitement
+      </Button>
+      <Button
+        variant="outline"
+        size="lg"
+        className="border-green-400 text-green-600 hover:bg-green-500 hover:text-white px-12 py-7 text-lg rounded-2xl"
+        onClick={() => navigate("/book-demo")}
+      >
+        Parler à un expert
+      </Button>
+    </div>
+    
   </div>
 </section>
 
