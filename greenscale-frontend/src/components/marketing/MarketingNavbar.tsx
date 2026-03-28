@@ -24,7 +24,7 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
-    label: "A propos",
+    label: "À propos",
     submenu: [
       { title: "Pourquoi Verdustry Solutions", desc: "", href: "/#pourquoi-verdustry" },
       { title: "Stratégie climatique", desc: "", href: "/#strategie-climatique" },
@@ -120,7 +120,7 @@ const Logo = ({ variant }: { variant: NavbarVariant }) => (
 //   </div>
 // );
 
-export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
+export function MarketingNavbar({ variant = "light" }: MarketingNavbarProps) {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
@@ -275,7 +275,7 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
               >
                 <button
                   className={cn(
-                    "flex items-center space-x-2 text-m font-medium uppercase tracking-wider transition-colors duration-300 py-2",
+                    "flex items-center space-x-2 text-m font-medium uppercase tracking-wider transition-colors duration-300 py-2 whitespace-nowrap",
                     variant === "light" ? "text-foreground hover:text-green-700" : "text-white hover:text-green-300"
                   )}
                   aria-expanded={hovered === index}
@@ -573,7 +573,7 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
                         variant === "light" ? "text-foreground hover:text-green-700" : "text-white hover:text-green-300"
                       )}
                     >
-                      <span>{item.label}</span>
+                      <span className="whitespace-nowrap">{item.label}</span>
                       {item.submenu.length > 0 && (
                         <motion.svg
                           animate={{ rotate: mobileExpanded === index ? 180 : 0 }}
