@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type MouseEvent as ReactMouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -26,9 +26,9 @@ const menuItems: MenuItem[] = [
   {
     label: "A propos",
     submenu: [
-      { title: "Pourquoi Verdustry Solutions", desc: "", href: "/" },
-      { title: "Stratégie climatique", desc: " ", href: "/" },
-      { title: "Q&A", desc: "questions fréquentes", href: "/" }
+      { title: "Pourquoi Verdustry Solutions", desc: "", href: "/#pourquoi-verdustry" },
+      { title: "Stratégie climatique", desc: "", href: "/#strategie-climatique" },
+      { title: "Q&A", desc: "questions fréquentes", href: "/#faq" }
 
       
     ],
@@ -201,6 +201,30 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
     setHovered(null);
   };
 
+  const onInternalLinkClick = (
+    e: ReactMouseEvent<HTMLAnchorElement>,
+    href: string | undefined,
+    opts?: { closeMobile?: boolean; closeSearch?: boolean }
+  ) => {
+    if (!href) return;
+
+    // Preserve default behavior for new-tab / modified clicks.
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+    // Route internal links through react-router (avoid full refresh).
+    if (href.startsWith("/")) {
+      e.preventDefault();
+      navigate(href);
+    }
+
+    setHovered(null);
+    if (opts?.closeMobile) setIsMobileOpen(false);
+    if (opts?.closeSearch) {
+      setIsSearchOpen(false);
+      setSearchQuery("");
+    }
+  };
+
   // Simple search
   const searchResults = searchQuery.trim()
     ? menuItems.flatMap((item) =>
@@ -323,10 +347,7 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
                             <a
                               key={i}
                               href={r.href}
-                              onClick={() => {
-                                setIsSearchOpen(false);
-                                setSearchQuery("");
-                              }}
+                              onClick={(e) => onInternalLinkClick(e, r.href, { closeSearch: true })}
                               className="block px-4 py-3 md:px-5 md:py-4 hover:bg-gray-100 transition-colors border-b border-gray-100 last:border-0"
                             >
                               <div className="font-semibold text-foreground text-sm md:text-base">{r.title}</div>
@@ -458,6 +479,7 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
                         variant === "light" ? " hover:bg-muted/40" : "hover:bg-white/5"
                       )}
                       onMouseEnter={() => sub.imageUrl && setActiveImage(sub.imageUrl)}
+                      onClick={(e) => onInternalLinkClick(e, sub.href, { closeSearch: true })}
                     >
                       <h3
                         className={cn(
@@ -579,7 +601,7 @@ export function MarketingNavbar({ variant = "dark" }: MarketingNavbarProps) {
                               <a
                                 key={i}
                                 href={sub.href}
-                                onClick={() => setIsMobileOpen(false)}
+                                onClick={(e) => onInternalLinkClick(e, sub.href, { closeMobile: true, closeSearch: true })}
                                 className="block py-3 px-4 rounded-lg hover:bg-white/10 transition-all group"
                               >
                                 <div

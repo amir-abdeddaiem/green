@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import MarketingNavbar from "@/components/marketing/MarketingNavbar";
@@ -312,6 +312,7 @@ function accentClasses(accent: Accent) {
 
 export  function MarketingHome() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [heroRef, heroInView] = useInView<HTMLDivElement>(0.1);
   const [impactRef, impactInView] = useInView<HTMLDivElement>(0.15);
@@ -320,6 +321,20 @@ export  function MarketingHome() {
   const [aiRef, aiInView] = useInView<HTMLDivElement>(0.1);
   const [whyRef, whyInView] = useInView<HTMLDivElement>(0.1);
   const [securityRef, securityInView] = useInView<HTMLDivElement>(0.1);
+
+  useEffect(() => {
+    const hash = location.hash;
+    if (!hash) return;
+
+    const scrollToHash = () => {
+      const el = document.querySelector(hash) as HTMLElement | null;
+      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    // Defer until after paint so the section exists.
+    const t = window.setTimeout(scrollToHash, 0);
+    return () => window.clearTimeout(t);
+  }, [location.hash]);
 
   return (
     <div className="relative min-h-screen bg-zinc-50 text-zinc-900 overflow-hidden">
@@ -414,7 +429,7 @@ export  function MarketingHome() {
       </section> */}
 
       {/* PRODUCTS SECTION */}
-      <section id="produits" ref={productsRef} className="py-24 bg-white">
+      <section id="produits" ref={productsRef} className="py-24 bg-white scroll-mt-28">
         <div className="mx-auto max-w-6xl px-6">
           <div className="text-center mb-16">
             
@@ -530,8 +545,9 @@ export  function MarketingHome() {
 </section> */}
 
       {/* PROCESS / STEPS SECTION */}
-      <section id="solutions" ref={stepsRef} className="py-28" style={{ background: "linear-gradient(160deg, #f8fcf9 0%, #ffffff 50%, #f0faf4 100%)" }}>
+      <section id="solutions" ref={stepsRef} className="py-28 scroll-mt-28" style={{ background: "linear-gradient(160deg, #f8fcf9 0%, #ffffff 50%, #f0faf4 100%)" }}>
         <div className="mx-auto max-w-6xl px-6">
+          <div id="strategie-climatique" className="scroll-mt-28" />
           <div className="max-w-2xl mb-20">
             <h2 className="mt-6 text-5xl font-semibold tracking-tight leading-none">
               Toute votre stratégie climat,<br />
@@ -570,10 +586,10 @@ export  function MarketingHome() {
 
       {/* WHY US SECTION */}
       <section
-  ref={whyRef}
-  className="relative overflow-hidden w-full py-24 px-4 rounded-[2rem] text-white bg-green-600/10"
-  
->
+        id="pourquoi-verdustry"
+        ref={whyRef}
+        className="relative overflow-hidden w-full py-24 px-4 rounded-[2rem] text-white bg-green-600/10 scroll-mt-28"
+      >
   <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2rem]">
     <div className="absolute -right-32 -top-32 h-[480px] w-[480px] rounded-full opacity-15"
       style={{ background: "radial-gradient(circle, #4ade80 0%, transparent 65%)" }} />
@@ -739,7 +755,9 @@ export  function MarketingHome() {
   </div>
 </section>
       
-      <FAQSection/>
+      <section id="faq" className="scroll-mt-28">
+        <FAQSection />
+      </section>
 
     {/* FOOTER */}
       <Footer/>

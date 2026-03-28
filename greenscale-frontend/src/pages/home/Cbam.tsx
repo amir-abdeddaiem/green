@@ -1,9 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { MarketingNavbar } from "@/components/marketing/MarketingNavbar";
 import Footer from "./Footer";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+
 
 const SECTORS = [
   { name: "Steel", desc: "Iron and steel products", price: "€45/tonne CO₂", icon: "🏗️" },
