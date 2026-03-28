@@ -40,7 +40,7 @@ export function DashboardLayout() {
     { label: "Dashboard", path: "/dashboard", icon: Home },
     { label: "integration", path: "/dashboard/integration", icon: Plug2Icon },
     { label: "docs", path: "/dashboard/docs", icon: Download },
-    { label: "rapport", path: "/dashboard/rapport", icon: FileText },
+   
     { label: "Analytics", path: "/dashboard/analytics", icon: Wind },
     { label: "Emissions", path: "/dashboard/emissions", icon: BarChart2 },
     { label: "Reports", path: "/dashboard/reports", icon: BarChart3 },

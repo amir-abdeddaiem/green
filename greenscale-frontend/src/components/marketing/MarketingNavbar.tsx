@@ -46,7 +46,7 @@ const menuItems: MenuItem[] = [
   { label: "Secteurs", submenu: [{ title: "Industrie ", desc: "plateforme pour les entreprises industrielles", href: "/industrie" }, { title: "Finance ", desc: "Solution pour les institutions financières", href: "/finance" }] },
   { label: "Normes", submenu: [{ title: "CSRD", desc: "eporting ESG des entreprises.", href: "/csrd" }, { title: "CBAM", desc: "Mécanisme de taxe carbone aux frontières de l’UE.", href: "/cbam" }] },
   
-  { label: "Contact", submenu: [{ title: "Nous contacter", desc: "pour plus d'informations", href: "/contact" }, { title: "Demo", desc: "Demander un demo", href: "/demo" }] },
+  { label: "Contact", submenu: [{ title: "Nous contacter", desc: "pour plus d'informations", href: "/contact" }, { title: "Demo", desc: "Demander un demo", href: "/book-demo" }] },
   
 ];
 
