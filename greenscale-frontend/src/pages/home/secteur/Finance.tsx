@@ -203,15 +203,7 @@ export default function FinanceSectorPage() {
         </div>
       </section>
 
-      {/* Slide Phrase */}
-      <section className="py-20 bg-green-700 text-white">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <p className="text-3xl lg:text-4xl font-medium leading-tight">
-            La plateforme permet aux institutions financières de <span className="text-white/90">mesurer l’impact carbone</span> de leurs investissements,
-            d’<span className="text-white/90">intégrer les critères ESG</span> dans leurs décisions et de <span className="text-white/90">piloter leurs portefeuilles</span> vers une économie durable.
-          </p>
-        </div>
-      </section>
+      
 
            {/* FINAL CTA  */}
 <section className="py-28 border-t rounded-[2rem] bg-green-600" >
