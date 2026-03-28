@@ -54,7 +54,6 @@ const FAQS = [
     tags: ["ESG", "risques", "conformité"],
   },
 ];
-
 const CATEGORIES = ["Tous", "Bases", "Comptabilité", "Réduction", "Réglementation", "ESG"];
 
 // Custom hook for intersection observer
@@ -271,7 +270,7 @@ function StillHaveQuestions() {
 export function FAQSection() {
   const [sectionRef, sectionInView] = useInView<HTMLDivElement>(0.1);
   const [openId, setOpenId] = useState<string | null>(null);
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState("Tous");
   const [searchQuery, setSearchQuery] = useState("");
   
 
@@ -280,7 +279,7 @@ export function FAQSection() {
   };
 
   const filteredFAQs = FAQS.filter((faq) => {
-    const matchesCategory = activeCategory === "All" || faq.category === activeCategory;
+    const matchesCategory = activeCategory === "Tous" || faq.category.includes(activeCategory);
     const matchesSearch = searchQuery === "" || 
       faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
       faq.answer.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -332,7 +331,7 @@ export function FAQSection() {
               <button
                 onClick={() => {
                   setSearchQuery("");
-                  setActiveCategory("All");
+                  setActiveCategory("Tous");
                 }}
                 className="mt-4 text-green-600 font-medium hover:text-green-700"
               >
