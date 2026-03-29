@@ -15,7 +15,7 @@
 **Objective**: Verify that super admin can access owner dashboard
 
 **Steps**:
-1. Login with super admin credentials
+1. login with super admin credentials
    - Email: [super_admin_email]
    - Password: [super_admin_password]
 
@@ -42,7 +42,7 @@
 **Objective**: Verify that regular users cannot access owner dashboard
 
 **Steps**:
-1. Login with regular user credentials
+1. login with regular user credentials
    - Email: [regular_user_email]
    - Password: [regular_user_password]
 
@@ -74,7 +74,7 @@
 
 2. Try accessing `/admin-dashboard` in URL
    - Should redirect to `/login`
-   - Login form should display
+   - login form should display
 
 3. Try accessing `/admin-dashboard/users` in URL
    - Should redirect to `/login`
@@ -88,7 +88,7 @@
 **Objective**: Verify only super admin can create users
 
 **Steps**:
-1. Login as super admin
+1. login as super admin
 
 2. Navigate to Owner Dashboard → User Management
 
@@ -123,7 +123,7 @@
 **Objective**: Verify that regular users cannot create users via API
 
 **Steps**:
-1. Login as regular user
+1. login as regular user
 
 2. Open browser Developer Tools (F12) → Console
 
@@ -154,7 +154,7 @@
 **Objective**: Verify owner dashboard access persists across page refresh
 
 **Steps**:
-1. Login as super admin
+1. login as super admin
 
 2. Navigate to Owner Dashboard
 
@@ -175,7 +175,7 @@
 **Objective**: Verify logout clears all authentication data
 
 **Steps**:
-1. Login as super admin
+1. login as super admin
 
 2. Navigate to Owner Dashboard
 
@@ -225,7 +225,7 @@
 
 ### Check Network Tab (DevTools → Network)
 
-1. **On Login Request**
+1. **On login Request**
    - Verify response contains `is_super_admin` flag
    - For super admin: `"is_super_admin": true`
    - For regular user: `"is_super_admin": false`

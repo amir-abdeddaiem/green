@@ -19,7 +19,7 @@
 
 ## Testing Checklist
 
-### 1. ✅ Login & Dashboard Access
+### 1. ✅ login & Dashboard Access
 - [ ] Open http://localhost:5173 in browser
 - [ ] Log in with: `testatiq@atiq.com` / (your password)
 - [ ] Access Dashboard

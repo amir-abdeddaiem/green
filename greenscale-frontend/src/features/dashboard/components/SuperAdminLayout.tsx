@@ -31,19 +31,19 @@ export const SuperAdminLayout = ({ children }: { children: React.ReactNode }) =>
   const navLinks: NavLink[] = [
     {
       id: "dashboard",
-      label: "Dashboard",
+      label: "Tableau de bord",
       icon: <BarChart3 size={20} />,
       href: "/admin-dashboard",
     },
     {
       id: "user-management",
-      label: "User Management",
+      label: "Gestion des utilisateurs",
       icon: <Users size={20} />,
       href: "/admin-dashboard/users",
     },
     {
       id: "settings",
-      label: "System Settings",
+      label: "Paramètres système",
       icon: <Settings size={20} />,
       href: "/admin-dashboard/settings",
     },
@@ -60,7 +60,7 @@ export const SuperAdminLayout = ({ children }: { children: React.ReactNode }) =>
       <div className="flex h-screen items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600"></div>
-          <p className="mt-4 text-gray-600">Loading Owner Dashboard...</p>
+          <p className="mt-4 text-gray-600">Chargement du tableau de bord propriétaire...</p>
         </div>
       </div>
     );
@@ -79,7 +79,7 @@ export const SuperAdminLayout = ({ children }: { children: React.ReactNode }) =>
           {sidebarOpen && (
             <div>
               <h1 className="text-2xl font-bold">Verdustry</h1>
-              <p className="text-xs text-green-100">Owner Dashboard</p>
+              <p className="text-xs text-green-100">Tableau de bord propriétaire</p>
             </div>
           )}
           <button
@@ -111,7 +111,7 @@ export const SuperAdminLayout = ({ children }: { children: React.ReactNode }) =>
             className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-600 transition text-left"
           >
             <LogOut size={20} />
-            {sidebarOpen && <span>Logout</span>}
+            {sidebarOpen && <span>Déconnexion</span>}
           </button>
         </div>
       </div>
@@ -122,17 +122,17 @@ export const SuperAdminLayout = ({ children }: { children: React.ReactNode }) =>
         <div className="bg-blue-50 border-b border-blue-200 px-8 py-3 flex items-center gap-3">
           <AlertCircle size={18} className="text-blue-600" />
           <p className="text-sm text-blue-800 font-medium">
-            🔒 Restricted Access: Owner Dashboard - Only accessible to the business owner
+            🔒 Accès restreint : tableau de bord propriétaire — uniquement accessible au propriétaire de l’entreprise
           </p>
         </div>
 
         {/* Header */}
         <div className="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center shadow-sm">
-          <h2 className="text-2xl font-bold text-gray-800">Owner Dashboard</h2>
+          <h2 className="text-2xl font-bold text-gray-800">Tableau de bord propriétaire</h2>
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <p className="text-sm font-semibold text-gray-800">Administrator</p>
-              <p className="text-xs text-gray-500">Super Admin Access</p>
+              <p className="text-sm font-semibold text-gray-800">Administrateur</p>
+              <p className="text-xs text-gray-500">Accès super admin</p>
             </div>
             <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white font-bold">
               👑

@@ -2,6 +2,7 @@ import MarketingNavbar from "@/components/marketing/MarketingNavbar";
 import Footer from "./Footer";
 import { useState, useRef, useEffect, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 /* ─── PALETTE ─────────────────────────────────────────────────────────── */
 const V = {
@@ -439,45 +440,40 @@ export default function ContactPage() {
 
               
             </div>
-            {/* Book Demo CTA */}
-              <Reveal delay={260}>
-                <div
-                  className="rounded-3xl p-10 relative overflow-hidden"
-                  style={{
-                    background: `linear-gradient(135deg, ${V.primary}, #15803d)`,
-                    boxShadow: V.shadowLg,
-                  }}
-                >
-                  <div className="absolute top-6 right-6 h-20 w-20 rounded-full bg-white/20 blur-xl" />
-
-                  <div className="relative">
-                    <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/20 text-white text-xs font-bold tracking-widest">
-                      <span className="relative flex h-3 w-3">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-white" />
-                      </span>
-                      DISPONIBLE
-                    </div>
-
-                    <h3 className="mt-8 text-3xl font-bold text-white leading-tight">
-                      Réservez une démo<br />personnalisée
-                    </h3>
-                    <p className="mt-5 text-emerald-100 text-[15.5px] leading-relaxed">
-                      30 minutes avec un expert pour découvrir comment nous pouvons accélérer votre transition ESG.
-                    </p>
-
-                    <button
-                      onClick={() => navigate("/book-demo")}
-                      className="mt-8 w-full py-4 rounded-2xl font-bold text-base bg-white text-green-700 hover:bg-emerald-50 transition-all hover:shadow-xl"
-                    >
-                      Réserver ma démo →
-                    </button>
-                  </div>
-                </div>
-              </Reveal>
+            
           </div>
         </div>
       </section>
+          {/* FINAL CTA  */}
+<section className="py-28 border-t rounded-[2rem] bg-green-600" >
+  <div className=" min-w-xl text-center px-6">
+    <h2 className="text-5xl font-semibold tracking-tight text-white">
+      Prêt à réduire votre empreinte carbone ?
+    </h2>
+    <p className="mt-6 text-white  rounded-[3rem] " >
+      Rejoignez-nous pour transformer l’impact climatique en avantage compétitif.
+    </p>
+
+    <div className="mt-12 flex flex-wrap justify-center gap-4">
+      <Button
+        size="lg"
+        className="bg-green-900/95 hover:bg-green-500 text-white px-12 py-7 text-lg rounded-2xl"
+        onClick={() => navigate("/register")}
+      >
+        Commencer gratuitement
+      </Button>
+      <Button
+        variant="outline"
+        size="lg"
+        className="border-green-400 text-green-600 hover:bg-green-500 hover:text-white px-12 py-7 text-lg rounded-2xl"
+        onClick={() => navigate("/book-demo")}
+      >
+        Parler à un expert
+      </Button>
+    </div>
+    
+  </div>
+</section>
 
       <style>{`
         @keyframes spin {

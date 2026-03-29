@@ -47,7 +47,7 @@ Verdustry-backend/
 ## 🚀 Usage
 
 1. Start both frontend & backend
-2. Login to dashboard
+2. login to dashboard
 3. Scroll to bottom-right corner
 4. Click green chat button
 5. Send messages

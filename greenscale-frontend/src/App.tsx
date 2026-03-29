@@ -43,7 +43,11 @@ function App() {
         <Route path="/solutions/packs/:packId" element={<PackDetailPage />} />
         {/* Auth Routes */}
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/signin" element={<Navigate to="/login" replace />} />
+        <Route path="/sign-in" element={<Navigate to="/login" replace />} />
         <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/signup" element={<Navigate to="/register" replace />} />
+        <Route path="/sign-up" element={<Navigate to="/register" replace />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/industrie" element={<IndustrieSectorPage />} />
         <Route path="/finance" element={<FinanceSectorPage />} />

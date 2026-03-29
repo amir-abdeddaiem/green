@@ -32,8 +32,8 @@ export function MonthlyChart({ data, loading }: MonthlyChartProps) {
     return (
       <div className="w-full h-80 flex items-center justify-center bg-slate-50 rounded-lg">
         <div className="text-center">
-          <p className="text-slate-500 font-medium">No data available</p>
-          <p className="text-slate-400 text-sm">Monthly trends will appear here after logging emissions</p>
+          <p className="text-slate-500 font-medium">Aucune donnée disponible</p>
+          <p className="text-slate-400 text-sm">Les tendances mensuelles apparaîtront ici après l’enregistrement d’émissions</p>
         </div>
       </div>
     );
@@ -54,17 +54,17 @@ export function MonthlyChart({ data, loading }: MonthlyChartProps) {
         <YAxis 
           stroke="#64748b"
           style={{ fontSize: '12px' }}
-          label={{ value: 'CO2 (kg)', angle: -90, position: 'insideLeft' }}
+          label={{ value: 'CO₂ (kg)', angle: -90, position: 'insideLeft' }}
         />
         <Tooltip content={<CustomTooltip />} />
         <Legend 
           wrapperStyle={{ paddingTop: '20px' }}
-          formatter={() => 'CO2 Impact'}
+          formatter={() => 'Impact CO₂'}
         />
         <Bar
           dataKey="impact"
           fill="#10b981"
-          name="CO2 Impact"
+          name="Impact CO₂"
           radius={[8, 8, 0, 0]}
           animationBegin={0}
           animationDuration={800}

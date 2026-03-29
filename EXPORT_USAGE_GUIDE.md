@@ -4,7 +4,7 @@
 
 ### How to Download Your Carbon Report
 
-1. **Login to Dashboard** 
+1. **login to Dashboard** 
    - Enter your business email and password
    - Click "Log In"
 

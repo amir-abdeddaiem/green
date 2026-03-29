@@ -63,8 +63,8 @@ export function AnalyticsTab() {
     <div className="min-h-screen bg-white p-4 sm:p-6 md:p-8 lg:p-12 space-y-8 md:space-y-10">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-green-900">Analytics & Insights</h1>
-        <p className="text-green-700 text-sm md:text-base">Deep dive into your emissions data with advanced visualizations</p>
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-green-900">Analytique & insights</h1>
+        <p className="text-green-700 text-sm md:text-base">Analysez en profondeur vos données d’émissions avec des visualisations avancées</p>
       </div>
 
       {/* Charts Grid */}
@@ -76,8 +76,8 @@ export function AnalyticsTab() {
               <BarChart3 className="text-white w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-bold text-green-900">Emissions Breakdown</h3>
-              <p className="text-xs text-green-600">By source type</p>
+              <h3 className="font-bold text-green-900">Répartition des émissions</h3>
+              <p className="text-xs text-green-600">Par type de source</p>
             </div>
           </div>
           <CategoryChart data={transformCategoryData(categoryData)} loading={chartsLoading} />
@@ -90,8 +90,8 @@ export function AnalyticsTab() {
               <TrendingUp className="text-white w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-bold text-green-900">6-Month Trends</h3>
-              <p className="text-xs text-green-600">CO2 impact over time</p>
+              <h3 className="font-bold text-green-900">Tendances sur 6 mois</h3>
+              <p className="text-xs text-green-600">Impact CO₂ dans le temps</p>
             </div>
           </div>
           <MonthlyChart data={transformMonthlyData(monthlyData)} loading={chartsLoading} />
@@ -103,11 +103,11 @@ export function AnalyticsTab() {
         <div className="flex items-start gap-3">
           <AlertCircle className="w-5 h-5 text-green-700 flex-shrink-0 mt-0.5" />
           <div>
-            <h3 className="font-bold text-green-900 mb-2">Key Insights</h3>
+            <h3 className="font-bold text-green-900 mb-2">Points clés</h3>
             <ul className="text-sm text-green-700 space-y-1">
-              <li>• Your top emission source is <span className="font-semibold">Electricity</span> ({categoryData.find(c => c.type === 'Electricity')?.impact || 0} kg CO2e)</li>
-              <li>• Month-over-month, your emissions have remained <span className="font-semibold">relatively stable</span></li>
-              <li>• Consider logging fuel usage to get a complete picture</li>
+              <li>• Votre principale source d’émissions est <span className="font-semibold">Électricité</span> ({categoryData.find(c => c.type === 'Electricity')?.impact || 0} kg CO2e)</li>
+              <li>• Mois après mois, vos émissions sont restées <span className="font-semibold">relativement stables</span></li>
+              <li>• Pensez à enregistrer la consommation de carburant pour obtenir une vision complète</li>
             </ul>
           </div>
         </div>

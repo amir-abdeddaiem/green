@@ -62,7 +62,7 @@ export const FinancialTab: React.FC = () => {
         );
 
         if (!response.ok) {
-          throw new Error('Failed to fetch financial stats');
+          throw new Error('Impossible de récupérer les statistiques financières');
         }
 
         const data: FinancialStatsData = await response.json();
@@ -79,7 +79,7 @@ export const FinancialTab: React.FC = () => {
 
         setChartData(chartPoints);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        setError(err instanceof Error ? err.message : 'Une erreur est survenue');
         console.error('❌ Error fetching financial stats:', err);
       } finally {
         setLoading(false);
@@ -102,7 +102,7 @@ export const FinancialTab: React.FC = () => {
       <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
         <AlertCircle className="w-5 h-5 text-red-600" />
         <div>
-          <p className="font-semibold text-red-900">Error loading financial data</p>
+          <p className="font-semibold text-red-900">Erreur lors du chargement des données financières</p>
           <p className="text-sm text-red-700">{error}</p>
         </div>
       </div>
@@ -113,7 +113,7 @@ export const FinancialTab: React.FC = () => {
     return (
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
         <p className="text-yellow-900">
-          No financial data available. Please set up tariff rates in Settings.
+          Aucune donnée financière disponible. Veuillez configurer les tarifs dans les paramètres.
         </p>
       </div>
     );
@@ -133,7 +133,7 @@ export const FinancialTab: React.FC = () => {
     <div className="space-y-6">
       {/* Month/Year Selection */}
       <div className="flex gap-4 items-center bg-white p-4 rounded-lg shadow">
-        <label className="font-medium text-gray-700">Select Month:</label>
+        <label className="font-medium text-gray-700">Mois :</label>
         <select
           value={selectedMonth}
           onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
@@ -141,12 +141,12 @@ export const FinancialTab: React.FC = () => {
         >
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((month) => (
             <option key={month} value={month}>
-              {new Date(2025, month - 1).toLocaleString('default', { month: 'long' })}
+              {new Date(2025, month - 1).toLocaleString('fr-FR', { month: 'long' })}
             </option>
           ))}
         </select>
 
-        <label className="font-medium text-gray-700 ml-4">Year:</label>
+        <label className="font-medium text-gray-700 ml-4">Année :</label>
         <select
           value={selectedYear}
           onChange={(e) => setSelectedYear(parseInt(e.target.value))}
@@ -166,7 +166,7 @@ export const FinancialTab: React.FC = () => {
         <div className="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-gray-600 text-sm font-medium">Total Emissions</p>
+              <p className="text-gray-600 text-sm font-medium">Émissions totales</p>
               <p className="text-3xl font-bold text-blue-600 mt-2">{total_emissions_kg.toFixed(2)}</p>
               <p className="text-gray-500 text-sm mt-1">kg CO₂e</p>
             </div>
@@ -178,7 +178,7 @@ export const FinancialTab: React.FC = () => {
         <div className="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-gray-600 text-sm font-medium">Total Spending</p>
+              <p className="text-gray-600 text-sm font-medium">Dépenses totales</p>
               <p className="text-3xl font-bold text-green-600 mt-2">
                 {currencySymbol} {total_cost.toFixed(2)}
               </p>
@@ -194,12 +194,12 @@ export const FinancialTab: React.FC = () => {
         >
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-gray-600 text-sm font-medium">Budget Status</p>
+              <p className="text-gray-600 text-sm font-medium">Statut du budget</p>
               <p className={`text-3xl font-bold text-${alertColor}-600 mt-2`}>
                 {budget_status.percentage_used?.toFixed(1) || 'N/A'}%
               </p>
               <p className={`text-gray-500 text-sm mt-1`}>
-                {budget_status.alert_level || 'No budget set'}
+                {budget_status.alert_level || 'Aucun budget défini'}
               </p>
             </div>
             <AlertCircle className={`w-8 h-8 text-${alertColor}-400`} />
@@ -210,11 +210,11 @@ export const FinancialTab: React.FC = () => {
       {/* Budget Details */}
       {budget_status.limit && (
         <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Budget Overview</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Aperçu du budget</h3>
           <div className="space-y-4">
             <div>
               <div className="flex justify-between mb-2">
-                <span className="text-gray-700">Monthly Budget</span>
+                <span className="text-gray-700">Budget mensuel</span>
                 <span className="font-semibold">
                   {currencySymbol} {budget_status.limit?.toFixed(2)} {displayCurrency}
                 </span>
@@ -230,13 +230,13 @@ export const FinancialTab: React.FC = () => {
             {budget_status.remaining !== undefined && (
               <div className="grid grid-cols-2 gap-4 pt-4 border-t">
                 <div>
-                  <p className="text-gray-600 text-sm">Spent</p>
+                  <p className="text-gray-600 text-sm">Dépensé</p>
                   <p className="text-xl font-bold text-gray-900">
                     {currencySymbol} {total_cost.toFixed(2)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-gray-600 text-sm">Remaining</p>
+                  <p className="text-gray-600 text-sm">Restant</p>
                   <p className="text-xl font-bold text-green-600">
                     {currencySymbol} {budget_status.remaining.toFixed(2)}
                   </p>
@@ -251,7 +251,7 @@ export const FinancialTab: React.FC = () => {
       {chartData.length > 0 && (
         <div className="bg-white rounded-lg shadow p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            Emissions vs Spending by Type
+            Émissions vs dépenses par type
           </h3>
           <ResponsiveContainer width="100%" height={400}>
             <BarChart data={chartData}>
@@ -259,12 +259,12 @@ export const FinancialTab: React.FC = () => {
               <XAxis dataKey="name" />
               <YAxis
                 yAxisId="left"
-                label={{ value: 'CO₂ Emissions (kg)', angle: -90, position: 'insideLeft' }}
+                label={{ value: 'Émissions CO₂ (kg)', angle: -90, position: 'insideLeft' }}
               />
               <YAxis
                 yAxisId="right"
                 orientation="right"
-                label={{ value: `Spending (${displayCurrency})`, angle: 90, position: 'insideRight' }}
+                label={{ value: `Dépenses (${displayCurrency})`, angle: 90, position: 'insideRight' }}
               />
               <Tooltip
                 formatter={(value: any) => typeof value === 'number' ? value.toFixed(2) : value}
@@ -272,7 +272,7 @@ export const FinancialTab: React.FC = () => {
               />
               <Legend />
               <Bar yAxisId="left" dataKey="emissions" fill="#3b82f6" name="CO₂ (kg)" />
-              <Bar yAxisId="right" dataKey="cost" fill="#10b981" name={`Cost (${displayCurrency})`} />
+              <Bar yAxisId="right" dataKey="cost" fill="#10b981" name={`Coût (${displayCurrency})`} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -282,7 +282,7 @@ export const FinancialTab: React.FC = () => {
       {chartData.length > 0 && (
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <div className="p-6 border-b border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900">Emissions Breakdown</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Répartition des émissions</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -292,13 +292,13 @@ export const FinancialTab: React.FC = () => {
                     Type
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                    Emissions (kg)
+                    Émissions (kg)
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                    Cost ({displayCurrency})
+                    Coût ({displayCurrency})
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                    % of Total
+                    % du total
                   </th>
                 </tr>
               </thead>

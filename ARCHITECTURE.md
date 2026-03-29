@@ -88,7 +88,7 @@ Verdustry-frontend/
 │   ├── features/
 │   │   ├── auth/
 │   │   │   ├── components/
-│   │   │   │   ├── LoginForm.tsx
+│   │   │   │   ├── loginForm.tsx
 │   │   │   │   ├── RegisterCard.tsx
 │   │   │   │   └── AuthScreen.tsx
 │   │   │   ├── services/
@@ -301,7 +301,7 @@ Frontend: Render charts
 
 ### Authentication
 - `POST /register` - Register business
-- `POST /login` - Login user
+- `POST /login` - login user
 - `POST /upload-profile-picture` - Upload picture
 
 ### Emissions

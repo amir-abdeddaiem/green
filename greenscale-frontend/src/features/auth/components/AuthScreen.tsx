@@ -11,7 +11,7 @@ export function AuthScreen() {
     <div className="flex flex-col items-center justify-center space-y-6">
       <div className="text-center space-y-2">
         <h1 className="text-4xl font-extrabold tracking-tight text-green-800">Verdustry</h1>
-        <p className="text-slate-500">Global Sustainability Analytics for Small Business</p>
+        <p className="text-slate-500">Analytique de durabilité globale pour les petites entreprises</p>
       </div>
 
       {/* Logic to toggle between Login and Register */}
@@ -22,7 +22,7 @@ export function AuthScreen() {
         onClick={() => setMode(mode === 'register' ? 'login' : 'register')}
         className="text-green-700 font-semibold"
       >
-        {mode === 'register' ? "Already have an account? Login" : "Need an account? Register"}
+        {mode === 'register' ? "Vous avez déjà un compte ? Se connecter" : "Vous n’avez pas de compte ? S’inscrire"}
       </Button>
     </div>
   )

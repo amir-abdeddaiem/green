@@ -53,7 +53,7 @@ API docs at: `http://localhost:8000/docs`
 
 ### Authentication
 - `POST /register` - Register new business
-- `POST /login` - Login user
+- `POST /login` - login user
 - `POST /upload-profile-picture` - Upload profile picture
 
 ### Emissions

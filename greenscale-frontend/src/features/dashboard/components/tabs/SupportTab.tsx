@@ -28,51 +28,51 @@ export function SupportTab() {
   const faqItems: FAQItem[] = [
     {
       id: 1,
-      question: "How do I track my carbon emissions?",
+      question: "Comment suivre mes émissions de carbone ?",
       answer:
-        "You can track your carbon emissions by navigating to the Emissions page and clicking on one of the emission type buttons (Electricity, Gas, Fuel, Waste). Fill in the required information and submit to log your emissions. The data will appear in your dashboard automatically.",
+        "Vous pouvez suivre vos émissions de carbone en allant sur la page Émissions et en cliquant sur l’un des boutons de type d’émission (Électricité, Gaz, Carburant, Déchets). Renseignez les informations requises puis validez pour enregistrer vos émissions. Les données apparaîtront automatiquement dans votre tableau de bord.",
     },
     {
       id: 2,
-      question: "How do I set sustainability goals?",
+      question: "Comment définir des objectifs de durabilité ?",
       answer:
-        "Go to the Goals & Targets section from the sidebar. Click the 'Add Goal' button, set your emission reduction target, select the emission categories to track, and choose your deadline. You can monitor progress with visual indicators showing your journey toward each goal.",
+        "Allez dans la section Objectifs depuis la barre latérale. Cliquez sur le bouton « Ajouter un objectif », définissez votre cible de réduction des émissions, sélectionnez les catégories à suivre et choisissez une échéance. Vous pouvez suivre la progression grâce aux indicateurs visuels pour chaque objectif.",
     },
     {
       id: 3,
-      question: "Can I export my emissions data?",
+      question: "Puis-je exporter mes données d’émissions ?",
       answer:
-        "Yes! On the Dashboard, click the 'Download' button to export your emissions report as a PDF. You can filter the data by date range before exporting. Reports include detailed analytics and visualizations.",
+        "Oui ! Sur le tableau de bord, cliquez sur le bouton « Télécharger » pour exporter votre rapport d’émissions au format PDF. Vous pouvez filtrer les données par période avant l’export. Les rapports incluent des analyses détaillées et des visualisations.",
     },
     {
       id: 4,
-      question: "What do the different date filters mean?",
+      question: "Que signifient les différents filtres de dates ?",
       answer:
-        "Today shows data from the current day. 7D shows the last 7 days of data. Month shows the last 30 days. 6M shows the last 6 months. Year shows the last 365 days. All shows all your historical data since account creation.",
+        "Aujourd’hui affiche les données du jour. 7j affiche les 7 derniers jours. Mois affiche les 30 derniers jours. 6m affiche les 6 derniers mois. Année affiche les 365 derniers jours. Tout affiche l’historique complet depuis la création du compte.",
     },
     {
       id: 5,
-      question: "How is CO₂ impact calculated?",
+      question: "Comment l’impact CO₂ est-il calculé ?",
       answer:
-        "CO₂ impact is calculated using standard emission factors for each category. Electricity uses grid-average factors, Gas uses combustion factors, Fuel uses fuel-specific factors, and Waste uses disposal method factors. All calculations follow international standards.",
+        "L’impact CO₂ est calculé à partir de facteurs d’émission standards pour chaque catégorie. L’électricité utilise des facteurs moyens du réseau, le gaz des facteurs de combustion, le carburant des facteurs spécifiques au type de carburant, et les déchets des facteurs liés à la méthode de traitement. Les calculs suivent des standards internationaux.",
     },
     {
       id: 6,
-      question: "Can I update my company profile?",
+      question: "Puis-je mettre à jour le profil de mon entreprise ?",
       answer:
-        "Yes, go to Settings from the sidebar. You can update your business name, email, and profile picture. Changes are saved automatically and will update across your entire dashboard.",
+        "Oui, allez dans Paramètres via la barre latérale. Vous pouvez mettre à jour le nom de l’entreprise, l’e-mail et la photo de profil. Les modifications sont enregistrées automatiquement et s’appliquent à tout le tableau de bord.",
     },
     {
       id: 7,
-      question: "What if I log an emission by mistake?",
+      question: "Que faire si j’enregistre une émission par erreur ?",
       answer:
-        "You can delete incorrect emissions from your Emissions Log. Find the entry, click delete, and confirm. This will remove it from your statistics. Consider checking the Monthly Trends chart to verify the change.",
+        "Vous pouvez supprimer les émissions incorrectes depuis votre journal des émissions. Trouvez l’entrée, cliquez sur supprimer et confirmez. Elle sera retirée des statistiques. Vous pouvez vérifier le changement dans le graphique des tendances mensuelles.",
     },
     {
       id: 8,
-      question: "Is my data secure and private?",
+      question: "Mes données sont-elles sécurisées et privées ?",
       answer:
-        "Yes, all your data is encrypted and stored securely. You control who has access to your account through your login credentials. We follow international data protection standards and never share your information with third parties.",
+        "Oui, toutes vos données sont chiffrées et stockées de manière sécurisée. Vous contrôlez l’accès à votre compte via vos identifiants. Nous suivons des standards internationaux de protection des données et ne partageons jamais vos informations avec des tiers.",
     },
   ];
 
@@ -80,25 +80,25 @@ export function SupportTab() {
     {
       id: "email",
       icon: <Mail className="w-6 h-6" />,
-      title: "Email Support",
-      description: "Send us an email and we'll respond within 24 hours",
-      action: "Send Email",
+      title: "Support e-mail",
+      description: "Envoyez-nous un e-mail et nous répondrons sous 24 heures",
+      action: "Envoyer un e-mail",
       contact: "support@Verdustry.com",
     },
     {
       id: "chat",
       icon: <MessageCircle className="w-6 h-6" />,
-      title: "Live Chat",
-      description: "Chat with our support team in real-time",
-      action: "Start Chat",
-      contact: "Available 9am-5pm EST",
+      title: "Chat en direct",
+      description: "Discutez avec notre équipe support en temps réel",
+      action: "Démarrer le chat",
+      contact: "Disponible 9h–17h (EST)",
     },
     {
       id: "phone",
       icon: <Phone className="w-6 h-6" />,
-      title: "Phone Support",
-      description: "Call our dedicated support hotline",
-      action: "Call Now",
+      title: "Support téléphonique",
+      description: "Appelez notre ligne support dédiée",
+      action: "Appeler maintenant",
       contact: "+1 (555) 123-4567",
     },
   ];
@@ -130,10 +130,10 @@ export function SupportTab() {
           <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
             <HelpCircle className="w-6 h-6 text-green-700" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-black text-slate-900">Help & Support</h1>
+          <h1 className="text-3xl md:text-4xl font-black text-slate-900">Aide & support</h1>
         </div>
         <p className="text-slate-600 text-lg">
-          We're here to help. Find answers to common questions or reach out to our support team.
+          Nous sommes là pour vous aider. Trouvez des réponses aux questions fréquentes ou contactez notre équipe support.
         </p>
       </div>
 
@@ -162,14 +162,14 @@ export function SupportTab() {
       {/* FAQ Section */}
       <div className="space-y-6">
         <div>
-          <h2 className="text-2xl font-black text-slate-900 mb-4">Frequently Asked Questions</h2>
+          <h2 className="text-2xl font-black text-slate-900 mb-4">Questions fréquentes</h2>
 
           {/* Search Bar */}
           <div className="relative mb-6">
             <Search className="absolute left-4 top-3 w-5 h-5 text-slate-400" />
             <input
               type="text"
-              placeholder="Search FAQs..."
+              placeholder="Rechercher dans la FAQ..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-green-500 bg-white"
@@ -206,7 +206,7 @@ export function SupportTab() {
             ) : (
               <div className="text-center py-8">
                 <AlertCircle className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-                <p className="text-slate-500">No FAQs found. Try a different search term.</p>
+                <p className="text-slate-500">Aucune question trouvée. Essayez un autre terme de recherche.</p>
               </div>
             )}
           </div>
@@ -219,7 +219,7 @@ export function SupportTab() {
           <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
             <Mail className="w-5 h-5 text-green-700" />
           </div>
-          <h2 className="text-2xl font-black text-slate-900">Send us a Message</h2>
+          <h2 className="text-2xl font-black text-slate-900">Envoyez-nous un message</h2>
         </div>
 
         {formSubmitted && (
@@ -229,21 +229,21 @@ export function SupportTab() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <p className="text-green-700 font-semibold">Message sent successfully! We'll respond soon.</p>
+            <p className="text-green-700 font-semibold">Message envoyé avec succès ! Nous vous répondrons rapidement.</p>
           </div>
         )}
 
         <form onSubmit={handleFormSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">Name</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Nom</label>
               <input
                 type="text"
                 name="name"
                 value={contactForm.name}
                 onChange={handleFormChange}
                 required
-                placeholder="Your name"
+                placeholder="Votre nom"
                 className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-green-500 bg-gray-50"
               />
             </div>
@@ -262,14 +262,14 @@ export function SupportTab() {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">Subject</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Objet</label>
             <input
               type="text"
               name="subject"
               value={contactForm.subject}
               onChange={handleFormChange}
               required
-              placeholder="What is this about?"
+              placeholder="Quel est le sujet ?"
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-green-500 bg-gray-50"
             />
           </div>
@@ -281,7 +281,7 @@ export function SupportTab() {
               value={contactForm.message}
               onChange={handleFormChange}
               required
-              placeholder="Please describe your issue or question..."
+              placeholder="Décrivez votre problème ou votre question..."
               rows={5}
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-green-500 bg-gray-50 resize-none"
             />
@@ -292,7 +292,7 @@ export function SupportTab() {
             className="w-full px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
           >
             <Send className="w-4 h-4" />
-            Send Message
+            Envoyer
           </button>
         </form>
       </div>
@@ -304,17 +304,17 @@ export function SupportTab() {
             <FileText className="w-5 h-5 text-green-600" />
             <h3 className="font-bold text-slate-900">Documentation</h3>
           </div>
-          <p className="text-slate-600 text-sm mb-4">Read our comprehensive user guide and API documentation.</p>
-          <button className="text-green-600 hover:text-green-700 font-semibold text-sm">View Docs →</button>
+          <p className="text-slate-600 text-sm mb-4">Consultez notre guide utilisateur complet et la documentation API.</p>
+          <button className="text-green-600 hover:text-green-700 font-semibold text-sm">Voir la doc →</button>
         </div>
 
         <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:border-green-300 transition-all">
           <div className="flex items-center gap-3 mb-3">
             <AlertCircle className="w-5 h-5 text-green-600" />
-            <h3 className="font-bold text-slate-900">Status Page</h3>
+            <h3 className="font-bold text-slate-900">Page de statut</h3>
           </div>
-          <p className="text-slate-600 text-sm mb-4">Check system status and maintenance updates in real-time.</p>
-          <button className="text-green-600 hover:text-green-700 font-semibold text-sm">Check Status →</button>
+          <p className="text-slate-600 text-sm mb-4">Vérifiez l’état du système et les mises à jour de maintenance en temps réel.</p>
+          <button className="text-green-600 hover:text-green-700 font-semibold text-sm">Voir le statut →</button>
         </div>
       </div>
     </div>

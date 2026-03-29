@@ -43,22 +43,22 @@ export function ChatWidget({ businessId, userName = 'User' }: ChatWidgetProps) {
       await startChatSession(businessId);
       
       // Show welcome message immediately regardless of response
-      const timestamp = new Date().toLocaleTimeString();
+      const timestamp = new Date().toLocaleTimeString('fr-FR');
       setMessages([
         {
           role: 'bot',
-          text: '🌱 Welcome to Verdustry Support!\n\nWe\'re here to help you with:\n• Carbon emissions tracking\n• Sustainability goals\n• Data analysis & reports\n• Platform features\n\nWhat can we help you with today?',
+          text: '🌱 Bienvenue sur le support Verdustry !\n\nNous pouvons vous aider pour :\n• Le suivi des émissions carbone\n• Les objectifs de durabilité\n• L’analyse des données & les rapports\n• Les fonctionnalités de la plateforme\n\nComment pouvons-nous vous aider aujourd’hui ?',
           timestamp,
         },
       ]);
     } catch (err) {
       console.error('Chat start error:', err);
       // Still show welcome message on error
-      const timestamp = new Date().toLocaleTimeString();
+      const timestamp = new Date().toLocaleTimeString('fr-FR');
       setMessages([
         {
           role: 'bot',
-          text: '🌱 Welcome to Verdustry Support!\n\nWe\'re here to help you with:\n• Carbon emissions tracking\n• Sustainability goals\n• Data analysis & reports\n• Platform features\n\nWhat can we help you with today?',
+          text: '🌱 Bienvenue sur le support Verdustry !\n\nNous pouvons vous aider pour :\n• Le suivi des émissions carbone\n• Les objectifs de durabilité\n• L’analyse des données & les rapports\n• Les fonctionnalités de la plateforme\n\nComment pouvons-nous vous aider aujourd’hui ?',
           timestamp,
         },
       ]);
@@ -76,7 +76,7 @@ export function ChatWidget({ businessId, userName = 'User' }: ChatWidgetProps) {
     const userMessage: ChatMessage = {
       role: 'user',
       text: inputValue,
-      timestamp: new Date().toLocaleTimeString(),
+      timestamp: new Date().toLocaleTimeString('fr-FR'),
     };
 
     setMessages((prev) => [...prev, userMessage]);
@@ -88,7 +88,7 @@ export function ChatWidget({ businessId, userName = 'User' }: ChatWidgetProps) {
     try {
       // Create bot message placeholder
       let botMessageContent = '';
-      const botMessageTimestamp = new Date().toLocaleTimeString();
+      const botMessageTimestamp = new Date().toLocaleTimeString('fr-FR');
 
       // Stream response from AI
       for await (const chunk of sendChatMessageStream(businessId, userInput, userName)) {
@@ -123,11 +123,11 @@ export function ChatWidget({ businessId, userName = 'User' }: ChatWidgetProps) {
       console.error('Send message error:', err);
       const errorMessage: ChatMessage = {
         role: 'bot',
-        text: '❌ Error getting response. Please try again or contact support@Verdustry.com',
-        timestamp: new Date().toLocaleTimeString(),
+        text: '❌ Erreur lors de la réponse. Veuillez réessayer ou contactez support@Verdustry.com',
+        timestamp: new Date().toLocaleTimeString('fr-FR'),
       };
       setMessages((prev) => [...prev, errorMessage]);
-      setError('Failed to get response');
+      setError('Impossible d’obtenir une réponse');
     } finally {
       setIsLoading(false);
     }
@@ -144,7 +144,7 @@ export function ChatWidget({ businessId, userName = 'User' }: ChatWidgetProps) {
               <MessageCircle className="w-5 h-5" />
               <div>
                 <h3 className="font-bold text-sm md:text-base">Verdustry Support</h3>
-                <p className="text-xs text-green-100">Average response: 2 hours</p>
+                <p className="text-xs text-green-100">Temps de réponse moyen : 2 heures</p>
               </div>
             </div>
             <button
@@ -159,7 +159,7 @@ export function ChatWidget({ businessId, userName = 'User' }: ChatWidgetProps) {
           <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
             {messages.length === 0 && !isLoading && (
               <div className="flex items-center justify-center h-full text-gray-400 text-center">
-                <p className="text-sm">Loading chat...</p>
+                <p className="text-sm">Chargement du chat...</p>
               </div>
             )}
 
@@ -185,7 +185,7 @@ export function ChatWidget({ businessId, userName = 'User' }: ChatWidgetProps) {
               <div className="flex justify-start">
                 <div className="flex items-center gap-2 px-4 py-3 bg-white rounded-2xl border border-green-200 rounded-bl-sm">
                   <Loader className="w-4 h-4 text-green-600 animate-spin" />
-                  <span className="text-sm text-gray-600">Processing...</span>
+                  <span className="text-sm text-gray-600">Traitement...</span>
                 </div>
               </div>
             )}
@@ -205,7 +205,7 @@ export function ChatWidget({ businessId, userName = 'User' }: ChatWidgetProps) {
             <form onSubmit={handleSendMessage} className="flex gap-2">
               <input
                 type="text"
-                placeholder="Type your message..."
+                placeholder="Tapez votre message..."
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 disabled={isLoading}

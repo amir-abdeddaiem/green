@@ -7,7 +7,7 @@ import { BillingTariffsTab } from "./BillingTariffsTab";
 import { apiUrl } from "@/config/api";
 
 export function SettingsTab() {
-  const initialBusinessName = localStorage.getItem("business_name") || "Business";
+  const initialBusinessName = localStorage.getItem("business_name") || "Entreprise";
   const initialEmail = localStorage.getItem("email") || "user@example.com";
   const businessId = localStorage.getItem("user_id") || "1";
 
@@ -30,13 +30,13 @@ export function SettingsTab() {
 
     // Validate file type
     if (!file.type.startsWith("image/")) {
-      setUploadMessage("❌ Please select a valid image file");
+      setUploadMessage("❌ Veuillez sélectionner un fichier image valide");
       return;
     }
 
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      setUploadMessage("❌ Image size must be less than 5MB");
+      setUploadMessage("❌ L’image doit faire moins de 5 Mo");
       return;
     }
 
@@ -57,14 +57,14 @@ export function SettingsTab() {
         const data = await response.json();
         setProfilePicture(data.image_url);
         localStorage.setItem("profile_picture", data.image_url);
-        setUploadMessage("✅ Profile picture updated successfully!");
+        setUploadMessage("✅ Photo de profil mise à jour avec succès !");
         setTimeout(() => setUploadMessage(""), 3000);
       } else {
-        setUploadMessage("❌ Failed to upload profile picture");
+        setUploadMessage("❌ Échec du téléversement de la photo de profil");
       }
     } catch (error) {
       console.error("Error uploading profile picture:", error);
-      setUploadMessage("❌ Error uploading profile picture");
+      setUploadMessage("❌ Erreur lors du téléversement de la photo de profil");
     } finally {
       setIsUploadingPicture(false);
     }
@@ -79,7 +79,7 @@ export function SettingsTab() {
     setBusinessName(editBusinessName);
     setEmail(editEmail);
     
-    alert("✅ Profile updated successfully!");
+    alert("✅ Profil mis à jour avec succès !");
     setIsEditing(false);
     
     // Trigger a page refresh to update sidebar
@@ -87,11 +87,11 @@ export function SettingsTab() {
   };
 
   const handleChangePassword = () => {
-    alert("🔐 Password change feature coming soon!");
+    alert("🔐 La fonctionnalité de changement de mot de passe arrive bientôt !");
   };
 
   const handleDeleteAccount = () => {
-    alert("⚠️ Account deletion is permanent. This feature will be enabled after confirmation.");
+    alert("⚠️ La suppression du compte est définitive. Cette fonctionnalité sera activée après confirmation.");
     setShowDeleteConfirm(false);
   };
 
@@ -99,8 +99,8 @@ export function SettingsTab() {
     <div className="min-h-screen bg-white p-4 sm:p-6 md:p-8 lg:p-12 space-y-8 md:space-y-10">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-green-900">Settings & Control</h1>
-        <p className="text-green-700 text-sm md:text-base">Manage your business profile and account settings</p>
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-green-900">Paramètres & contrôle</h1>
+        <p className="text-green-700 text-sm md:text-base">Gérez le profil de votre entreprise et les paramètres de votre compte</p>
       </div>
 
       {/* Tabs */}
@@ -114,7 +114,7 @@ export function SettingsTab() {
           }`}
         >
           <User className="w-4 h-4 inline mr-2" />
-          Profile
+          Profil
         </button>
         <button
           onClick={() => setActiveTab("security")}
@@ -125,7 +125,7 @@ export function SettingsTab() {
           }`}
         >
           <Lock className="w-4 h-4 inline mr-2" />
-          Security
+          Sécurité
         </button>
         <button
           onClick={() => setActiveTab("roles")}
@@ -136,7 +136,7 @@ export function SettingsTab() {
           }`}
         >
           <Shield className="w-4 h-4 inline mr-2" />
-          Roles
+          Rôles
         </button>
         <button
           onClick={() => setActiveTab("users")}
@@ -147,7 +147,7 @@ export function SettingsTab() {
           }`}
         >
           <Users className="w-4 h-4 inline mr-2" />
-          Users
+          Utilisateurs
         </button>
         <button
           onClick={() => setActiveTab("billing")}
@@ -158,7 +158,7 @@ export function SettingsTab() {
           }`}
         >
           <DollarSign className="w-4 h-4 inline mr-2" />
-          Billing
+          Facturation
         </button>
         <button
           onClick={() => setActiveTab("danger")}
@@ -168,7 +168,7 @@ export function SettingsTab() {
               : "border-transparent text-green-600 hover:text-green-900"
           }`}
         >
-          Danger Zone
+          Zone de danger
         </button>
       </div>
 
@@ -177,7 +177,7 @@ export function SettingsTab() {
         <div className="space-y-6">
           {/* Profile Picture Card */}
           <Card className="p-6 rounded-lg shadow-lg bg-white border border-green-300">
-            <h3 className="text-lg font-bold text-green-900 mb-4">Profile Picture</h3>
+            <h3 className="text-lg font-bold text-green-900 mb-4">Photo de profil</h3>
             
             <div className="flex flex-col sm:flex-row items-center gap-6">
               {/* Current Picture */}
@@ -185,7 +185,7 @@ export function SettingsTab() {
                 {profilePicture ? (
                   <img
                     src={profilePicture}
-                    alt="Profile"
+                    alt="Profil"
                     className="w-32 h-32 rounded-lg object-cover border-4 border-green-100 shadow"
                   />
                 ) : (
@@ -201,7 +201,7 @@ export function SettingsTab() {
                   <div className="flex items-center gap-2 px-6 py-3 bg-green-100 border-2 border-dashed border-green-400 rounded-lg cursor-pointer hover:bg-green-200 transition-colors">
                     <Upload className="w-5 h-5 text-green-700" />
                     <span className="font-semibold text-green-700">
-                      {isUploadingPicture ? "Uploading..." : "Choose Image"}
+                      {isUploadingPicture ? "Téléversement..." : "Choisir une image"}
                     </span>
                   </div>
                   <input
@@ -212,7 +212,7 @@ export function SettingsTab() {
                     className="hidden"
                   />
                 </label>
-                <p className="text-xs text-green-600 mt-2">JPG, PNG or WebP (Max 5MB)</p>
+                <p className="text-xs text-green-600 mt-2">JPG, PNG ou WebP (max. 5 Mo)</p>
                 {uploadMessage && (
                   <p className={`text-sm font-semibold mt-2 ${uploadMessage.includes("✅") ? "text-green-900" : "text-red-600"}`}>
                     {uploadMessage}
@@ -239,7 +239,7 @@ export function SettingsTab() {
             {isEditing ? (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-semibold text-green-700 mb-2">Business Name</label>
+                  <label className="block text-sm font-semibold text-green-700 mb-2">Nom de l’entreprise</label>
                   <input
                     type="text"
                     value={editBusinessName}
@@ -261,20 +261,20 @@ export function SettingsTab() {
                     onClick={handleSaveProfile}
                     className="flex-1 px-4 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors"
                   >
-                    Save Changes
+                    Enregistrer
                   </button>
                   <button
                     onClick={() => {setIsEditing(false); setEditBusinessName(businessName); setEditEmail(email);}}
                     className="flex-1 px-4 py-2 bg-green-200 text-green-900 font-bold rounded-lg hover:bg-green-300 transition-colors"
                   >
-                    Cancel
+                    Annuler
                   </button>
                 </div>
               </div>
             ) : (
               <div className="space-y-3">
                 <div className="pb-3 border-b border-green-300">
-                  <p className="text-xs text-green-600 font-semibold uppercase mb-1">Business Name</p>
+                  <p className="text-xs text-green-600 font-semibold uppercase mb-1">Nom de l’entreprise</p>
                   <p className="text-green-900 font-semibold">{businessName}</p>
                 </div>
                 <div className="pb-3 border-b border-green-300">
@@ -285,7 +285,7 @@ export function SettingsTab() {
                   onClick={() => {setIsEditing(true); setEditBusinessName(businessName); setEditEmail(email);}}
                   className="w-full px-4 py-2 bg-green-100 text-green-900 font-bold rounded-lg hover:bg-green-200 transition-colors border border-green-400"
                 >
-                  Edit Profile
+                  Modifier le profil
                 </button>
               </div>
             )}
@@ -294,19 +294,19 @@ export function SettingsTab() {
           {/* Profile Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Card className="p-4 rounded-lg bg-white border border-green-300">
-              <p className="text-xs text-green-600 font-semibold uppercase mb-2">Account Status</p>
+              <p className="text-xs text-green-600 font-semibold uppercase mb-2">Statut du compte</p>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-green-700" />
-                <span className="font-bold text-green-900">Active</span>
+                <span className="font-bold text-green-900">Actif</span>
               </div>
             </Card>
             <Card className="p-4 rounded-lg bg-white border border-green-300">
-              <p className="text-xs text-green-600 font-semibold uppercase mb-2">Member Since</p>
-              <p className="font-bold text-green-900">January 2025</p>
+              <p className="text-xs text-green-600 font-semibold uppercase mb-2">Membre depuis</p>
+              <p className="font-bold text-green-900">Janvier 2025</p>
             </Card>
             <Card className="p-4 rounded-lg bg-white border border-green-300">
-              <p className="text-xs text-green-600 font-semibold uppercase mb-2">Plan</p>
-              <p className="font-bold text-green-900">Professional</p>
+              <p className="text-xs text-green-600 font-semibold uppercase mb-2">Forfait</p>
+              <p className="font-bold text-green-900">Professionnel</p>
             </Card>
           </div>
         </div>
@@ -318,40 +318,40 @@ export function SettingsTab() {
           <Card className="p-6 rounded-lg shadow-lg bg-white border border-green-300">
             <div className="flex items-center gap-3 mb-6">
               <Lock className="w-6 h-6 text-green-700" />
-              <h3 className="text-lg font-bold text-green-900">Password & Security</h3>
+              <h3 className="text-lg font-bold text-green-900">Mot de passe & sécurité</h3>
             </div>
 
             <div className="space-y-4">
               <div>
-                <p className="text-sm text-green-700 mb-3">Update your password to keep your account secure.</p>
+                <p className="text-sm text-green-700 mb-3">Mettez à jour votre mot de passe pour sécuriser votre compte.</p>
                 <button
                   onClick={handleChangePassword}
                   className="px-4 py-2.5 bg-green-100 text-green-900 font-bold rounded-lg hover:bg-green-200 transition-colors border border-green-400"
                 >
-                  Change Password
+                  Changer le mot de passe
                 </button>
               </div>
 
               <div className="pt-4 border-t border-green-300">
-                <h4 className="font-bold text-green-900 mb-3">Active Sessions</h4>
+                <h4 className="font-bold text-green-900 mb-3">Sessions actives</h4>
                 <Card className="p-3 rounded-lg bg-green-50 border border-green-400">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-semibold text-green-900">Current Browser</p>
-                      <p className="text-xs text-green-600">Chrome on Windows</p>
+                      <p className="text-sm font-semibold text-green-900">Navigateur actuel</p>
+                      <p className="text-xs text-green-600">Chrome sur Windows</p>
                     </div>
-                    <span className="text-xs font-bold text-green-700">Active Now</span>
+                    <span className="text-xs font-bold text-green-700">Actif maintenant</span>
                   </div>
                 </Card>
               </div>
 
               <div className="pt-4 border-t border-green-300">
-                <p className="text-sm text-green-700 mb-3">Two-Factor Authentication (coming soon)</p>
+                <p className="text-sm text-green-700 mb-3">Authentification à deux facteurs (bientôt disponible)</p>
                 <button
                   disabled
                   className="px-4 py-2.5 bg-green-100 text-green-600 font-bold rounded-lg cursor-not-allowed opacity-50 border border-green-400"
                 >
-                  Enable 2FA (Phase 6)
+                  Activer 2FA (phase 6)
                 </button>
               </div>
             </div>
@@ -366,42 +366,42 @@ export function SettingsTab() {
             <div className="flex items-start gap-3 mb-4">
               <AlertCircle className="w-6 h-6 text-green-700 flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="text-lg font-bold text-green-900 mb-1">Danger Zone</h3>
-                <p className="text-sm text-green-700">These actions are permanent and cannot be undone.</p>
+                <h3 className="text-lg font-bold text-green-900 mb-1">Zone de danger</h3>
+                <p className="text-sm text-green-700">Ces actions sont définitives et ne peuvent pas être annulées.</p>
               </div>
             </div>
 
             <div className="space-y-4 mt-6">
               {/* Export Data */}
               <div className="p-4 bg-white rounded-lg border border-green-400">
-                <h4 className="font-bold text-green-900 mb-2">Download Your Data</h4>
-                <p className="text-sm text-green-600 mb-3">Get a copy of all your emissions data in a portable format.</p>
+                <h4 className="font-bold text-green-900 mb-2">Télécharger vos données</h4>
+                <p className="text-sm text-green-600 mb-3">Obtenez une copie de toutes vos données d’émissions dans un format portable.</p>
                 <button className="px-4 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors">
-                  Download Data
+                  Télécharger
                 </button>
               </div>
 
               {/* Delete Account */}
               <div className="p-4 bg-white rounded-lg border border-green-400">
-                <h4 className="font-bold text-green-900 mb-2">Delete Account</h4>
+                <h4 className="font-bold text-green-900 mb-2">Supprimer le compte</h4>
                 <p className="text-sm text-green-600 mb-3">
-                  Permanently delete your account and all associated data. This action cannot be reversed.
+                  Supprimez définitivement votre compte et toutes les données associées. Cette action est irréversible.
                 </p>
                 {showDeleteConfirm ? (
                   <div className="space-y-3 p-3 bg-green-100 rounded-lg border border-green-400">
-                    <p className="text-sm font-semibold text-green-900">Are you absolutely sure?</p>
+                    <p className="text-sm font-semibold text-green-900">Êtes-vous absolument sûr ?</p>
                     <div className="flex gap-2">
                       <button
                         onClick={handleDeleteAccount}
                         className="flex-1 px-3 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors"
                       >
-                        Yes, Delete Everything
+                        Oui, tout supprimer
                       </button>
                       <button
                         onClick={() => setShowDeleteConfirm(false)}
                         className="flex-1 px-3 py-2 bg-green-200 text-green-900 font-bold rounded-lg hover:bg-green-300 transition-colors"
                       >
-                        Cancel
+                        Annuler
                       </button>
                     </div>
                   </div>
@@ -410,7 +410,7 @@ export function SettingsTab() {
                     onClick={() => setShowDeleteConfirm(true)}
                     className="px-4 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition-colors"
                   >
-                    Delete Account
+                    Supprimer le compte
                   </button>
                 )}
               </div>

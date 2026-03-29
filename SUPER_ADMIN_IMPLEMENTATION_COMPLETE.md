@@ -276,7 +276,7 @@ python setup_super_admin.py testatiq@atiq.com
 
 ## 🚀 Ready For
 
-- ✅ Login and Super Admin Dashboard access
+- ✅ login and Super Admin Dashboard access
 - ✅ User management (promote/demote)
 - ✅ Platform administration
 - ✅ User deletion

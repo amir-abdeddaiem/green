@@ -20,7 +20,7 @@ interface MonthlyData {
 
 export function DashboardOverview() {
   const navigate = useNavigate();
-  const businessName = localStorage.getItem("business_name") || "Business";
+  const businessName = localStorage.getItem("business_name") || "Entreprise";
   const businessId = localStorage.getItem("user_id");
   const [isLoading, setIsLoading] = useState(true);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
@@ -43,12 +43,12 @@ export function DashboardOverview() {
   const [filterDateRange, setFilterDateRange] = useState("month");
 
   const dateRangeOptions = [
-    { id: "today", label: "Today", days: 1 },
-    { id: "7d", label: "7D", days: 7 },
-    { id: "month", label: "Month", days: 30 },
-    { id: "6m", label: "6M", days: 180 },
-    { id: "year", label: "Year", days: 365 },
-    { id: "all", label: "All", days: null },
+    { id: "today", label: "Aujourd’hui", days: 1 },
+    { id: "7d", label: "7j", days: 7 },
+    { id: "month", label: "Mois", days: 30 },
+    { id: "6m", label: "6m", days: 180 },
+    { id: "year", label: "Année", days: 365 },
+    { id: "all", label: "Tout", days: null },
   ];
 
   const getDateRangeParams = (rangeId: string) => {
@@ -89,28 +89,28 @@ export function DashboardOverview() {
 
       // Fetch dashboard stats
       const statsRes = await fetch(apiUrl(`/dashboard-stats/${businessId}?${statsParams}`));
-      if (!statsRes.ok) throw new Error("Failed to fetch stats");
+      if (!statsRes.ok) throw new Error("Impossible de récupérer les statistiques");
       const statsData = await statsRes.json();
       setStats(statsData);
       console.log("✅ Stats fetched:", statsData);
 
       // Fetch recent logs
       const logsRes = await fetch(apiUrl(`/recent-logs/${businessId}?${statsParams}`));
-      if (!logsRes.ok) throw new Error("Failed to fetch logs");
+      if (!logsRes.ok) throw new Error("Impossible de récupérer les journaux");
       const logsData = await logsRes.json();
       setLogs(logsData);
       console.log("✅ Logs fetched:", logsData);
 
       // Fetch category breakdown
       const categoryRes = await fetch(apiUrl(`/category-breakdown/${businessId}?${statsParams}`));
-      if (!categoryRes.ok) throw new Error("Failed to fetch category data");
+      if (!categoryRes.ok) throw new Error("Impossible de récupérer les données par catégorie");
       const categoryDataJson = await categoryRes.json();
       setCategoryData(categoryDataJson.data || []);
       console.log("✅ Category data fetched:", categoryDataJson.data);
 
       // Fetch monthly trends
       const monthlyRes = await fetch(apiUrl(`/monthly-trends/${businessId}?${statsParams}`));
-      if (!monthlyRes.ok) throw new Error("Failed to fetch monthly data");
+      if (!monthlyRes.ok) throw new Error("Impossible de récupérer les données mensuelles");
       const monthlyDataJson = await monthlyRes.json();
       setMonthlyData(monthlyDataJson.data || []);
       console.log("✅ Monthly data fetched:", monthlyDataJson.data);
@@ -129,7 +129,7 @@ export function DashboardOverview() {
   const statCards = [
     {
       icon: Zap,
-      label: "Electricity",
+      label: "Électricité",
       value: formatCO2(stats.total_kwh),
       unit: "kg CO₂e",
       change: "+2.2%",
@@ -139,7 +139,7 @@ export function DashboardOverview() {
     },
     {
       icon: Flame,
-      label: "Natural Gas",
+      label: "Gaz naturel",
       value: formatCO2(stats.total_gas),
       unit: "kg CO₂e",
       change: "-2.2%",
@@ -149,7 +149,7 @@ export function DashboardOverview() {
     },
     {
       icon: Fuel,
-      label: "Fuel Usage",
+      label: "Carburant",
       value: formatCO2(stats.total_co2 / 2),
       unit: "kg CO₂e",
       change: "-2.2%",
@@ -159,7 +159,7 @@ export function DashboardOverview() {
     },
     {
       icon: Trash2,
-      label: "Waste",
+      label: "Déchets",
       value: formatCO2(stats.total_co2 / 3),
       unit: "kg CO₂e",
       change: "+2.2%",
@@ -169,7 +169,7 @@ export function DashboardOverview() {
     },
     {
       icon: TrendingUp,
-      label: "Total Emissions",
+      label: "Émissions totales",
       value: formatCO2(stats.total_co2),
       unit: "kg CO₂e",
       change: "+1.5%",
@@ -186,13 +186,13 @@ export function DashboardOverview() {
         <div className="bg-gradient-to-r from-white via-green-50 to-white rounded-3xl p-8 md:p-12 mb-8 border border-green-200/50">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
-              <p className="text-slate-500 text-sm font-semibold mb-2 tracking-widest">OVERVIEW</p>
+              <p className="text-slate-500 text-sm font-semibold mb-2 tracking-widest">APERÇU</p>
               <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-3">
-                Welcome back,<br /><span className="bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent">{businessName}</span>
+                Bon retour,<br /><span className="bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent">{businessName}</span>
               </h1>
               <p className="text-slate-600 text-sm flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                Data for: {new Date().toLocaleDateString("en-US", { year: "numeric", month: "2-digit", day: "2-digit" })}
+                Données pour : {new Date().toLocaleDateString("fr-FR", { year: "numeric", month: "2-digit", day: "2-digit" })}
               </p>
             </div>
 
@@ -212,7 +212,7 @@ export function DashboardOverview() {
                 </button>
               ))}
               <button className="px-4 py-2 text-slate-500 hover:text-slate-900 text-sm font-medium transition-colors flex items-center gap-1 border border-gray-200 rounded-lg hover:border-green-300">
-                <Calendar className="w-4 h-4" /> Custom
+                <Calendar className="w-4 h-4" /> Personnalisé
               </button>
             </div>
           </div>
@@ -260,14 +260,14 @@ export function DashboardOverview() {
                   <DollarSign className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-100 text-blue-700">
-                  💼 New
+                  💼 Nouveau
                 </span>
               </div>
-              <p className="text-slate-600 text-xs font-semibold uppercase tracking-wider mb-2">Financial Module</p>
-              <p className="text-2xl font-black text-slate-900 mb-3">Carbon Costs</p>
-              <p className="text-sm text-slate-600 mb-4">Track emissions costs in multiple currencies, set budgets, and monitor financial impact.</p>
+              <p className="text-slate-600 text-xs font-semibold uppercase tracking-wider mb-2">Module financier</p>
+              <p className="text-2xl font-black text-slate-900 mb-3">Coûts carbone</p>
+              <p className="text-sm text-slate-600 mb-4">Suivez les coûts liés aux émissions dans plusieurs devises, définissez des budgets et mesurez l’impact financier.</p>
               <div className="flex items-center gap-2 text-blue-600 font-semibold text-sm group-hover:gap-3 transition-all">
-                <span>View Financial Dashboard</span>
+                <span>Voir le tableau financier</span>
                 <TrendingUp className="w-4 h-4" />
               </div>
             </div>
@@ -282,14 +282,14 @@ export function DashboardOverview() {
                   <BarChart3 className="w-6 h-6" />
                 </div>
                 <span className="text-xs font-bold px-3 py-1 rounded-full bg-purple-100 text-purple-700">
-                  📈 New
+                  📈 Nouveau
                 </span>
               </div>
-              <p className="text-slate-600 text-xs font-semibold uppercase tracking-wider mb-2">ROI Calculator</p>
-              <p className="text-2xl font-black text-slate-900 mb-3">Savings Analysis</p>
-              <p className="text-sm text-slate-600 mb-4">Compare month-over-month performance and see your environmental ROI and cost savings.</p>
+              <p className="text-slate-600 text-xs font-semibold uppercase tracking-wider mb-2">Calculateur de ROI</p>
+              <p className="text-2xl font-black text-slate-900 mb-3">Analyse des économies</p>
+              <p className="text-sm text-slate-600 mb-4">Comparez les performances mois par mois et visualisez votre ROI environnemental ainsi que les économies réalisées.</p>
               <div className="flex items-center gap-2 text-purple-600 font-semibold text-sm group-hover:gap-3 transition-all">
-                <span>View ROI Analysis</span>
+                <span>Voir l’analyse ROI</span>
                 <TrendingUp className="w-4 h-4" />
               </div>
             </div>
@@ -304,14 +304,14 @@ export function DashboardOverview() {
                   <Truck className="w-5 h-5" />
                 </div>
                 <span className="text-xs font-bold px-2 py-1 rounded-full bg-green-100 text-green-700">
-                  🚚 New
+                  🚚 Nouveau
                 </span>
               </div>
-              <p className="text-slate-600 text-xs font-semibold uppercase tracking-wider mb-1">Supply Chain</p>
-              <p className="text-lg font-black text-slate-900 mb-2">Scope 3</p>
-              <p className="text-xs text-slate-600 mb-3 line-clamp-2">Track supplier emissions and manage sustainability ratings.</p>
+              <p className="text-slate-600 text-xs font-semibold uppercase tracking-wider mb-1">Chaîne d’approvisionnement</p>
+              <p className="text-lg font-black text-slate-900 mb-2">Périmètre 3</p>
+              <p className="text-xs text-slate-600 mb-3 line-clamp-2">Suivez les émissions des fournisseurs et gérez les notations de durabilité.</p>
               <div className="flex items-center gap-2 text-green-600 font-semibold text-xs group-hover:gap-3 transition-all">
-                <span>Manage</span>
+                <span>Gérer</span>
                 <Truck className="w-3 h-3" />
               </div>
             </div>
@@ -326,8 +326,8 @@ export function DashboardOverview() {
                     <DollarSign className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="font-bold text-slate-900">⚡ Get Started with Billing & Tariffs</p>
-                    <p className="text-xs text-slate-600">Set up your utility tariffs to track financial impact of emissions</p>
+                    <p className="font-bold text-slate-900">⚡ Commencer avec la facturation & les tarifs</p>
+                    <p className="text-xs text-slate-600">Configurez vos tarifs d’énergie pour suivre l’impact financier des émissions</p>
                   </div>
                 </div>
               </div>
@@ -335,7 +335,7 @@ export function DashboardOverview() {
                 onClick={() => navigate("/dashboard/settings")}
                 className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-semibold transition-all text-sm whitespace-nowrap"
               >
-                Set Up Now
+                Configurer
               </button>
             </div>
           </div>
@@ -349,12 +349,12 @@ export function DashboardOverview() {
                   <TrendingUp className="w-5 h-5 text-green-700" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900">Financial Trend</h3>
-                  <p className="text-xs text-slate-500">Emissions Analysis</p>
+                  <h3 className="text-sm font-bold text-slate-900">Tendance financière</h3>
+                  <p className="text-xs text-slate-500">Analyse des émissions</p>
                 </div>
               </div>
               {chartsLoading ? (
-                <div className="h-64 flex items-center justify-center text-gray-400">Loading...</div>
+                <div className="h-64 flex items-center justify-center text-gray-400">Chargement...</div>
               ) : (
                 <MonthlyChart data={transformMonthlyData(monthlyData)} />
               )}
@@ -367,12 +367,12 @@ export function DashboardOverview() {
                   <Flame className="w-5 h-5 text-green-700" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900">Emissions</h3>
-                  <p className="text-xs text-slate-500">Status Distribution</p>
+                  <h3 className="text-sm font-bold text-slate-900">Émissions</h3>
+                  <p className="text-xs text-slate-500">Répartition</p>
                 </div>
               </div>
               {chartsLoading ? (
-                <div className="h-64 flex items-center justify-center text-gray-400">Loading...</div>
+                <div className="h-64 flex items-center justify-center text-gray-400">Chargement...</div>
               ) : (
                 <CategoryChart data={transformCategoryData(categoryData)} />
               )}
@@ -389,7 +389,7 @@ export function DashboardOverview() {
               className="bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
             >
               <Zap className="w-4 h-4" />
-              <span className="hidden sm:inline text-sm">Electricity</span>
+              <span className="hidden sm:inline text-sm">Électricité</span>
             </button>
             <button
               onClick={() => {
@@ -399,7 +399,7 @@ export function DashboardOverview() {
               className="bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
             >
               <Flame className="w-4 h-4" />
-              <span className="hidden sm:inline text-sm">Gas</span>
+              <span className="hidden sm:inline text-sm">Gaz</span>
             </button>
             <button
               onClick={() => {
@@ -409,7 +409,7 @@ export function DashboardOverview() {
               className="bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
             >
               <Fuel className="w-4 h-4" />
-              <span className="hidden sm:inline text-sm">Fuel</span>
+              <span className="hidden sm:inline text-sm">Carburant</span>
             </button>
             <button
               onClick={() => {
@@ -419,7 +419,7 @@ export function DashboardOverview() {
               className="bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
             >
               <Trash2 className="w-4 h-4" />
-              <span className="hidden sm:inline text-sm">Waste</span>
+              <span className="hidden sm:inline text-sm">Déchets</span>
             </button>
           </div>
         </div>
@@ -432,7 +432,7 @@ export function DashboardOverview() {
         >
           {/* Close button for mobile */}
           <div className="flex items-center justify-between mb-6 lg:hidden">
-            <h3 className="text-lg font-bold text-slate-900">Filters</h3>
+            <h3 className="text-lg font-bold text-slate-900">Filtres</h3>
             <button
               onClick={() => setIsFiltersOpen(false)}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -443,7 +443,7 @@ export function DashboardOverview() {
 
           {/* Desktop header */}
           <div className="hidden lg:block mb-6">
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Quick Add</h3>
+            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Ajout rapide</h3>
           </div>
 
           {/* Quick Add in Sidebar */}
@@ -456,7 +456,7 @@ export function DashboardOverview() {
               }}
               className="w-full px-4 py-3 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl font-semibold transition-all text-sm flex items-center gap-2"
             >
-              <Zap className="w-4 h-4" /> Electricity
+              <Zap className="w-4 h-4" /> Électricité
             </button>
             <button
               onClick={() => {
@@ -466,7 +466,7 @@ export function DashboardOverview() {
               }}
               className="w-full px-4 py-3 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl font-semibold transition-all text-sm flex items-center gap-2"
             >
-              <Flame className="w-4 h-4" /> Gas
+              <Flame className="w-4 h-4" /> Gaz
             </button>
             <button
               onClick={() => {
@@ -476,7 +476,7 @@ export function DashboardOverview() {
               }}
               className="w-full px-4 py-3 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl font-semibold transition-all text-sm flex items-center gap-2"
             >
-              <Fuel className="w-4 h-4" /> Fuel
+              <Fuel className="w-4 h-4" /> Carburant
             </button>
             <button
               onClick={() => {
@@ -486,12 +486,12 @@ export function DashboardOverview() {
               }}
               className="w-full px-4 py-3 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl font-semibold transition-all text-sm flex items-center gap-2"
             >
-              <Trash2 className="w-4 h-4" /> Waste
+              <Trash2 className="w-4 h-4" /> Déchets
             </button>
           </div>
 
           <div className="border-t border-gray-200 pt-6">
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">Filters</h3>
+            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">Filtres</h3>
 
             {/* Filter Groups */}
             <div className="space-y-4">
@@ -503,34 +503,34 @@ export function DashboardOverview() {
                   onChange={(e) => setFilterEmissionType(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-green-500 bg-gray-50 text-gray-900 font-medium text-sm"
                 >
-                  <option>All Types</option>
-                  <option>Electricity</option>
-                  <option>Natural Gas</option>
-                  <option>Fuel</option>
-                  <option>Waste</option>
+                  <option value="All">Tous les types</option>
+                  <option value="Electricity">Électricité</option>
+                  <option value="Natural Gas">Gaz naturel</option>
+                  <option value="Fuel">Carburant</option>
+                  <option value="Waste">Déchets</option>
                 </select>
               </div>
 
               {/* Date Range Filter */}
               <div>
-                <label className="text-xs font-bold uppercase text-slate-600 block mb-2">Period</label>
+                <label className="text-xs font-bold uppercase text-slate-600 block mb-2">Période</label>
                 <select
                   value={filterDateRange}
                   onChange={(e) => setFilterDateRange(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-green-500 bg-gray-50 text-gray-900 font-medium text-sm"
                 >
-                  <option value="today">Today</option>
-                  <option value="7d">Last 7 Days</option>
-                  <option value="month">This Month</option>
-                  <option value="6m">Last 6 Months</option>
-                  <option value="year">This Year</option>
-                  <option value="all">All Time</option>
+                  <option value="today">Aujourd’hui</option>
+                  <option value="7d">7 derniers jours</option>
+                  <option value="month">Ce mois-ci</option>
+                  <option value="6m">6 derniers mois</option>
+                  <option value="year">Cette année</option>
+                  <option value="all">Depuis le début</option>
                 </select>
               </div>
 
               {/* Team Filter */}
               <div>
-                <label className="text-xs font-bold uppercase text-slate-600 block mb-2">Team</label>
+                <label className="text-xs font-bold uppercase text-slate-600 block mb-2">Équipe</label>
                 <select className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-green-500 bg-gray-50 text-gray-900 font-medium text-sm">
                   <option>{businessName}</option>
                 </select>
@@ -541,10 +541,10 @@ export function DashboardOverview() {
           {/* Buttons */}
           <div className="flex gap-2 mt-8">
             <button className="flex-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-all text-sm">
-              Apply
+              Appliquer
             </button>
             <button className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-900 rounded-lg font-semibold transition-all text-sm">
-              Clear
+              Réinitialiser
             </button>
           </div>
         </div>

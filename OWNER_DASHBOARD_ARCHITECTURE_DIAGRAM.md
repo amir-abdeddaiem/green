@@ -12,7 +12,7 @@
                 ┌─────────────────────┼─────────────────────┐
                 ▼                     ▼                     ▼
         ┌─────────────┐       ┌─────────────┐      ┌──────────────┐
-        │   LOGIN     │       │  REGISTER   │      │   FORGOT     │
+        │   login     │       │  REGISTER   │      │   FORGOT     │
         │             │       │             │      │   PASSWORD   │
         │ Auth Check  │       │ Create User │      │              │
         │             │       │             │      │              │
@@ -168,7 +168,7 @@
 ## Authentication & Authorization Flow
 
 ```
-USER LOGIN
+USER login
    │
    ▼
 ┌─────────────────────────────────┐
@@ -367,8 +367,8 @@ Modal Form Opens
 
 ```
 App
-├── LoginPage
-│   └── LoginForm
+├── loginPage
+│   └── loginForm
 ├── RegisterPage
 │   └── RegisterForm
 ├── HomePage

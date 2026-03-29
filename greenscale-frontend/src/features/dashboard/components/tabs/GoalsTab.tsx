@@ -25,6 +25,13 @@ export function GoalsTab() {
     category: "Electricity",
   });
 
+  const CATEGORY_LABELS: Record<string, string> = {
+    Electricity: "Électricité",
+    Gas: "Gaz",
+    Fuel: "Carburant",
+    Waste: "Déchets",
+  };
+
   // Load goals from localStorage
   useEffect(() => {
     const savedGoals = localStorage.getItem("goals");
@@ -35,7 +42,7 @@ export function GoalsTab() {
       const sampleGoals: Goal[] = [
         {
           id: "1",
-          name: "Reduce Electricity Usage",
+          name: "Réduire la consommation d’électricité",
           targetEmission: 500,
           currentEmission: 620,
           unit: "kg CO2e",
@@ -45,7 +52,7 @@ export function GoalsTab() {
         },
         {
           id: "2",
-          name: "Natural Gas Optimization",
+          name: "Optimisation du gaz naturel",
           targetEmission: 200,
           currentEmission: 150,
           unit: "kg CO2e",
@@ -82,7 +89,7 @@ export function GoalsTab() {
 
   const handleAddGoal = () => {
     if (!formData.name || !formData.targetEmission || !formData.deadline) {
-      alert("Please fill in all required fields");
+      alert("Veuillez remplir tous les champs obligatoires");
       return;
     }
 
@@ -170,8 +177,8 @@ export function GoalsTab() {
               <Target className="w-6 h-6 text-green-600" />
             </div>
             <div>
-              <h1 className="text-3xl font-black text-gray-900">Goals & Targets</h1>
-              <p className="text-sm text-gray-500 mt-1">Set and track your emissions reduction goals</p>
+              <h1 className="text-3xl font-black text-gray-900">Objectifs & cibles</h1>
+              <p className="text-sm text-gray-500 mt-1">Définissez et suivez vos objectifs de réduction des émissions</p>
             </div>
           </div>
           <button
@@ -179,7 +186,7 @@ export function GoalsTab() {
             className="px-6 py-2.5 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-all duration-300 flex items-center gap-2 shadow-md"
           >
             <Plus className="w-5 h-5" />
-            Add Goal
+            Ajouter un objectif
           </button>
         </div>
       </div>
@@ -187,19 +194,19 @@ export function GoalsTab() {
       {/* ===== STATS CARDS ===== */}
       <div className="grid grid-cols-4 gap-4 px-8 py-6 bg-gradient-to-b from-green-50 to-white border-b border-gray-200">
         <div className="bg-white border border-gray-200 rounded-lg p-4">
-          <p className="text-xs uppercase tracking-wider font-bold text-gray-600">Total Goals</p>
+          <p className="text-xs uppercase tracking-wider font-bold text-gray-600">Total des objectifs</p>
           <p className="text-3xl font-black text-gray-900 mt-2">{stats.totalGoals}</p>
         </div>
         <div className="bg-white border border-green-200 rounded-lg p-4">
-          <p className="text-xs uppercase tracking-wider font-bold text-green-700">Achieved</p>
+          <p className="text-xs uppercase tracking-wider font-bold text-green-700">Atteints</p>
           <p className="text-3xl font-black text-green-600 mt-2">{stats.achievedGoals}</p>
         </div>
         <div className="bg-white border border-blue-200 rounded-lg p-4">
-          <p className="text-xs uppercase tracking-wider font-bold text-blue-700">On Track</p>
+          <p className="text-xs uppercase tracking-wider font-bold text-blue-700">Sur la bonne voie</p>
           <p className="text-3xl font-black text-blue-600 mt-2">{stats.onTrack}</p>
         </div>
         <div className="bg-white border border-red-200 rounded-lg p-4">
-          <p className="text-xs uppercase tracking-wider font-bold text-red-700">At Risk</p>
+          <p className="text-xs uppercase tracking-wider font-bold text-red-700">À risque</p>
           <p className="text-3xl font-black text-red-600 mt-2">{stats.atRisk}</p>
         </div>
       </div>
@@ -210,14 +217,14 @@ export function GoalsTab() {
           {/* Add/Edit Form */}
           {isAddingGoal && (
             <div className="bg-green-50 border border-green-200 rounded-lg p-6 space-y-4">
-              <h3 className="text-lg font-bold text-gray-900">{editingId ? "Edit Goal" : "Add New Goal"}</h3>
+              <h3 className="text-lg font-bold text-gray-900">{editingId ? "Modifier l’objectif" : "Ajouter un objectif"}</h3>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Goal Name *</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Nom de l’objectif *</label>
                   <input
                     type="text"
-                    placeholder="e.g., Reduce Electricity Usage"
+                    placeholder="ex. : Réduire la consommation d’électricité"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 transition-all"
@@ -225,21 +232,21 @@ export function GoalsTab() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Category *</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Catégorie *</label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500 transition-all"
                   >
-                    <option>Electricity</option>
-                    <option>Gas</option>
-                    <option>Fuel</option>
-                    <option>Waste</option>
+                    <option value="Electricity">Électricité</option>
+                    <option value="Gas">Gaz</option>
+                    <option value="Fuel">Carburant</option>
+                    <option value="Waste">Déchets</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Target Emission (kg CO2e) *</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Émission cible (kg CO2e) *</label>
                   <input
                     type="number"
                     placeholder="500"
@@ -250,7 +257,7 @@ export function GoalsTab() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Current Emission (kg CO2e)</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Émission actuelle (kg CO2e)</label>
                   <input
                     type="number"
                     placeholder="620"
@@ -261,7 +268,7 @@ export function GoalsTab() {
                 </div>
 
                 <div className="col-span-2">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Deadline *</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Échéance *</label>
                   <input
                     type="date"
                     value={formData.deadline}
@@ -276,13 +283,13 @@ export function GoalsTab() {
                   onClick={handleAddGoal}
                   className="px-6 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-all"
                 >
-                  {editingId ? "Update Goal" : "Create Goal"}
+                  {editingId ? "Mettre à jour" : "Créer"}
                 </button>
                 <button
                   onClick={handleCancel}
                   className="px-6 py-2 bg-gray-200 text-gray-900 font-semibold rounded-lg hover:bg-gray-300 transition-all"
                 >
-                  Cancel
+                  Annuler
                 </button>
               </div>
             </div>
@@ -292,7 +299,7 @@ export function GoalsTab() {
           {goals.length === 0 ? (
             <div className="text-center py-12">
               <Target className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 font-medium">No goals yet. Create your first goal!</p>
+              <p className="text-gray-500 font-medium">Aucun objectif pour le moment. Créez votre premier objectif !</p>
             </div>
           ) : (
             <div className="grid gap-4">
@@ -314,12 +321,12 @@ export function GoalsTab() {
                               ? "bg-blue-100 text-blue-700"
                               : "bg-red-100 text-red-700"
                           }`}>
-                            {status === "achieved" && "✓ Achieved"}
-                            {status === "on-track" && "On Track"}
-                            {status === "at-risk" && "At Risk"}
+                            {status === "achieved" && "✓ Atteint"}
+                            {status === "on-track" && "Sur la bonne voie"}
+                            {status === "at-risk" && "À risque"}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-600 mt-1">{goal.category}</p>
+                        <p className="text-sm text-gray-600 mt-1">{CATEGORY_LABELS[goal.category] || goal.category}</p>
                       </div>
 
                       <div className="flex gap-2">
@@ -341,7 +348,7 @@ export function GoalsTab() {
                     {/* Progress Bar */}
                     <div className="mb-4">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-semibold text-gray-700">Progress: {progress.toFixed(0)}%</span>
+                        <span className="text-sm font-semibold text-gray-700">Progression : {progress.toFixed(0)}%</span>
                         <span className="text-sm text-gray-600">
                           {goal.currentEmission.toFixed(0)} / {goal.targetEmission.toFixed(0)} {goal.unit}
                         </span>
@@ -361,9 +368,9 @@ export function GoalsTab() {
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4 text-gray-400" />
                         <div>
-                          <p className="text-xs text-gray-600">Deadline</p>
+                          <p className="text-xs text-gray-600">Échéance</p>
                           <p className="text-sm font-semibold text-gray-900">
-                            {new Date(goal.deadline).toLocaleDateString()} ({daysLeft}d)
+                            {new Date(goal.deadline).toLocaleDateString("fr-FR")} ({daysLeft}j)
                           </p>
                         </div>
                       </div>
@@ -371,7 +378,7 @@ export function GoalsTab() {
                       <div className="flex items-center gap-2">
                         <TrendingDown className="w-4 h-4 text-green-600" />
                         <div>
-                          <p className="text-xs text-gray-600">Reduction Needed</p>
+                          <p className="text-xs text-gray-600">Réduction nécessaire</p>
                           <p className="text-sm font-semibold text-gray-900">
                             {Math.max(0, goal.currentEmission - goal.targetEmission).toFixed(0)} {goal.unit}
                           </p>
@@ -385,9 +392,9 @@ export function GoalsTab() {
                           <AlertCircle className="w-4 h-4 text-gray-400" />
                         )}
                         <div>
-                          <p className="text-xs text-gray-600">Status</p>
+                          <p className="text-xs text-gray-600">Statut</p>
                           <p className="text-sm font-semibold text-gray-900">
-                            {status === "achieved" ? "Goal Met" : `${daysLeft} days left`}
+                            {status === "achieved" ? "Objectif atteint" : `${daysLeft} jours restants`}
                           </p>
                         </div>
                       </div>

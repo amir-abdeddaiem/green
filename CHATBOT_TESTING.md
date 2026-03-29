@@ -35,7 +35,7 @@ npm run dev
 ```
 
 ### Test Chat Bot
-1. Login to the app
+1. login to the app
 2. Navigate to any dashboard page (Dashboard, Analytics, etc.)
 3. Look for **green floating button** in bottom-right corner
 4. Click to open chat

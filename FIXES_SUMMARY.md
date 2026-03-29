@@ -131,7 +131,7 @@ Complete list of all fixes and improvements made to the Verdustry project.
 - **Files:** `authService.ts`, `chatService.ts`
 - **Issue:** Pointing to port 8001 instead of 8000
 - **Fix:** Updated API_URL to correct port
-- **Impact:** Login and chat now work
+- **Impact:** login and chat now work
 
 ### 2. **Enhanced Auth Service** ✅
 - **File:** `authService.ts`

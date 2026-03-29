@@ -33,21 +33,21 @@ export function DashboardLayout() {
     const timer = setInterval(() => {
       setCurrentDateTime(new Date());
     }, 1000);
-    return () => clearInterval(timer);
+    return () => clearInterval(timer);  
   }, []);
 
   const navItems = [
-    { label: "Dashboard", path: "/dashboard", icon: Home },
-    { label: "integration", path: "/dashboard/integration", icon: Plug2Icon },
-    { label: "docs", path: "/dashboard/docs", icon: Download },
+    { label: "Tableau de bord", path: "/dashboard", icon: Home },
+    { label: "Intégration", path: "/dashboard/integration", icon: Plug2Icon },
+    { label: "Documents", path: "/dashboard/docs", icon: Download },
    
-    { label: "Analytics", path: "/dashboard/analytics", icon: Wind },
-    { label: "Emissions", path: "/dashboard/emissions", icon: BarChart2 },
-    { label: "Reports", path: "/dashboard/reports", icon: BarChart3 },
-    { label: "Goals", path: "/dashboard/goals", icon: Target },
-    { label: "Financial", path: "/dashboard/financial", icon: DollarSign },
+    { label: "Analytique", path: "/dashboard/analytics", icon: Wind },
+    { label: "Émissions", path: "/dashboard/emissions", icon: BarChart2 },
+    { label: "Rapports", path: "/dashboard/reports", icon: BarChart3 },
+    { label: "Objectifs", path: "/dashboard/goals", icon: Target },
+    { label: "Finance", path: "/dashboard/financial", icon: DollarSign },
     { label: "ROI", path: "/dashboard/roi", icon: TrendingUp },
-    { label: "Supply Chain", path: "/dashboard/scope3", icon: Truck },
+    { label: "Chaîne d’approvisionnement", path: "/dashboard/scope3", icon: Truck },
   ];
 
   return (
@@ -137,7 +137,7 @@ function DashboardContent({
           <button
             onClick={() => setIsSidebarExpanded(!isSidebarExpanded)}
             className="hidden lg:flex text-gray-600 hover:text-green-600 transition-colors p-1"
-            title={isSidebarExpanded ? "Collapse sidebar" : "Expand sidebar"}
+            title={isSidebarExpanded ? "Réduire le menu" : "Développer le menu"}
           >
             <ChevronLeft className={`w-5 h-5 transition-transform ${!isSidebarExpanded ? "rotate-180" : ""}`} />
           </button>
@@ -208,7 +208,7 @@ function DashboardContent({
               <Search className="w-4 h-4 text-gray-500" />
               <input
                 type="text"
-                placeholder="Search emissions, goals..."
+                placeholder="Rechercher des émissions, objectifs..."
                 className="bg-transparent text-sm text-black placeholder-gray-500 outline-none flex-1"
               />
             </div>
@@ -218,7 +218,7 @@ function DashboardContent({
             {/* Date and Time Display */}
             <div className="hidden sm:flex flex-col items-end">
               <p className="text-sm font-semibold text-black">
-                {currentDateTime.toLocaleDateString("en-US", {
+                {currentDateTime.toLocaleDateString("fr-FR", {
                   weekday: "short",
                   year: "numeric",
                   month: "short",
@@ -226,7 +226,7 @@ function DashboardContent({
                 })}
               </p>
               <p className="text-xs text-gray-500">
-                {currentDateTime.toLocaleTimeString("en-US", {
+                {currentDateTime.toLocaleTimeString("fr-FR", {
                   hour: "2-digit",
                   minute: "2-digit",
                   second: "2-digit",
@@ -250,7 +250,7 @@ function DashboardContent({
                 {profilePicture ? (
                   <img
                     src={profilePicture}
-                    alt="Profile"
+                    alt="Profil"
                     className="w-10 h-10 rounded-lg object-cover border-2 border-green-600"
                   />
                 ) : (
@@ -260,7 +260,7 @@ function DashboardContent({
                 )}
                 <div className="hidden sm:block">
                   <p className="text-black font-semibold text-sm">{businessName}</p>
-                  <p className="text-gray-500 text-xs">Admin</p>
+                  <p className="text-gray-500 text-xs">Administrateur</p>
                 </div>
               </button>
 
@@ -277,7 +277,7 @@ function DashboardContent({
                       className="w-full flex items-center gap-3 px-4 py-3 text-yellow-700 hover:bg-yellow-50 transition border-b border-gray-100 font-semibold"
                     >
                       <Crown className="w-5 h-5 text-yellow-600" />
-                      <span>👑 Owner Dashboard</span>
+                      <span>👑 Tableau de bord propriétaire</span>
                     </button>
                   )}
 
@@ -290,7 +290,7 @@ function DashboardContent({
                     className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition border-b border-gray-100"
                   >
                     <Settings className="w-5 h-5 text-gray-600" />
-                    <span className="font-medium">Settings</span>
+                    <span className="font-medium">Paramètres</span>
                   </button>
 
                   {/* Support Option */}
@@ -314,7 +314,7 @@ function DashboardContent({
                     className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition"
                   >
                     <LogOut className="w-5 h-5" />
-                    <span className="font-medium">Logout</span>
+                    <span className="font-medium">Déconnexion</span>
                   </button>
                 </div>
               )}

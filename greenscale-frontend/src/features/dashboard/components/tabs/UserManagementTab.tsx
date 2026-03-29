@@ -55,7 +55,7 @@ export function UserManagementTab() {
       }
       setError("");
     } catch (err) {
-      setError("Failed to fetch users");
+      setError("Impossible de récupérer les utilisateurs");
       console.error(err);
     } finally {
       setLoading(false);
@@ -78,12 +78,12 @@ export function UserManagementTab() {
     e.preventDefault();
     
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
+      setError("Les mots de passe ne correspondent pas");
       return;
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters");
+      setError("Le mot de passe doit contenir au moins 6 caractères");
       return;
     }
 
@@ -103,7 +103,7 @@ export function UserManagementTab() {
       });
 
       if (response.ok) {
-        setSuccess("User created successfully!");
+        setSuccess("Utilisateur créé avec succès !");
         setFormData({
           name: "",
           email: "",
@@ -116,10 +116,10 @@ export function UserManagementTab() {
         setTimeout(() => setSuccess(""), 3000);
       } else {
         const data = await response.json();
-        setError(data.detail || "Failed to create user");
+        setError(data.detail || "Impossible de créer l’utilisateur");
       }
     } catch (err) {
-      setError("Error creating user");
+      setError("Erreur lors de la création de l’utilisateur");
       console.error(err);
     }
   };
@@ -147,20 +147,20 @@ export function UserManagementTab() {
       });
 
       if (response.ok) {
-        setSuccess("Roles assigned successfully!");
+        setSuccess("Rôles attribués avec succès !");
         setIsRoleModalOpen(false);
         setSelectedUser(null);
         fetchUsers();
         setTimeout(() => setSuccess(""), 3000);
       }
     } catch (err) {
-      setError("Error assigning roles");
+      setError("Erreur lors de l’attribution des rôles");
       console.error(err);
     }
   };
 
   const handleDeleteUser = async (userId: number) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    if (!window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) return;
 
     try {
       const response = await fetch(`${API_BASE}/api/super-admin/users/${userId}`, {
@@ -171,12 +171,12 @@ export function UserManagementTab() {
       });
 
       if (response.ok) {
-        setSuccess("User deleted successfully!");
+        setSuccess("Utilisateur supprimé avec succès !");
         fetchUsers();
         setTimeout(() => setSuccess(""), 3000);
       }
     } catch (err) {
-      setError("Error deleting user");
+      setError("Erreur lors de la suppression de l’utilisateur");
       console.error(err);
     }
   };
@@ -188,16 +188,16 @@ export function UserManagementTab() {
         <div>
           <h1 className="text-3xl font-bold text-black flex items-center gap-3">
             <Users className="w-8 h-8 text-green-600" />
-            User Management
+            Gestion des utilisateurs
           </h1>
-          <p className="text-gray-600 mt-1">Create and manage users, assign roles</p>
+          <p className="text-gray-600 mt-1">Créez et gérez des utilisateurs, attribuez des rôles</p>
         </div>
         <button
           onClick={() => setIsCreateUserModalOpen(true)}
           className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition font-semibold"
         >
           <Plus size={20} />
-          Add New User
+          Ajouter un utilisateur
         </button>
       </div>
 
@@ -224,22 +224,22 @@ export function UserManagementTab() {
       {/* Users Table */}
       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
         {loading ? (
-          <div className="p-8 text-center text-gray-500">Loading users...</div>
+          <div className="p-8 text-center text-gray-500">Chargement des utilisateurs...</div>
         ) : users.length === 0 ? (
           <div className="p-8 text-center">
             <Users className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No users yet</h3>
-            <p className="text-gray-600 mb-4">Create your first user to get started.</p>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Aucun utilisateur pour l’instant</h3>
+            <p className="text-gray-600 mb-4">Créez votre premier utilisateur pour commencer.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Name</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Nom</th>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Email</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Roles</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Created</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Rôles</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Créé le</th>
                   <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Actions</th>
                 </tr>
               </thead>
@@ -251,7 +251,7 @@ export function UserManagementTab() {
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-2">
                         {user.roles.length === 0 ? (
-                          <span className="text-xs text-gray-500">No roles</span>
+                          <span className="text-xs text-gray-500">Aucun rôle</span>
                         ) : (
                           user.roles.map((role) => (
                             <span
@@ -265,7 +265,7 @@ export function UserManagementTab() {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600">
-                      {new Date(user.created_at).toLocaleDateString()}
+                      {new Date(user.created_at).toLocaleDateString("fr-FR")}
                     </td>
                     <td className="px-6 py-4 text-sm space-x-2">
                       <button
@@ -273,14 +273,14 @@ export function UserManagementTab() {
                         className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded-lg transition"
                       >
                         <Shield size={14} className="inline mr-1" />
-                        Roles
+                        Rôles
                       </button>
                       <button
                         onClick={() => handleDeleteUser(user.id)}
                         className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs rounded-lg transition"
                       >
                         <Trash2 size={14} className="inline mr-1" />
-                        Delete
+                        Supprimer
                       </button>
                     </td>
                   </tr>
@@ -297,7 +297,7 @@ export function UserManagementTab() {
           <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
             <div className="border-b border-gray-200 p-6 flex items-center justify-between sticky top-0 bg-white">
-              <h2 className="text-2xl font-bold text-black">Create New User</h2>
+              <h2 className="text-2xl font-bold text-black">Créer un nouvel utilisateur</h2>
               <button
                 onClick={() => {
                   setIsCreateUserModalOpen(false);
@@ -321,7 +321,7 @@ export function UserManagementTab() {
               {/* Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Full Name
+                  Nom complet
                 </label>
                 <input
                   type="text"
@@ -331,14 +331,14 @@ export function UserManagementTab() {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  placeholder="John Doe"
+                  placeholder="Jean Dupont"
                 />
               </div>
 
               {/* Email */}
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Email/Login
+                  E-mail / identifiant
                 </label>
                 <input
                   type="email"
@@ -355,7 +355,7 @@ export function UserManagementTab() {
               {/* Password */}
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Password
+                  Mot de passe
                 </label>
                 <input
                   type="password"
@@ -368,14 +368,14 @@ export function UserManagementTab() {
                   placeholder="••••••••"
                 />
                 <p className="text-xs text-gray-500 mt-1">
-                  Minimum 6 characters
+                  Minimum 6 caractères
                 </p>
               </div>
 
               {/* Confirm Password */}
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">
-                  Confirm Password
+                  Confirmer le mot de passe
                 </label>
                 <input
                   type="password"
@@ -392,11 +392,11 @@ export function UserManagementTab() {
               {/* Role Selection */}
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-3">
-                  Assign Roles
+                  Attribuer des rôles
                 </label>
                 <div className="space-y-2 max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-3">
                   {roles.length === 0 ? (
-                    <p className="text-sm text-gray-500">No roles available</p>
+                    <p className="text-sm text-gray-500">Aucun rôle disponible</p>
                   ) : (
                     roles.map((role) => (
                       <label
@@ -454,13 +454,13 @@ export function UserManagementTab() {
                   }}
                   className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium"
                 >
-                  Cancel
+                  Annuler
                 </button>
                 <button
                   type="submit"
                   className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition font-medium"
                 >
-                  Create User
+                  Créer l’utilisateur
                 </button>
               </div>
             </form>
@@ -474,7 +474,7 @@ export function UserManagementTab() {
           <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
             {/* Modal Header */}
             <div className="border-b border-gray-200 p-6">
-              <h2 className="text-2xl font-bold text-black">Assign Roles</h2>
+              <h2 className="text-2xl font-bold text-black">Attribuer des rôles</h2>
               <p className="text-gray-600 mt-1">{selectedUser.business_name}</p>
             </div>
 
@@ -516,13 +516,13 @@ export function UserManagementTab() {
                 }}
                 className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium"
               >
-                Cancel
+                Annuler
               </button>
               <button
                 onClick={handleAssignRoles}
                 className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition font-medium"
               >
-                Save Roles
+                Enregistrer les rôles
               </button>
             </div>
           </div>

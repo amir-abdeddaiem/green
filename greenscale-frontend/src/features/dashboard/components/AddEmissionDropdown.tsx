@@ -43,7 +43,7 @@ export function AddEmissionModal({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!amount) {
-      alert("Please enter an amount");
+      alert("Veuillez saisir une quantité");
       return;
     }
 
@@ -73,7 +73,7 @@ export function AddEmissionModal({
               <span className="text-3xl">{emissionIcons[emissionType]}</span>
               <div>
                 <h2 className="text-2xl font-bold text-gray-900">{emissionType}</h2>
-                <p className="text-sm text-gray-600">Add {emissionType.toLowerCase()} emission</p>
+                <p className="text-sm text-gray-600">Ajouter une émission de {emissionType.toLowerCase()}</p>
               </div>
             </div>
             <button
@@ -90,14 +90,14 @@ export function AddEmissionModal({
           {/* Amount */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Amount
+              Quantité
             </label>
             <input
               type="number"
               step="0.01"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              placeholder="Enter amount"
+              placeholder="Saisir une quantité"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
@@ -105,7 +105,7 @@ export function AddEmissionModal({
           {/* Unit */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Unit
+              Unité
             </label>
             <select
               value={unit}
@@ -136,12 +136,12 @@ export function AddEmissionModal({
           {/* Notes */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Notes (Optional)
+              Notes (facultatif)
             </label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Add any additional notes..."
+              placeholder="Ajouter des notes supplémentaires..."
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
               rows={3}
             />
@@ -154,13 +154,13 @@ export function AddEmissionModal({
               onClick={onClose}
               className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium"
             >
-              Cancel
+              Annuler
             </button>
             <button
               type="submit"
               className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium"
             >
-              Add {emissionType}
+              Ajouter {emissionType}
             </button>
           </div>
         </form>

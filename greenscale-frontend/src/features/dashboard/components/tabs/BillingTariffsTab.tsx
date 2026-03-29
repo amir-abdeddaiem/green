@@ -30,6 +30,14 @@ export const BillingTariffsTab: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'tariffs' | 'budgets'>('tariffs');
 
+  const UTILITY_LABELS: Record<string, string> = {
+    Electricity: "Électricité",
+    "Natural Gas": "Gaz naturel",
+    Fuel: "Carburant",
+    Waste: "Déchets",
+    Water: "Eau",
+  };
+
   // Form states
   const [newTariff, setNewTariff] = useState({
     utility_type: 'Electricity',
@@ -109,7 +117,7 @@ export const BillingTariffsTab: React.FC = () => {
   const handleDeleteTariff = async (tariffId: number) => {
     if (!businessId) return;
 
-    if (!confirm('Are you sure you want to delete this tariff?')) return;
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce tarif ?')) return;
 
     try {
       const response = await fetch(
@@ -174,7 +182,7 @@ export const BillingTariffsTab: React.FC = () => {
               : 'border-transparent text-gray-600 hover:text-gray-900'
           }`}
         >
-          💰 Tariff Rates
+          💰 Tarifs
         </button>
         <button
           onClick={() => setActiveTab('budgets')}
@@ -184,7 +192,7 @@ export const BillingTariffsTab: React.FC = () => {
               : 'border-transparent text-gray-600 hover:text-gray-900'
           }`}
         >
-          📊 Budget Goals
+          📊 Objectifs de budget
         </button>
       </div>
 
@@ -193,11 +201,11 @@ export const BillingTariffsTab: React.FC = () => {
         <div className="space-y-6">
           {/* Add New Tariff Form */}
           <div className="bg-white rounded-lg shadow p-6 border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Add Tariff Rate</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Ajouter un tarif</h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Utility Type
+                  Type d’énergie
                 </label>
                 <select
                   value={newTariff.utility_type}
@@ -206,17 +214,17 @@ export const BillingTariffsTab: React.FC = () => {
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                 >
-                  <option>Electricity</option>
-                  <option>Natural Gas</option>
-                  <option>Fuel</option>
-                  <option>Waste</option>
-                  <option>Water</option>
+                  <option value="Electricity">Électricité</option>
+                  <option value="Natural Gas">Gaz naturel</option>
+                  <option value="Fuel">Carburant</option>
+                  <option value="Waste">Déchets</option>
+                  <option value="Water">Eau</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Price per Unit
+                  Prix par unité
                 </label>
                 <input
                   type="number"
@@ -233,7 +241,7 @@ export const BillingTariffsTab: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Currency
+                  Devise
                 </label>
                 <select
                   value={newTariff.currency_code}
@@ -256,7 +264,7 @@ export const BillingTariffsTab: React.FC = () => {
                   className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center justify-center gap-2"
                 >
                   <Plus className="w-4 h-4" />
-                  Add Tariff
+                  Ajouter
                 </button>
               </div>
             </div>
@@ -265,11 +273,11 @@ export const BillingTariffsTab: React.FC = () => {
           {/* Tariffs List */}
           <div className="bg-white rounded-lg shadow overflow-hidden">
             <div className="p-6 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900">Current Tariff Rates</h3>
+              <h3 className="text-lg font-semibold text-gray-900">Tarifs actuels</h3>
             </div>
             {tariffs.length === 0 ? (
               <div className="p-6 text-center text-gray-500">
-                No tariff rates configured yet. Add one above to get started!
+                Aucun tarif configuré. Ajoutez-en un ci-dessus pour commencer.
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -280,13 +288,13 @@ export const BillingTariffsTab: React.FC = () => {
                         Type
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Price per Unit
+                        Prix par unité
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Currency
+                        Devise
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Last Updated
+                        Dernière mise à jour
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
                         Actions
@@ -297,7 +305,7 @@ export const BillingTariffsTab: React.FC = () => {
                     {tariffs.map((tariff, idx) => (
                       <tr key={tariff.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                         <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                          {tariff.utility_type}
+                          {UTILITY_LABELS[tariff.utility_type] || tariff.utility_type}
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-700">
                           {tariff.price_per_unit.toFixed(2)}
@@ -306,13 +314,13 @@ export const BillingTariffsTab: React.FC = () => {
                           {tariff.currency_code}
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-500">
-                          {new Date(tariff.updated_at).toLocaleDateString()}
+                          {new Date(tariff.updated_at).toLocaleDateString("fr-FR")}
                         </td>
                         <td className="px-6 py-4 text-sm flex gap-2">
                           <button
                             onClick={() => handleDeleteTariff(tariff.id)}
                             className="text-red-600 hover:text-red-800 transition"
-                            title="Delete tariff"
+                            title="Supprimer le tarif"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -332,10 +340,10 @@ export const BillingTariffsTab: React.FC = () => {
         <div className="space-y-6">
           {/* Add New Budget Form */}
           <div className="bg-white rounded-lg shadow p-6 border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Set Monthly Budget</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Définir un budget mensuel</h3>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Month</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Mois</label>
                 <select
                   value={newBudget.month}
                   onChange={(e) =>
@@ -345,14 +353,14 @@ export const BillingTariffsTab: React.FC = () => {
                 >
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((m) => (
                     <option key={m} value={m}>
-                      {new Date(2025, m - 1).toLocaleString('default', { month: 'long' })}
+                      {new Date(2025, m - 1).toLocaleString('fr-FR', { month: 'long' })}
                     </option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Year</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Année</label>
                 <select
                   value={newBudget.year}
                   onChange={(e) =>
@@ -370,7 +378,7 @@ export const BillingTariffsTab: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Budget Limit
+                  Plafond du budget
                 </label>
                 <input
                   type="number"
@@ -387,7 +395,7 @@ export const BillingTariffsTab: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Alert at %
+                  Alerte à %
                 </label>
                 <input
                   type="number"
@@ -410,7 +418,7 @@ export const BillingTariffsTab: React.FC = () => {
                   className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center justify-center gap-2"
                 >
                   <Plus className="w-4 h-4" />
-                  Set Budget
+                  Enregistrer
                 </button>
               </div>
             </div>
@@ -419,11 +427,11 @@ export const BillingTariffsTab: React.FC = () => {
           {/* Budgets List */}
           <div className="bg-white rounded-lg shadow overflow-hidden">
             <div className="p-6 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900">Monthly Budgets</h3>
+              <h3 className="text-lg font-semibold text-gray-900">Budgets mensuels</h3>
             </div>
             {budgets.length === 0 ? (
               <div className="p-6 text-center text-gray-500">
-                No budgets set yet. Create one above to track spending goals!
+                Aucun budget défini. Créez-en un ci-dessus pour suivre vos objectifs de dépenses.
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -431,19 +439,19 @@ export const BillingTariffsTab: React.FC = () => {
                   <thead className="bg-gray-50">
                     <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Month
+                        Mois
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Limit
+                        Plafond
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Alert %
+                        Alerte %
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Currency
+                        Devise
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">
-                        Created
+                        Créé le
                       </th>
                     </tr>
                   </thead>
@@ -451,7 +459,7 @@ export const BillingTariffsTab: React.FC = () => {
                     {budgets.map((budget, idx) => (
                       <tr key={budget.id} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                         <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                          {new Date(2025, budget.month - 1).toLocaleString('default', {
+                          {new Date(2025, budget.month - 1).toLocaleString('fr-FR', {
                             month: 'long',
                           })}{' '}
                           {budget.year}
@@ -463,7 +471,7 @@ export const BillingTariffsTab: React.FC = () => {
                         <td className="px-6 py-4 text-sm text-gray-700">{budget.alert_percentage}%</td>
                         <td className="px-6 py-4 text-sm text-gray-700">{budget.currency_code}</td>
                         <td className="px-6 py-4 text-sm text-gray-500">
-                          {new Date(budget.created_at).toLocaleDateString()}
+                          {new Date(budget.created_at).toLocaleDateString("fr-FR")}
                         </td>
                       </tr>
                     ))}

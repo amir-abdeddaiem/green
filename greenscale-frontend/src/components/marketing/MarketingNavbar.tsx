@@ -52,11 +52,25 @@ const menuItems: MenuItem[] = [
 
 // Crépuscule Prod Logo Component
 const Logo = ({ variant }: { variant: NavbarVariant }) => (
+
   <div className="flex items-center space-x-3">
-    <div className="relative">
-      <img src="/LOGO_-_Verdustry-removebg-preview.png" alt="_Verdustry" />
-    </div>
+    
+    {/* Desktop Logo */}
+    <img
+      src="/LOGO_-_Verdustry-removebg-preview.png"
+      alt="Verdustry"
+      className="hidden md:block"
+    />
+
+    {/* Mobile Logo */}
+    <img
+      src="/icone-removebg-preview.png"
+      alt="Verdustry"
+      className="block md:hidden"
+    />
+
   </div>
+
 );
 
 // // Social Media Icons
@@ -380,7 +394,7 @@ export function MarketingNavbar({ variant = "light" }: MarketingNavbarProps) {
                 )}
                 onClick={() => navigate("/book-demo")}
               >
-                Demo
+                Démo
               </Button>
               <Button
                 variant="outline"
@@ -391,7 +405,7 @@ export function MarketingNavbar({ variant = "light" }: MarketingNavbarProps) {
                 )}
                 onClick={() => navigate("/register")}
               >
-                Sign in
+                S’inscrire
               </Button>
               <Button
                 variant="outline"
@@ -402,7 +416,7 @@ export function MarketingNavbar({ variant = "light" }: MarketingNavbarProps) {
                 )}
                 onClick={() => navigate("/login")}
               >
-                Log in
+                Se connecter
               </Button>
             </div>
 
@@ -650,7 +664,7 @@ export function MarketingNavbar({ variant = "light" }: MarketingNavbarProps) {
                       navigate("/book-demo");
                     }}
                   >
-                    Demo
+                    Démo
                   </Button>
                   <Button
                     variant="outline"
@@ -665,7 +679,7 @@ export function MarketingNavbar({ variant = "light" }: MarketingNavbarProps) {
                       navigate("/register");
                     }}
                   >
-                    Sign in
+                    S’inscrire
                   </Button>
                   <Button
                     variant="outline"
@@ -680,7 +694,7 @@ export function MarketingNavbar({ variant = "light" }: MarketingNavbarProps) {
                       navigate("/login");
                     }}
                   >
-                    Log in
+                    Se connecter
                   </Button>
                 </div>
               </div>

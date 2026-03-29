@@ -16,6 +16,7 @@ import {
   Receipt,
   ScrollText,
   ChevronRight,
+  Loader2,
 } from "lucide-react";
 
 type DocumentCategory = "invoice" | "company" | "report" | "other";
@@ -61,33 +62,107 @@ interface SavedExtractedDoc {
   extractedData: ScannedDocument["extractedData"] | null;
 }
 
+function toNumber(value: unknown): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string") {
+    const normalized = value.replace(/,/g, ".").replace(/\s+/g, " ").trim();
+    const match = normalized.match(/-?\d+(?:\.\d+)?/);
+    if (!match) return null;
+    const n = Number(match[0]);
+    return Number.isFinite(n) ? n : null;
+  }
+  return null;
+}
+
+type EmissionType = "Electricity" | "Natural Gas" | "Fuel" | "Waste";
+
+function deriveEmissionFromExtractedData(
+  extracted: ScannedDocument["extractedData"],
+): { type: EmissionType; value: number; unit: string } {
+  if (!extracted) {
+    throw new Error("Aucune donnée extraite disponible");
+  }
+
+  const activityType = extracted.activityType;
+  const activityValue = toNumber(extracted.activityValue);
+  const activityUnit = typeof extracted.activityUnit === "string" ? extracted.activityUnit : null;
+
+  const mapActivity = (at: string): { type: EmissionType; defaultUnit: string } => {
+    switch (at) {
+      case "electricity_kwh":
+        return { type: "Electricity", defaultUnit: "kWh" };
+      case "natural_gas_m3":
+        return { type: "Natural Gas", defaultUnit: "m³" };
+      case "diesel_l":
+      case "petrol_l":
+        return { type: "Fuel", defaultUnit: "Liters" };
+      case "waste_kg":
+        return { type: "Waste", defaultUnit: "kg" };
+      case "water_m3":
+      case "transport_km":
+        throw new Error(
+          "Type d’activité non pris en charge pour l’export automatique (eau/transport). Veuillez l’ajouter manuellement."
+        );
+      default:
+        throw new Error("Type d’activité inconnu — impossible d’exporter automatiquement");
+    }
+  };
+
+  if (typeof activityType === "string" && activityType) {
+    const mapped = mapActivity(activityType);
+    const unit = activityUnit || mapped.defaultUnit;
+
+    if (activityValue !== null && activityValue > 0) {
+      return { type: mapped.type, value: activityValue, unit };
+    }
+
+    // Fallback: sum consumptionRows when activityValue is missing.
+    const rows = Array.isArray(extracted.consumptionRows) ? extracted.consumptionRows : [];
+    const sum = rows.reduce((acc, r) => {
+      const n = toNumber(r?.consommation);
+      return acc + (n ?? 0);
+    }, 0);
+    if (sum > 0) {
+      return { type: mapped.type, value: sum, unit };
+    }
+
+    throw new Error(
+      "Valeur de consommation introuvable (ni activityValue, ni lignes consommation)."
+    );
+  }
+
+  throw new Error(
+    "activityType manquant dans l’extraction — impossible de déterminer le type d’émission automatiquement"
+  );
+}
+
 const CATEGORY_CONFIG: Record<
   DocumentCategory,
   { label: string; icon: React.ReactNode; color: string; description: string }
 > = {
   invoice: {
-    label: "Invoice",
+    label: "Facture",
     icon: <Receipt className="w-5 h-5" />,
     color: "bg-green-100 text-green-700 border-green-300",
-    description: "Utility bills, supplier invoices",
+    description: "Factures d’énergie, factures fournisseurs",
   },
   company: {
-    label: "Company Doc",
+    label: "Document d’entreprise",
     icon: <Building2 className="w-5 h-5" />,
     color: "bg-green-100 text-green-700 border-green-300",
-    description: "Corporate documents, contracts",
+    description: "Documents d’entreprise, contrats",
   },
   report: {
-    label: "Report",
+    label: "Rapport",
     icon: <ScrollText className="w-5 h-5" />,
     color: "bg-teal-100 text-teal-700 border-teal-300",
-    description: "Audit reports, certifications",
+    description: "Rapports d’audit, certifications",
   },
   other: {
-    label: "Other",
+    label: "Autre",
     icon: <FileText className="w-5 h-5" />,
     color: "bg-lime-100 text-lime-700 border-lime-300",
-    description: "Miscellaneous documents",
+    description: "Documents divers",
   },
 };
 
@@ -97,7 +172,7 @@ async function extractFromDocument(
   businessId: string | null
 ): Promise<ScannedDocument["extractedData"]> {
   if (!businessId) {
-    throw new Error("Missing business_id (please login again)");
+    throw new Error("business_id manquant (veuillez vous reconnecter)");
   }
 
   const formData = new FormData();
@@ -115,7 +190,7 @@ async function extractFromDocument(
   if (!response.ok) {
     const message =
       (data && typeof data.detail === "string" && data.detail) ||
-      "OCR extraction failed";
+      "Échec de l’extraction OCR";
     throw new Error(message);
   }
 
@@ -178,11 +253,13 @@ export function DocumentScannerTab() {
   const [savedLoading, setSavedLoading] = useState(false);
   const [savedError, setSavedError] = useState<string | null>(null);
   const [lastScanError, setLastScanError] = useState<string | null>(null);
+  const [isExportingEmission, setIsExportingEmission] = useState(false);
+  const [exportEmissionError, setExportEmissionError] = useState<string | null>(null);
 
   const refreshSavedExtracts = useCallback(async () => {
     if (!businessId) {
       setSavedExtracts([]);
-      setSavedError("Missing business_id (please login again)");
+      setSavedError("business_id manquant (veuillez vous reconnecter)");
       return;
     }
 
@@ -196,7 +273,7 @@ export function DocumentScannerTab() {
       if (!resp.ok) {
         const message =
           (data && typeof data.detail === "string" && data.detail) ||
-          "Failed to load saved extracts";
+          "Impossible de charger les extractions enregistrées";
         throw new Error(message);
       }
 
@@ -226,7 +303,7 @@ export function DocumentScannerTab() {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error("Failed to load saved extracts", e);
-      setSavedError(e instanceof Error ? e.message : "Failed to load saved extracts");
+      setSavedError(e instanceof Error ? e.message : "Impossible de charger les extractions enregistrées");
     } finally {
       setSavedLoading(false);
     }
@@ -255,7 +332,7 @@ export function DocumentScannerTab() {
           name: file.name,
           category: selectedCategory,
           size: formatBytes(file.size),
-          uploadedAt: new Date().toLocaleString("en-US", {
+          uploadedAt: new Date().toLocaleString("fr-FR", {
             month: "short",
             day: "numeric",
             year: "numeric",
@@ -293,7 +370,7 @@ export function DocumentScannerTab() {
           const message =
             e instanceof Error
               ? e.message
-              : "Document scan failed (unknown error)";
+              : "Échec de l’analyse du document (erreur inconnue)";
           setLastScanError(message);
           setDocuments((prev) =>
             prev.map((d) =>
@@ -329,30 +406,79 @@ export function DocumentScannerTab() {
 
   const totalDocs = documents.length;
 
+  const exportPreviewDocAsEmission = useCallback(async () => {
+    if (!previewDoc) return;
+    if (!businessId) {
+      setExportEmissionError("business_id manquant (veuillez vous reconnecter)");
+      return;
+    }
+
+    const numericBusinessId = Number(businessId);
+    if (!Number.isFinite(numericBusinessId) || numericBusinessId <= 0) {
+      setExportEmissionError("business_id invalide (veuillez vous reconnecter)");
+      return;
+    }
+
+    setIsExportingEmission(true);
+    setExportEmissionError(null);
+
+    try {
+      const payload = deriveEmissionFromExtractedData(previewDoc.extractedData);
+      const resp = await fetch(apiUrl("/add-emission"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          business_id: numericBusinessId,
+          type: payload.type,
+          value: payload.value,
+          unit: payload.unit,
+        }),
+      });
+
+      const data = (await resp.json().catch(() => null)) as any;
+      if (!resp.ok) {
+        const message =
+          (data && typeof data.detail === "string" && data.detail) ||
+          "Impossible d’enregistrer l’émission";
+        throw new Error(message);
+      }
+
+      alert(
+        `✅ Émission enregistrée : ${payload.type} — ${payload.value} ${payload.unit} (impact: ${data?.impact ?? "N/A"} kg CO₂e)`
+      );
+      setPreviewDoc(null);
+    } catch (e) {
+      setExportEmissionError(
+        e instanceof Error ? e.message : "Erreur inconnue lors de l’export"
+      );
+    } finally {
+      setIsExportingEmission(false);
+    }
+  }, [previewDoc, businessId]);
+
   return (
     <div className="min-h-screen bg-white p-4 sm:p-6 md:p-8 lg:p-12 space-y-8 md:space-y-10">
       {/* Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-2">
         <div>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-green-900">
-            Document Scanner
+            Scanner de documents
           </h1>
           <p className="text-green-700 text-sm md:text-base mt-1">
-            Upload invoices and company documents — AI extracts emissions data
-            automatically
+            Téléversez des factures et des documents d’entreprise — l’IA extrait automatiquement les données d’émissions
           </p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-300 rounded-lg">
           <Scan className="w-4 h-4 text-green-600 animate-pulse" />
           <span className="text-xs font-semibold text-green-700 uppercase tracking-widest">
-            AI-Powered OCR
+            OCR propulsé par l’IA
           </span>
         </div>
       </div>
 
       {scanStatus === "error" && lastScanError && (
         <div className="py-3 px-4 bg-white border border-red-200 rounded-xl">
-          <p className="text-red-600 text-sm font-semibold">Scan failed: {lastScanError}</p>
+          <p className="text-red-600 text-sm font-semibold">Échec du scan : {lastScanError}</p>
         </div>
       )}
 
@@ -361,16 +487,16 @@ export function DocumentScannerTab() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-green-700 uppercase tracking-widest">
-              Saved Extractions
+              Extractions enregistrées
             </p>
             <p className="text-green-600 text-sm">
-              These are stored in the database table <span className="font-semibold">extracted_Doc</span>
+              Elles sont enregistrées dans la table <span className="font-semibold">extracted_Doc</span>
             </p>
           </div>
           {savedLoading && (
             <div className="flex items-center gap-2 text-green-600">
               <div className="w-4 h-4 border-2 border-green-400 border-t-transparent rounded-full animate-spin" />
-              <span className="text-xs font-semibold">Loading…</span>
+              <span className="text-xs font-semibold">Chargement…</span>
             </div>
           )}
         </div>
@@ -387,11 +513,11 @@ export function DocumentScannerTab() {
               <table className="w-full text-sm">
                 <thead className="bg-green-50 border-b border-green-300">
                   <tr>
-                    <th className="text-left px-6 py-4 font-bold text-green-900">FILE</th>
-                    <th className="text-left px-6 py-4 font-bold text-green-900">CATEGORY</th>
+                    <th className="text-left px-6 py-4 font-bold text-green-900">FICHIER</th>
+                    <th className="text-left px-6 py-4 font-bold text-green-900">CATÉGORIE</th>
                     <th className="text-left px-6 py-4 font-bold text-green-900">DATE</th>
-                    <th className="text-left px-6 py-4 font-bold text-green-900">VENDOR</th>
-                    <th className="text-left px-6 py-4 font-bold text-green-900">PERIOD</th>
+                    <th className="text-left px-6 py-4 font-bold text-green-900">FOURNISSEUR</th>
+                    <th className="text-left px-6 py-4 font-bold text-green-900">PÉRIODE</th>
                     <th className="text-right px-6 py-4 font-bold text-green-900">TOTAL</th>
                     <th className="text-right px-6 py-4 font-bold text-green-900">ACTION</th>
                   </tr>
@@ -422,7 +548,7 @@ export function DocumentScannerTab() {
                                 id: it.document_id,
                                 name: it.filename,
                                 category: it.category,
-                                size: "Saved",
+                                size: "Enregistré",
                                 uploadedAt: when,
                                 status: "ready",
                                 extractedData: it.extractedData || undefined,
@@ -433,7 +559,7 @@ export function DocumentScannerTab() {
                             }}
                             className="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-bold rounded-lg transition-colors"
                           >
-                            View
+                            Voir
                           </button>
                         </td>
                       </tr>
@@ -445,9 +571,9 @@ export function DocumentScannerTab() {
           </Card>
         ) : (
           <div className="py-6 px-4 bg-white border border-green-200 rounded-xl">
-            <p className="text-green-700 text-sm font-semibold">No saved extractions yet.</p>
+            <p className="text-green-700 text-sm font-semibold">Aucune extraction enregistrée pour le moment.</p>
             <p className="text-green-500 text-sm mt-1">
-              Upload a document above to create one.
+              Téléversez un document ci-dessus pour en créer une.
             </p>
           </div>
         )}
@@ -456,7 +582,7 @@ export function DocumentScannerTab() {
       {/* Category selector */}
       <div>
         <p className="text-xs font-bold text-green-700 uppercase tracking-widest mb-3">
-          Document Type
+          Type de document
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {(Object.keys(CATEGORY_CONFIG) as DocumentCategory[]).map((cat) => {
@@ -537,11 +663,11 @@ export function DocumentScannerTab() {
         <div className="text-center">
           <p className="text-green-900 font-bold text-base">
             {isDragging
-              ? "Release to upload"
-              : "Drop files here or click to browse"}
+              ? "Relâchez pour téléverser"
+              : "Déposez des fichiers ici ou cliquez pour parcourir"}
           </p>
           <p className="text-green-600 text-sm mt-1">
-            PDF, JPG, PNG, WEBP — up to 20 MB each
+            PDF, JPG, PNG, WEBP — jusqu’à 20 Mo chacun
           </p>
         </div>
 
@@ -550,7 +676,7 @@ export function DocumentScannerTab() {
           className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${CATEGORY_CONFIG[selectedCategory].color}`}
         >
           {CATEGORY_CONFIG[selectedCategory].icon}
-          Will be saved as: {CATEGORY_CONFIG[selectedCategory].label}
+          Sera enregistré comme : {CATEGORY_CONFIG[selectedCategory].label}
         </div>
 
         {/* Camera quick-upload on mobile */}
@@ -570,7 +696,7 @@ export function DocumentScannerTab() {
           className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white text-xs font-bold rounded-lg hover:bg-green-700 transition-all active:scale-95 shadow-md sm:hidden"
         >
           <Camera className="w-4 h-4" />
-          Scan with Camera
+          Scanner avec la caméra
         </button>
       </div>
 
@@ -579,7 +705,7 @@ export function DocumentScannerTab() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-green-700 uppercase tracking-widest">
-              Extracted Data
+              Données extraites
             </p>
             <p className="text-green-600 text-sm">
               LIBELLE / CONSOMMATION / MONTANT
@@ -588,7 +714,7 @@ export function DocumentScannerTab() {
           {scanStatus === "scanning" && (
             <div className="flex items-center gap-2 text-green-600">
               <div className="w-4 h-4 border-2 border-green-400 border-t-transparent rounded-full animate-spin" />
-              <span className="text-xs font-semibold">Extracting…</span>
+              <span className="text-xs font-semibold">Extraction…</span>
             </div>
           )}
         </div>
@@ -636,25 +762,25 @@ export function DocumentScannerTab() {
             <div className="w-16 h-16 rounded-full bg-green-50 border border-green-200 flex items-center justify-center">
               <FileText className="w-7 h-7 text-green-300" />
             </div>
-            <p className="text-green-700 font-semibold">No scans yet</p>
+            <p className="text-green-700 font-semibold">Aucun scan pour l’instant</p>
             <p className="text-green-500 text-sm max-w-xs">
-              Upload an invoice to extract line items.
+              Téléversez une facture pour extraire les lignes.
             </p>
           </div>
         ) : scanStatus === "scanning" ? (
           <div className="flex items-center gap-3 py-6 px-4 bg-green-50 border border-green-200 rounded-xl">
             <div className="w-5 h-5 border-2 border-green-400 border-t-transparent rounded-full animate-spin" />
             <span className="text-green-700 text-sm font-semibold">
-              Extracting invoice data…
+              Extraction des données de la facture…
             </span>
           </div>
         ) : (
           <div className="py-6 px-4 bg-white border border-green-200 rounded-xl">
             <p className="text-green-700 text-sm font-semibold">
-              No extracted rows found for the last scan.
+              Aucune ligne extraite trouvée pour le dernier scan.
             </p>
             <p className="text-green-500 text-sm mt-1">
-              Try a clearer image or a STEG/utility invoice.
+              Essayez une image plus nette ou une facture STEG/de service public.
             </p>
           </div>
         )}
@@ -664,7 +790,7 @@ export function DocumentScannerTab() {
       {documents.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
           <Card className="p-4 rounded-lg bg-white border border-green-300">
-            <p className="text-xs text-green-600 font-medium">Total Scans</p>
+            <p className="text-xs text-green-600 font-medium">Nombre total de scans</p>
             <p className="text-2xl font-black text-green-900">{totalDocs}</p>
           </Card>
         </div>
@@ -706,7 +832,7 @@ export function DocumentScannerTab() {
               <div className="bg-green-50 border-b border-green-200 flex items-center justify-center p-4 max-h-48 overflow-hidden">
                 <img
                   src={previewDoc.previewUrl}
-                  alt="Document preview"
+                  alt="Aperçu du document"
                   className="max-h-40 object-contain rounded-lg shadow"
                 />
               </div>
@@ -716,14 +842,14 @@ export function DocumentScannerTab() {
             <div className="p-6 space-y-4">
               <p className="text-xs font-bold text-green-700 uppercase tracking-widest flex items-center gap-2">
                 <Scan className="w-3.5 h-3.5" />
-                Extracted Data
+                Données extraites
               </p>
 
               {previewDoc.status === "processing" ? (
                 <div className="flex items-center gap-3 py-4">
                   <div className="w-5 h-5 border-2 border-green-400 border-t-transparent rounded-full animate-spin" />
                   <span className="text-green-600 text-sm">
-                    AI is scanning your document…
+                    L’IA analyse votre document…
                   </span>
                 </div>
               ) : previewDoc.extractedData ? (
@@ -731,27 +857,27 @@ export function DocumentScannerTab() {
                   {[
                     {
                       key: "vendor",
-                      label: "Vendor / Issuer",
+                      label: "Fournisseur / Émetteur",
                       icon: "🏢",
                     },
                     {
                       key: "date",
-                      label: "Document Date",
+                      label: "Date du document",
                       icon: "📅",
                     },
                     {
                       key: "totalAmount",
-                      label: "Total Amount",
+                      label: "Montant total",
                       icon: "💰",
                     },
                     {
                       key: "activityValue",
-                      label: "Activity",
+                      label: "Activité",
                       icon: "⚡",
                     },
                     {
                       key: "co2Equivalent",
-                      label: "CO₂ Equivalent",
+                      label: "Équivalent CO₂",
                       icon: "🌿",
                     },
                   ].map(({ key, label, icon }) => {
@@ -789,7 +915,7 @@ export function DocumentScannerTab() {
                     previewDoc.extractedData.consumptionRows.length > 0 && (
                       <div className="mt-3">
                         <p className="text-xs font-bold text-green-700 uppercase tracking-widest mb-2">
-                          Consumption
+                          Consommation
                         </p>
                         <div className="overflow-hidden rounded-lg border border-green-200">
                           <table className="w-full text-xs">
@@ -840,7 +966,7 @@ export function DocumentScannerTab() {
                   {previewDoc.extractedData.confidence && (
                     <div className="mt-3">
                       <div className="flex justify-between text-xs text-green-600 mb-1">
-                        <span>AI Confidence</span>
+                        <span>Confiance de l’IA</span>
                         <span className="font-bold">
                           {previewDoc.extractedData.confidence}%
                         </span>
@@ -858,7 +984,7 @@ export function DocumentScannerTab() {
                 </div>
               ) : (
                 <p className="text-sm text-red-500">
-                  Could not extract data from this document.
+                  Impossible d’extraire des données de ce document.
                 </p>
               )}
             </div>
@@ -869,23 +995,39 @@ export function DocumentScannerTab() {
                 onClick={() => setPreviewDoc(null)}
                 className="flex-1 px-4 py-2.5 text-green-700 hover:bg-green-100 rounded-lg font-semibold transition-colors border border-green-300 text-sm"
               >
-                Close
+                Fermer
               </button>
-              {previewDoc.status === "ready" &&
-                previewDoc.extractedData?.co2Equivalent && (
-                  <button
-                    onClick={() => {
-                      // TODO: wire to emission logger
-                      setPreviewDoc(null);
-                    }}
-                    className="flex-1 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-sm"
-                  >
-                    <Zap className="w-4 h-4" />
-                    Log as Emission
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
-                )}
+              {previewDoc.status === "ready" && previewDoc.extractedData && (
+                <button
+                  onClick={exportPreviewDocAsEmission}
+                  disabled={isExportingEmission}
+                  className="flex-1 px-4 py-2.5 bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-sm"
+                >
+                  {isExportingEmission ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Enregistrement…
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="w-4 h-4" />
+                      Enregistrer comme émission
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </>
+                  )}
+                </button>
+              )}
             </div>
+
+            {exportEmissionError && (
+              <div className="px-6 pb-6">
+                <div className="py-3 px-4 bg-white border border-red-200 rounded-xl">
+                  <p className="text-red-600 text-sm font-semibold">
+                    Échec de l’export émission : {exportEmissionError}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -899,10 +1041,9 @@ export function DocumentScannerTab() {
                 <AlertCircle className="w-6 h-6 text-red-500" />
               </div>
               <div>
-                <h3 className="font-bold text-green-900">Delete Document</h3>
+                <h3 className="font-bold text-green-900">Supprimer le document</h3>
                 <p className="text-sm text-green-700 mt-1">
-                  This will permanently remove the document and its extracted
-                  data.
+                  Cela supprimera définitivement le document et ses données extraites.
                 </p>
               </div>
             </div>
@@ -911,7 +1052,7 @@ export function DocumentScannerTab() {
                 onClick={() => setDeleteId(null)}
                 className="flex-1 px-4 py-2.5 text-green-700 hover:bg-green-100 rounded-lg font-semibold border border-green-300 text-sm"
               >
-                Cancel
+                Annuler
               </button>
               <button
                 onClick={() => {
@@ -921,7 +1062,7 @@ export function DocumentScannerTab() {
                 className="flex-1 px-4 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold text-sm flex items-center justify-center gap-2"
               >
                 <Trash2 className="w-4 h-4" />
-                Delete
+                Supprimer
               </button>
             </div>
           </div>

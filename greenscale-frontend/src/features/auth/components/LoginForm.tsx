@@ -32,6 +32,7 @@ export function LoginForm() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4 py-8">
+      
       <div className="w-full max-w-sm">
         {/* Header Section */}
         <div className="bg-gradient-to-br from-green-700 via-green-600 to-green-700 rounded-t-3xl p-10 text-center relative overflow-hidden">
@@ -50,6 +51,7 @@ export function LoginForm() {
             <h1 className="text-2xl font-black text-white mb-1">Welcome Back</h1>
             <p className="text-green-100 font-medium text-sm">Sign in to Verdustry</p>
           </div>
+          
         </div>
 
         {/* Form Section */}

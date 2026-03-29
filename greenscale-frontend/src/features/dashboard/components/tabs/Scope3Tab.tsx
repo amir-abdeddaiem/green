@@ -64,7 +64,7 @@ export function Scope3Tab() {
   const generateMonthlyData = () => {
     // Generate placeholder monthly data
     // In production, this would fetch actual data from the backend
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+    const months = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin'];
     const data = months.map(month => ({
       month,
       'Scope 1 (Gas)': Math.random() * 500 + 100,
@@ -100,8 +100,8 @@ export function Scope3Tab() {
               <Truck className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-black text-slate-900">Scope 3: Supply Chain</h1>
-              <p className="text-slate-600 text-sm">Track emissions from suppliers, logistics, and business travel</p>
+              <h1 className="text-3xl font-black text-slate-900">Périmètre 3 : chaîne d’approvisionnement</h1>
+              <p className="text-slate-600 text-sm">Suivez les émissions des fournisseurs, de la logistique et des déplacements professionnels</p>
             </div>
           </div>
           <button
@@ -109,7 +109,7 @@ export function Scope3Tab() {
             className="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition flex items-center gap-2 whitespace-nowrap"
           >
             <Plus className="w-5 h-5" />
-            New Supplier
+            Nouveau fournisseur
           </button>
         </div>
       </div>
@@ -123,11 +123,11 @@ export function Scope3Tab() {
               <Truck className="w-5 h-5 text-blue-600" />
             </div>
             <span className="text-xs font-bold px-2 py-1 rounded-full bg-blue-100 text-blue-700">
-              Emissions
+              Émissions
             </span>
           </div>
           <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-2">
-            Total Scope 3 CO₂
+            Total périmètre 3 CO₂
           </p>
           <p className="text-3xl font-black text-slate-900 mb-1">
             {stats?.total_scope3_co2_kg.toFixed(1) || 0}
@@ -142,16 +142,16 @@ export function Scope3Tab() {
               <Building2 className="w-5 h-5 text-green-600" />
             </div>
             <span className="text-xs font-bold px-2 py-1 rounded-full bg-green-100 text-green-700">
-              Tracking
+              Suivi
             </span>
           </div>
           <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-2">
-            Active Suppliers
+            Fournisseurs actifs
           </p>
           <p className="text-3xl font-black text-slate-900 mb-1">
             {stats?.supplier_count || 0}
           </p>
-          <p className="text-xs text-slate-400">registered</p>
+          <p className="text-xs text-slate-400">enregistrés</p>
         </div>
 
         {/* Activity Count */}
@@ -161,16 +161,16 @@ export function Scope3Tab() {
               <TrendingUp className="w-5 h-5 text-purple-600" />
             </div>
             <span className="text-xs font-bold px-2 py-1 rounded-full bg-purple-100 text-purple-700">
-              Logged
+              Enregistrées
             </span>
           </div>
           <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-2">
-            Activities
+            Activités
           </p>
           <p className="text-3xl font-black text-slate-900 mb-1">
             {stats?.activity_count || 0}
           </p>
-          <p className="text-xs text-slate-400">entries</p>
+          <p className="text-xs text-slate-400">entrées</p>
         </div>
 
         {/* Average Carbon Intensity */}
@@ -180,16 +180,16 @@ export function Scope3Tab() {
               <AlertTriangle className="w-5 h-5 text-amber-600" />
             </div>
             <span className="text-xs font-bold px-2 py-1 rounded-full bg-amber-100 text-amber-700">
-              Intensity
+              Intensité
             </span>
           </div>
           <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-2">
-            Avg Carbon Intensity
+            Intensité carbone moyenne
           </p>
           <p className="text-3xl font-black text-slate-900 mb-1">
             {stats?.avg_carbon_intensity.toFixed(3) || 0}
           </p>
-          <p className="text-xs text-slate-400">kg CO₂e / unit</p>
+          <p className="text-xs text-slate-400">kg CO₂e / unité</p>
         </div>
       </div>
 
@@ -213,8 +213,8 @@ export function Scope3Tab() {
             <BarChart className="w-5 h-5 text-blue-700" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-slate-900">Monthly Carbon Breakdown</h3>
-            <p className="text-xs text-slate-500">Scope 1 (Gas) + Scope 2 (Electricity) + Scope 3 (Supply Chain)</p>
+            <h3 className="text-sm font-bold text-slate-900">Répartition carbone mensuelle</h3>
+            <p className="text-xs text-slate-500">Périmètre 1 (gaz) + périmètre 2 (électricité) + périmètre 3 (chaîne d’approvisionnement)</p>
           </div>
         </div>
 
@@ -232,14 +232,14 @@ export function Scope3Tab() {
                 }}
               />
               <Legend />
-              <Bar dataKey="Scope 1 (Gas)" stackId="a" fill="#ef4444" />
-              <Bar dataKey="Scope 2 (Electricity)" stackId="a" fill="#f59e0b" />
-              <Bar dataKey="Scope 3 (Supply Chain)" stackId="a" fill="#3b82f6" />
+              <Bar dataKey="Scope 1 (Gas)" name="Périmètre 1 (gaz)" stackId="a" fill="#ef4444" />
+              <Bar dataKey="Scope 2 (Electricity)" name="Périmètre 2 (électricité)" stackId="a" fill="#f59e0b" />
+              <Bar dataKey="Scope 3 (Supply Chain)" name="Périmètre 3 (chaîne d’approvisionnement)" stackId="a" fill="#3b82f6" />
             </ComposedChart>
           </ResponsiveContainer>
         ) : (
           <div className="h-64 flex items-center justify-center text-gray-400">
-            No data available yet
+            Aucune donnée pour le moment
           </div>
         )}
       </div>
@@ -251,8 +251,8 @@ export function Scope3Tab() {
             <Truck className="w-5 h-5 text-purple-700" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-slate-900">Recent Activities</h3>
-            <p className="text-xs text-slate-500">Latest supply chain emissions logged</p>
+            <h3 className="text-sm font-bold text-slate-900">Activités récentes</h3>
+            <p className="text-xs text-slate-500">Dernières émissions de la chaîne d’approvisionnement enregistrées</p>
           </div>
         </div>
 
@@ -262,10 +262,10 @@ export function Scope3Tab() {
               <div key={activity.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg border border-gray-100">
                 <div>
                   <p className="font-semibold text-sm text-slate-900">
-                    {activity.supplier?.name || 'Unnamed Activity'}
+                    {activity.supplier?.name || 'Activité sans nom'}
                   </p>
                   {activity.source_reference && (
-                    <p className="text-xs text-slate-500">Ref: {activity.source_reference}</p>
+                    <p className="text-xs text-slate-500">Réf. : {activity.source_reference}</p>
                   )}
                 </div>
                 <div className="text-right">
@@ -284,31 +284,31 @@ export function Scope3Tab() {
         ) : (
           <div className="text-center py-8">
             <Truck className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-gray-500 font-medium">No activities logged yet</p>
-            <p className="text-gray-400 text-sm">Log your first activity above to get started</p>
+            <p className="text-gray-500 font-medium">Aucune activité enregistrée</p>
+            <p className="text-gray-400 text-sm">Enregistrez votre première activité ci-dessus pour commencer</p>
           </div>
         )}
       </div>
 
       {/* Help Section */}
       <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
-        <h3 className="font-bold text-slate-900 mb-3">💡 Scope 3 Categories</h3>
+        <h3 className="font-bold text-slate-900 mb-3">💡 Catégories du périmètre 3</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <p className="font-semibold text-sm text-slate-900">🏭 Purchased Goods</p>
-            <p className="text-xs text-slate-600">Track materials like steel, plastic, paper from suppliers</p>
+            <p className="font-semibold text-sm text-slate-900">🏭 Biens achetés</p>
+            <p className="text-xs text-slate-600">Suivez des matériaux comme l’acier, le plastique ou le papier auprès des fournisseurs</p>
           </div>
           <div>
-            <p className="font-semibold text-sm text-slate-900">🚚 Logistics & Freight</p>
-            <p className="text-xs text-slate-600">Log shipments with distance and weight (ton-km calculations)</p>
+            <p className="font-semibold text-sm text-slate-900">🚚 Logistique & fret</p>
+            <p className="text-xs text-slate-600">Enregistrez des expéditions avec distance et poids (calculs en tonne-km)</p>
           </div>
           <div>
-            <p className="font-semibold text-sm text-slate-900">✈️ Business Travel</p>
-            <p className="text-xs text-slate-600">Record flights, hotels, and rail with class multipliers</p>
+            <p className="font-semibold text-sm text-slate-900">✈️ Déplacements professionnels</p>
+            <p className="text-xs text-slate-600">Enregistrez vols, hôtels et train avec des multiplicateurs selon la classe</p>
           </div>
           <div>
-            <p className="font-semibold text-sm text-slate-900">🚗 Employee Commute</p>
-            <p className="text-xs text-slate-600">Track commuting by car, EV, bus, or train over work days</p>
+            <p className="font-semibold text-sm text-slate-900">🚗 Trajets domicile-travail</p>
+            <p className="text-xs text-slate-600">Suivez les trajets en voiture, VE, bus ou train sur les jours travaillés</p>
           </div>
         </div>
       </div>

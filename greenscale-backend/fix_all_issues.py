@@ -23,7 +23,7 @@ def fix_main_py():
     # Fix remaining complex f-strings
     replacements = [
         ('logger.error(f"❌ Registration error: {e}", exc_info=True)', 'logger.error("❌ Registration error: %s", e, exc_info=True)'),
-        ('logger.error(f"❌ Login error: {e}", exc_info=True)', 'logger.error("❌ Login error: %s", e, exc_info=True)'),
+        ('logger.error(f"❌ login error: {e}", exc_info=True)', 'logger.error("❌ login error: %s", e, exc_info=True)'),
         ('logger.error(f"❌ Upload error: {e}", exc_info=True)', 'logger.error("❌ Upload error: %s", e, exc_info=True)'),
         ('logger.error(f"❌ Emission creation error: {e}", exc_info=True)', 'logger.error("❌ Emission creation error: %s", e, exc_info=True)'),
         ('logger.error(f"❌ Deletion error: {e}", exc_info=True)', 'logger.error("❌ Deletion error: %s", e, exc_info=True)'),

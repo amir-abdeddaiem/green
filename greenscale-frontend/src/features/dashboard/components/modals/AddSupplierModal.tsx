@@ -33,19 +33,19 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
     const errors: FormErrors = {};
 
     if (!supplierName.trim()) {
-      errors.supplierName = 'Supplier name is required';
+      errors.supplierName = 'Le nom du fournisseur est obligatoire';
     } else if (supplierName.length < 2) {
-      errors.supplierName = 'Supplier name must be at least 2 characters';
+      errors.supplierName = 'Le nom du fournisseur doit contenir au moins 2 caractères';
     } else if (supplierName.length > 100) {
-      errors.supplierName = 'Supplier name must be less than 100 characters';
+      errors.supplierName = 'Le nom du fournisseur doit contenir moins de 100 caractères';
     }
 
     if (contact && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)) {
-      errors.contact = 'Invalid email format';
+      errors.contact = 'Format d’e-mail invalide';
     }
 
     if (website && !/^https?:\/\/.+/.test(website) && website.length > 0) {
-      errors.website = 'Website must start with http:// or https://';
+      errors.website = 'Le site web doit commencer par http:// ou https://';
     }
 
     setFormErrors(errors);
@@ -61,7 +61,7 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
     setSuccess(false);
 
     if (!businessId) {
-      setError('Business ID not found');
+      setError('Identifiant de l’entreprise introuvable');
       return;
     }
 
@@ -82,7 +82,7 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
 
       if (!response.ok) {
         const errorData = await response.json();
-        let errorMessage = 'Failed to create supplier';
+        let errorMessage = 'Impossible de créer le fournisseur';
         if (typeof errorData.detail === 'string') {
           errorMessage = errorData.detail;
         } else if (Array.isArray(errorData.detail)) {
@@ -104,7 +104,7 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
         onClose();
       }, 1500);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create supplier');
+      setError(err instanceof Error ? err.message : 'Impossible de créer le fournisseur');
     } finally {
       setLoading(false);
     }
@@ -131,7 +131,7 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
             <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
               <Plus className="w-5 h-5 text-white" />
             </div>
-            <h2 className="text-xl font-bold text-slate-900">Add New Supplier</h2>
+            <h2 className="text-xl font-bold text-slate-900">Ajouter un nouveau fournisseur</h2>
           </div>
           <button onClick={onClose} className="text-slate-500 hover:text-slate-700">
             <X className="w-5 h-5" />
@@ -145,9 +145,9 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
               <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
                 <CheckCircle2 className="w-10 h-10 text-green-600" />
               </div>
-              <p className="text-2xl font-bold text-slate-900">Supplier Created!</p>
+              <p className="text-2xl font-bold text-slate-900">Fournisseur créé&nbsp;!</p>
               <p className="text-slate-600 text-center">
-                <span className="font-semibold">{supplierName}</span> has been added to your supply chain.
+                <span className="font-semibold">{supplierName}</span> a été ajouté à votre chaîne d’approvisionnement.
               </p>
             </div>
           ) : (
@@ -167,7 +167,7 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
 
               {/* Supplier Name */}
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Supplier Name *</label>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">Nom du fournisseur *</label>
                 <input
                   type="text"
                   value={supplierName}
@@ -175,7 +175,7 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
                     setSupplierName(e.target.value);
                     if (formErrors.supplierName) setFormErrors({ ...formErrors, supplierName: undefined });
                   }}
-                  placeholder="e.g., ABC Manufacturing Ltd"
+                  placeholder="ex. ABC Manufacturing Ltd"
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition ${
                     formErrors.supplierName ? 'border-red-300 bg-red-50' : 'border-gray-300'
                   }`}
@@ -188,25 +188,25 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
 
               {/* Industry Type */}
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-2">Industry Type *</label>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">Secteur d’activité *</label>
                 <select
                   value={industryType}
                   onChange={(e) => setIndustryType(e.target.value as IndustryType)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition bg-white"
                   disabled={loading}
                 >
-                  <option value="manufacturing">🏭 Manufacturing</option>
-                  <option value="logistics">🚚 Logistics & Transportation</option>
-                  <option value="professional_services">💼 Professional Services</option>
-                  <option value="retail">🛒 Retail & Distribution</option>
-                  <option value="other">📋 Other</option>
+                  <option value="manufacturing">🏭 Fabrication</option>
+                  <option value="logistics">🚚 Logistique & transport</option>
+                  <option value="professional_services">💼 Services professionnels</option>
+                  <option value="retail">🛒 Commerce & distribution</option>
+                  <option value="other">📋 Autre</option>
                 </select>
               </div>
 
               {/* Contact Email */}
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  <Phone className="w-4 h-4 inline mr-2" />Contact Email (Optional)
+                  <Phone className="w-4 h-4 inline mr-2" />E-mail de contact (optionnel)
                 </label>
                 <input
                   type="email"
@@ -227,13 +227,13 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
               {/* Address */}
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  <MapPin className="w-4 h-4 inline mr-2" />Address (Optional)
+                  <MapPin className="w-4 h-4 inline mr-2" />Adresse (optionnel)
                 </label>
                 <input
                   type="text"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  placeholder="Street, City, Country"
+                  placeholder="Rue, ville, pays"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
                   disabled={loading}
                   maxLength={200}
@@ -243,7 +243,7 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
               {/* Website */}
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">
-                  <Globe className="w-4 h-4 inline mr-2" />Website (Optional)
+                  <Globe className="w-4 h-4 inline mr-2" />Site web (optionnel)
                 </label>
                 <input
                   type="url"
@@ -264,7 +264,7 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
               {/* Info Box */}
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <p className="text-xs text-blue-800">
-                  <span className="font-semibold">💡 Tip:</span> Track supplier emissions, monitor sustainability ratings, and compare carbon intensity against industry benchmarks.
+                  <span className="font-semibold">💡 Astuce :</span> Suivez les émissions des fournisseurs, surveillez les notations de durabilité et comparez l’intensité carbone aux références du secteur.
                 </p>
               </div>
 
@@ -279,7 +279,7 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
                   disabled={loading}
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-slate-700 font-semibold hover:bg-gray-50 transition disabled:opacity-50"
                 >
-                  Cancel
+                  Annuler
                 </button>
                 <button
                   type="button"
@@ -287,7 +287,7 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
                   disabled={loading || !supplierName.trim()}
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-slate-700 font-semibold hover:bg-gray-50 transition disabled:opacity-50"
                 >
-                  Clear
+                  Réinitialiser
                 </button>
                 <button
                   type="submit"
@@ -297,12 +297,12 @@ export function AddSupplierModal({ isOpen, onClose, onSuccess }: AddSupplierModa
                   {loading ? (
                     <>
                       <Loader className="w-4 h-4 animate-spin" />
-                      Creating...
+                      Création...
                     </>
                   ) : (
                     <>
                       <Plus className="w-4 h-4" />
-                      Add Supplier
+                      Ajouter le fournisseur
                     </>
                   )}
                 </button>

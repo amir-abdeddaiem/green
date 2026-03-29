@@ -42,8 +42,8 @@ export function CategoryChart({ data, loading }: CategoryChartProps) {
     return (
       <div className="w-full h-80 flex items-center justify-center bg-slate-50 rounded-lg">
         <div className="text-center">
-          <p className="text-slate-500 font-medium">No data available</p>
-          <p className="text-slate-400 text-sm">Start logging emissions to see the breakdown</p>
+          <p className="text-slate-500 font-medium">Aucune donnée disponible</p>
+          <p className="text-slate-400 text-sm">Commencez à enregistrer des émissions pour voir la répartition</p>
         </div>
       </div>
     );
