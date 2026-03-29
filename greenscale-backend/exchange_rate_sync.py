@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 EXCHANGE_RATE_API = "https://api.exchangerate.host/latest"
 
 # Currencies to sync
-SUPPORTED_CURRENCIES = ["PKR", "USD", "EUR", "GBP", "JPY", "CNY", "AED"]
+SUPPORTED_CURRENCIES = ["TND", "PKR", "USD", "EUR", "GBP", "JPY", "CNY", "AED"]
 
 
 class ExchangeRateSync:

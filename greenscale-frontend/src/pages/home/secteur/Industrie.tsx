@@ -107,7 +107,7 @@ export default function IndustrieSectorPage() {
 
 
       {/* Problèmes Section */}
-      <section className="py-24 bg-white">
+      <section className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight text-slate-900">Les problèmes que rencontrent les industries aujourd’hui</h2>

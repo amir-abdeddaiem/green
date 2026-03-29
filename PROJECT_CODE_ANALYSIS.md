@@ -218,9 +218,9 @@ Verdustry-frontend/
 │   ├── features/
 │   │   ├── auth/
 │   │   │   ├── components/
-│   │   │   │   ├── loginForm.tsx    ✅ login UI with form validation
+│   │   │   │   ├── LoginForm.tsx    ✅ Login UI with form validation
 │   │   │   │   ├── RegisterCard.tsx ✅ Registration UI
-│   │   │   │   └── /tabs/*          ✅ login/auth related tabs
+│   │   │   │   └── /tabs/*          ✅ Login/auth related tabs
 │   │   │   ├── services/
 │   │   │   │   └── authService.ts   ✅ Auth API calls + error formatting
 │   │   │   ├── hooks/
@@ -289,7 +289,7 @@ Verdustry-frontend/
 ```typescript
 // Main Route Structure:
 /                          → HomePage (landing page)
-/login                     → loginForm
+/login                     → LoginForm
 /register                  → RegisterCard (RegistrationForm)
 /dashboard                 → DashboardLayout + DashboardOverview
   /dashboard/analytics     → AnalyticsTab
@@ -396,7 +396,7 @@ Integration:
    → Stores in localStorage: { user_id, business_name, token, isLoggedIn }
 
 2. User logs in at /login
-   → loginForm sends POST /login
+   → LoginForm sends POST /login
    → Backend validates email + password hashing
    → Returns token + user_id
    → Stores in localStorage
@@ -517,7 +517,7 @@ Responsabilité: User management & permissions
 Files:
   - auth_utils.py (JWT, password hashing)
   - role_models.py, role_routes.py, role_utils.py
-  - loginForm.tsx, RegisterCard.tsx
+  - LoginForm.tsx, RegisterCard.tsx
   - ProtectedAdminRoute.tsx
   
 Features:

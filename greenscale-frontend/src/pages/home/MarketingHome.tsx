@@ -30,9 +30,9 @@ const IMPACT_STATS = [
 const WHY_US = [
   {
     num: "01",
-    tag: "PRÉCISION",
-    title: "Collecte de données sans compromis",
-    desc: "Connectez vos sources de données en quelques clics. Notre moteur de collecte automatisée élimine les erreurs manuelles et garantit une traçabilité complète de chaque émission.",
+    tag: "COLLECTE",
+    title: "Collecte de données automatisée",
+    desc: "Collecte de données depuis vos ERP et capteurs IoT avec une analyse et une supervision en temps réel. La plateforme automatise l'acquisition et la centralisation des données environnementales.",
     icon: (
       <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
         <path d="M24 6L40 14L40 34L24 42L8 34L8 14Z" stroke="#4ade80" strokeWidth="1.5" strokeLinejoin="round" />
@@ -41,14 +41,13 @@ const WHY_US = [
         <circle cx="24" cy="24" r="2" fill="#132b1e" />
       </svg>
     ),
-    stat: "99.8%",
-    statLabel: "précision",
+    statLabel: "temps réel",
   },
   {
     num: "02",
-    tag: "INTELLIGENCE",
-    title: "IA pour optimiser vos émissions",
-    desc: "Notre IA analyse en continu vos données pour détecter les anomalies, anticiper les dérives et vous proposer les actions à plus fort impact sur votre trajectoire de réduction.",
+    tag: "IA",
+    title: "Recommandations intelligentes",
+    desc: "Notre intelligence artificielle génère des recommandations pour optimiser les performances environnementales et réduire l’empreinte carbone de vos opérations.",
     icon: (
       <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
         <rect x="10" y="10" width="28" height="28" rx="6" stroke="#4ade80" strokeWidth="1.5" />
@@ -60,14 +59,13 @@ const WHY_US = [
         <path d="M18 18L24 24M30 18L24 24M18 30L24 24M30 30L24 24" stroke="#132b1e" strokeWidth="1.5" />
       </svg>
     ),
-    stat: "3×",
-    statLabel: "plus rapide",
+    statLabel: "optimisation",
   },
   {
     num: "03",
-    tag: "MISE À JOUR",
-    title: "Facteurs d'émission toujours précis",
-    desc: "Accédez à plus de 150 000 facteurs d'émissions issus des meilleures bases mondiales — ADEME, IPCC, Ecoinvent — mis à jour en continu pour refléter la réalité terrain.",
+    tag: "ESG",
+    title: "Rapports ESG conformes",
+    desc: "Génération automatique de rapports ESG conformes aux réglementations européennes telles que CBAM et ESRS pour faciliter la conformité réglementaire.",
     icon: (
       <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
         <circle cx="24" cy="24" r="16" stroke="#4ade80" strokeWidth="1.5" />
@@ -76,14 +74,13 @@ const WHY_US = [
         <path d="M20 24L24 20L28 24M24 20V30" stroke="#4ade80" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
-    stat: "150k+",
-    statLabel: "facteurs",
+    statLabel: "ESG",
   },
   {
     num: "04",
-    tag: "SÉCURITÉ",
-    title: "Vos données sont en sécurité",
-    desc: "Infrastructure certifiée SOC 2 Type II, chiffrement de bout en bout, hébergement européen. Vos données ESG restent confidentielles et sous votre contrôle total.",
+    tag: "MARCHÉ",
+    title: "Accès au marché européen",
+    desc: "Anticipez les contraintes réglementaires européennes, préservez vos parts de marché en Europe et facilitez l’accès à de nouveaux marchés internationaux.",
     icon: (
       <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-7 h-7">
         <path d="M24 6L38 12L38 26C38 34 32 40 24 43C16 40 10 34 10 26L10 12Z" stroke="#4ade80" strokeWidth="1.5" strokeLinejoin="round" />
@@ -91,8 +88,7 @@ const WHY_US = [
         <path d="M18 24L22 28L30 20" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
-    stat: "SOC 2",
-    statLabel: "Type II",
+    statLabel: "Europe",
   },
 ] as const;
 
@@ -153,25 +149,7 @@ const STEPS = [
   },
 ] as const;
 
-const SECURITY_FEATURES = [
-  { icon: "🔒", title: "Chiffrement des données", desc: "Chiffrement de bout en bout (AES-256) et TLS 1.3 sur toutes les communications" },
- 
-  { icon: "👥", title: "Authentification sécurisée et Gestion des accès", desc: "Contrôle granulaire par rôle, département et projet et authentification adaptative" },
-  { icon: "☁️", title: "Infrastructure cloud sécurisée", desc: "Hébergement souverain en Europe – SOC 2 Type II & ISO 27001" },
- 
-  { icon: "📋", title: "Journalisation & Traçabilité", desc: "Audit complet de toutes les actions sur vos données" },
-];
 
-const AI_SECTION = {
-  title: "Powered by Verdustry AI",
-  subtitle: "Une intelligence artificielle conçue par des experts climat",
-  description: "Développée avec des ingénieurs et scientifiques du climat, notre IA analyse en continu vos données pour détecter les opportunités, anticiper les risques et transformer chaque défi environnemental en avantage stratégique.",
-  stats: [
-    { value: "150 000+", label: "facteurs d'émission mis à jour quotidiennement" },
-    { value: "3×", label: "plus rapide que les approches traditionnelles" },
-    { value: "98.7%", label: "de précision dans la détection d'anomalies" },
-  ],
-};
 
 type Accent = "green" | "green" | "teal";
 
@@ -566,7 +544,7 @@ export  function MarketingHome() {
                 </div>
 
                 <div className="relative z-10">
-                  <div className="w-20 h-20 flex items-center justify-center bg-green-300 rounded-2xl mb-8 group-hover:bg-green-100 transition-colors">
+                  <div className="w-20 h-20 flex items-center justify-center bg-green-100 rounded-2xl mb-8 group-hover:bg-green-100 transition-colors">
                     {step.icon}
                   </div>
                   <div className="uppercase text-xs font-bold tracking-[2px] text-green-600 mb-3">{step.tag}</div>
@@ -584,29 +562,39 @@ export  function MarketingHome() {
       </section>
 
 
-      {/* WHY US SECTION */}
-      <section
-        id="pourquoi-verdustry"
-        ref={whyRef}
-        className="relative overflow-hidden w-full py-24 px-4 rounded-[2rem] text-white bg-green-600/10 scroll-mt-28"
-      >
+     {/* WHY US SECTION */}
+<section
+  id="pourquoi-verdustry"
+  ref={whyRef}
+  className="relative overflow-hidden w-full py-24 px-4 rounded-[2rem] text-white bg-green-600/10 scroll-mt-28"
+>
   <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2rem]">
-    <div className="absolute -right-32 -top-32 h-[480px] w-[480px] rounded-full opacity-15"
-      style={{ background: "radial-gradient(circle, #4ade80 0%, transparent 65%)" }} />
-    <div className="absolute -left-24 bottom-0 h-[360px] w-[360px] rounded-full opacity-10"
-      style={{ background: "radial-gradient(circle, #bbf7d0 0%, transparent 65%)" }} />
+    <div
+      className="absolute -right-32 -top-32 h-[480px] w-[480px] rounded-full opacity-15"
+      style={{ background: "radial-gradient(circle, #4ade80 0%, transparent 65%)" }}
+    />
+    <div
+      className="absolute -left-24 bottom-0 h-[360px] w-[360px] rounded-full opacity-10"
+      style={{ background: "radial-gradient(circle, #bbf7d0 0%, transparent 65%)" }}
+    />
   </div>
 
   <div className="relative mx-auto max-w-6xl">
-    <div className={cn(
-      "text-center transition-all duration-700",
-      whyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-    )}>
+    <div
+      className={cn(
+        "text-center transition-all duration-700",
+        whyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      )}
+    >
       <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-green-900 sm:text-4xl lg:text-5xl">
         La différence{" "}
-        <span style={{ color: "#00200b" }}>Verdustry</span> {/* green-200 — lisible sur green-600 */}
+        <span style={{ color: "#00200b" }}>Verdustry</span>
       </h2>
-      <p className="mx-auto mt-4 max-w-xl text-base" style={{ color: "rgba(0, 73, 26, 0.65)" }}>
+
+      <p
+        className="mx-auto mt-4 max-w-xl text-base"
+        style={{ color: "rgba(0, 73, 26, 0.65)" }}
+      >
         Rigueur scientifique, intelligence artificielle et sécurité absolue — au service de votre transition climatique.
       </p>
     </div>
@@ -616,12 +604,11 @@ export  function MarketingHome() {
         <div
           key={item.tag}
           className={cn(
-            "group relative overflow-hidden rounded-3xl p-8 transition-all duration-500 hover:-translate-y-1.5 cursor-pointer",
+            "bg-green-900 group relative overflow-hidden rounded-3xl p-8 transition-all duration-500 hover:-translate-y-1.5 cursor-pointer",
             whyInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           )}
           style={{
-            backgroundColor: "rgba(20, 51, 30, 0.95)", 
-            border: "1px solid rgba(134,239,172,0.12)", 
+            border: "1px solid rgba(134,239,172,0.12)",
             transitionDelay: `${i * 100}ms`,
           }}
           onMouseEnter={(e) => {
@@ -633,107 +620,80 @@ export  function MarketingHome() {
             e.currentTarget.style.boxShadow = "none";
           }}
         >
-          {/* Ligne de lumière au survol */}
-          <div className="absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-            style={{ background: "linear-gradient(90deg, transparent, #86efac, transparent)" }} />
+          {/* Ligne lumière hover */}
+          <div
+            className="absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            style={{
+              background: "linear-gradient(90deg, transparent, #86efac, transparent)",
+            }}
+          />
 
           {/* Numéro décoratif */}
-          <div className="pointer-events-none absolute bottom-2 right-4 text-8xl font-black leading-none select-none"
-            style={{ color: "rgba(134,239,172,0.05)" }}>
+          <div
+            className="pointer-events-none absolute bottom-2 right-4 text-8xl font-black leading-none select-none"
+            style={{ color: "rgba(134,239,172,0.05)" }}
+          >
             {item.num}
           </div>
 
-          <div className="relative">
-            <div className="flex items-start justify-between">
-              {/* Icône */}
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110"
-                style={{
-                  background: "rgba(134,239,172,0.08)",
-                  border: "1px solid rgba(134,239,172,0.2)"
-                }}>
-                {item.icon}
+          {/* CONTENT */}
+          <div className="relative flex items-start justify-between gap-6">
+            
+            {/* Texte */}
+            <div className="flex-1">
+              {/* Tag */}
+              <div
+                className="text-[10px] font-bold tracking-widest uppercase"
+                style={{ color: "rgba(134,239,172,0.55)" }}
+              >
+                {item.tag}
               </div>
 
-              {/* Stat badge */}
-              <div className="rounded-xl px-3 py-2 text-right"
-                style={{
-                  background: "rgba(134,239,172,0.07)",
-                  border: "1px solid rgba(134,239,172,0.18)"
-                }}>
-                <div className="text-xl font-black" style={{ color: "#86efac" }}>{item.stat}</div>
-                <div className="mt-0.5 text-[9px] font-semibold uppercase tracking-wider"
-                  style={{ color: "rgba(134,239,172,0.5)" }}>{item.statLabel}</div>
-              </div>
+              {/* Titre */}
+              <h3 className="mt-2 text-xl font-extrabold tracking-tight text-white leading-snug">
+                {item.title}
+              </h3>
+
+              {/* Description */}
+              <p
+                className="mt-3 text-sm leading-relaxed"
+                style={{ color: "rgba(187,247,208,0.5)" }}
+              >
+                {item.desc}
+              </p>
             </div>
 
-            {/* Tag */}
-            <div className="mt-6 text-[10px] font-bold tracking-widest uppercase"
-              style={{ color: "rgba(134,239,172,0.55)" }}>
-              {item.tag}
+            {/* Icon à droite */}
+            <div
+              className="flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110 shrink-0"
+              style={{
+                background: "rgba(134,239,172,0.08)",
+                border: "1px solid rgba(134,239,172,0.2)",
+              }}
+            >
+              {item.icon}
             </div>
 
-            {/* Titre */}
-            <h3 className="mt-2 text-xl font-extrabold tracking-tight text-white leading-snug">
-              {item.title}
-            </h3>
-
-            {/* Description */}
-            <p className="mt-3 text-sm leading-relaxed" style={{ color: "rgba(187,247,208,0.5)" }}>
-              {item.desc}
-            </p>
-
-            {/* CTA */}
-            <div className="mt-6 flex items-center gap-1.5 text-sm font-bold" style={{ color: "#86efac" }}>
-              <span>En savoir plus</span>
-              <span className="transition-transform duration-200 group-hover:translate-x-1.5">→</span>
-            </div>
           </div>
         </div>
       ))}
     </div>
   </div>
 </section>
-      {/* SECURITY SECTION */}
-<section ref={securityRef} className="py-28 bg-white text-zinc-900">
-  <div className="mx-auto max-w-6xl px-6">
-    <div className="text-center mb-16">
-      <h2 className="text-5xl font-semibold tracking-tight">
-        Vos données sont en sécurité
-      </h2>
-      <p className="mt-4 text-zinc-600 max-w-md mx-auto">
-        Nous protégeons vos informations avec les plus hauts standards de sécurité et de conformité.
-      </p>
-    </div>
-
-    <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
-      {SECURITY_FEATURES.map((feature, i) => (
-        <div
-          key={i}
-          className="bg-green-600/10 border border-green-200 hover:border-green-300 rounded-3xl p-8 transition-all hover:-translate-y-1 group"
-        >
-          <div className="text-5xl mb-6 text-green-600 group-hover:scale-110 transition-transform">
-            {feature.icon}
-          </div>
-          <h3 className="text-xl font-semibold mb-3 text-green-700">
-            {feature.title}
-          </h3>
-          <p className="text-zinc-600 leading-relaxed">{feature.desc}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
+   
 
    {/* FINAL CTA  */}
-<section className="py-28 border-t rounded-[2rem] bg-green-600" >
-  <div className=" min-w-xl text-center px-6">
-    <h2 className="text-5xl font-semibold tracking-tight text-white">
-      Prêt à réduire votre empreinte carbone ?
+<section className="py-10 border-t rounded-[2rem] bg-green-600">
+  <div className="max-w-3xl mx-auto text-center px-6">
+    <h2 className="text-4xl font-semibold tracking-tight text-white leading-snug">
+      Prêt à réduire votre empreinte{" "}
+      <span className="text-green-200">environnementale</span>,
+      sécuriser vos parts de marché{" "}
+      <span className="text-green-200">et accéder aux marchés européens ?</span>
     </h2>
-    <p className="mt-6 text-white  rounded-[3rem] " >
+    <p className="mt-6 text-white/90">
       Rejoignez nous pour transformer l'impact climatique en avantage compétitif.
     </p>
-
     <div className="mt-12 flex flex-wrap justify-center gap-4">
       <Button
         size="lg"
@@ -751,7 +711,6 @@ export  function MarketingHome() {
         Parler à un expert
       </Button>
     </div>
-    
   </div>
 </section>
       

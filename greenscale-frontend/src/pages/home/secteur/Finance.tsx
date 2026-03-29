@@ -8,13 +8,11 @@ export default function FinanceSectorPage() {
     <div className="min-h-screen bg-white">
       <MarketingNavbar variant="light" />
       {/* Hero Section */}
-      <section className="pt-28 pb-20 bg-gradient-to-br from-white via-white to-slate-50 relative overflow-hidden">
+      <section className="pt-40 pb-20 bg-gradient-to-br from-white via-white to-slate-50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <div className="space-y-8">
-              <div className="inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700">
-                Secteur Finance
-              </div>
+              <br /><br />
 
               <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-tight text-slate-900">
                 Intégrez le <span className="text-green-700">climat</span> et l’ESG
@@ -39,6 +37,7 @@ export default function FinanceSectorPage() {
                 <li>Conformité CSRD & SFDR</li>
                 <li>Analyse de l’empreinte carbone du portefeuille</li>
               </ul>
+              <br /><br />
             </div>
 
             {/* Hero Visual */}
@@ -111,14 +110,14 @@ export default function FinanceSectorPage() {
             <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight text-slate-900">Gestion avancée du risque climatique</h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className=" grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { title: "Mesure de l’empreinte carbone", desc: "Calcul précis du carbone Scope 1, 2 et 3 de l’ensemble de vos portefeuilles" },
               { title: "Analyse des risques climatiques", desc: "Évaluation des risques physiques et de transition selon les scénarios NGFS" },
               { title: "Identification des entreprises à risque", desc: "Détection des sociétés à forte intensité carbone et à haut risque ESG" },
               { title: "Pilotage des stratégies durables", desc: "Suivi en temps réel de l’alignement de vos investissements avec vos objectifs climatiques" }
             ].map((item, i) => (
-              <div key={i} className="bg-white border border-slate-200 rounded-3xl p-10 hover:border-green-200 transition-colors">
+              <div key={i} className="bg-green-50 border border-slate-200 rounded-3xl p-10 hover:border-green-200 transition-colors">
                 <h3 className="font-semibold text-xl mb-3 text-slate-900">{item.title}</h3>
                 <p className="text-slate-600 leading-relaxed">{item.desc}</p>
               </div>

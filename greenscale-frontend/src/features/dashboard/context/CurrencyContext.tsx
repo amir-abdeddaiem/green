@@ -26,11 +26,13 @@ interface CurrencyProviderProps {
 }
 
 export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) => {
-  const [baseCurrency, setBaseCurrency] = useState<string>('PKR');
-  const [displayCurrency, setDisplayCurrency] = useState<string>('PKR');
+  // Use ISO code internally for compatibility with exchange-rate providers.
+  // Tunisian dinar is TND; UI symbol/label is commonly "DT".
+  const [baseCurrency, setBaseCurrency] = useState<string>('TND');
+  const [displayCurrency, setDisplayCurrency] = useState<string>('TND');
   const [_exchangeRates, setExchangeRates] = useState<Record<string, number>>({});
 
-  const supportedCurrencies = ['PKR', 'USD', 'EUR', 'GBP', 'JPY', 'CNY', 'AED'];
+  const supportedCurrencies = ['TND', 'PKR', 'USD', 'EUR', 'GBP', 'JPY', 'CNY', 'AED'];
 
   // Fetch exchange rates from backend
   useEffect(() => {
@@ -67,6 +69,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
 
   const getCurrencySymbol = (currency: string): string => {
     const symbols: Record<string, string> = {
+      TND: 'DT',
       PKR: '₨',
       USD: '$',
       EUR: '€',

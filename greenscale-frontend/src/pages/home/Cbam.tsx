@@ -252,15 +252,17 @@ export default function CbamPage() {
       
 
      {/* FINAL CTA  */}
-<section className="py-28 border-t rounded-[2rem] bg-green-600" >
-  <div className=" min-w-xl text-center px-6">
-    <h2 className="text-5xl font-semibold tracking-tight text-white">
-      Prêt à réduire votre empreinte carbone ?
+<section className="py-10 border-t rounded-[2rem] bg-green-600">
+  <div className="max-w-3xl mx-auto text-center px-6">
+    <h2 className="text-4xl font-semibold tracking-tight text-white leading-snug">
+      Prêt à réduire votre empreinte{" "}
+      <span className="text-green-200">environnementale</span>,
+      sécuriser vos parts de marché{" "}
+      <span className="text-green-200">et accéder aux marchés européens ?</span>
     </h2>
-    <p className="mt-6 text-white  rounded-[3rem] " >
+    <p className="mt-6 text-white/90">
       Rejoignez nous pour transformer l'impact climatique en avantage compétitif.
     </p>
-
     <div className="mt-12 flex flex-wrap justify-center gap-4">
       <Button
         size="lg"
@@ -278,7 +280,6 @@ export default function CbamPage() {
         Parler à un expert
       </Button>
     </div>
-    
   </div>
 </section>
 

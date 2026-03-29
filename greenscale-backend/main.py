@@ -865,7 +865,7 @@ def get_exchange_rates(
     """
     base_currency = (base or "PKR").upper().strip()
 
-    supported = {"PKR", "USD", "EUR", "GBP", "JPY", "CNY", "AED"}
+    supported = {"TND", "PKR", "USD", "EUR", "GBP", "JPY", "CNY", "AED"}
     if base_currency not in supported:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -888,6 +888,9 @@ def get_exchange_rates(
 
     if len(rates) <= 1:
         fallback = {
+            # If rates are not yet synced/cached for TND, keep a safe identity fallback.
+            # (Avoid hardcoding potentially wrong FX numbers.)
+            "TND": {"TND": 1.0},
             "PKR": {"PKR": 1.0, "USD": 0.0036, "EUR": 0.0033, "GBP": 0.0028, "JPY": 0.55, "CNY": 0.026, "AED": 0.013},
             "USD": {"USD": 1.0, "PKR": 275.0, "EUR": 0.92, "GBP": 0.79, "JPY": 150.0, "CNY": 7.2, "AED": 3.67},
             "EUR": {"EUR": 1.0, "USD": 1.09, "PKR": 300.0, "GBP": 0.86, "JPY": 163.0, "CNY": 7.8, "AED": 4.0},

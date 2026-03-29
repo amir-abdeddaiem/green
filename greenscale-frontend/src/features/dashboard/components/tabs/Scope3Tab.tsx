@@ -100,7 +100,7 @@ export function Scope3Tab() {
               <Truck className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-black text-slate-900">Périmètre 3 : chaîne d’approvisionnement</h1>
+              <h1 className="text-3xl font-black text-slate-900">Scope 3 : chaîne d’approvisionnement</h1>
               <p className="text-slate-600 text-sm">Suivez les émissions des fournisseurs, de la logistique et des déplacements professionnels</p>
             </div>
           </div>
@@ -127,7 +127,7 @@ export function Scope3Tab() {
             </span>
           </div>
           <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider mb-2">
-            Total périmètre 3 CO₂
+            Total Scope 3 CO₂
           </p>
           <p className="text-3xl font-black text-slate-900 mb-1">
             {stats?.total_scope3_co2_kg.toFixed(1) || 0}
@@ -214,7 +214,7 @@ export function Scope3Tab() {
           </div>
           <div>
             <h3 className="text-sm font-bold text-slate-900">Répartition carbone mensuelle</h3>
-            <p className="text-xs text-slate-500">Périmètre 1 (gaz) + périmètre 2 (électricité) + périmètre 3 (chaîne d’approvisionnement)</p>
+            <p className="text-xs text-slate-500">Scope 1 (gaz) + Scope 2 (électricité) + Scope 3 (chaîne d’approvisionnement)</p>
           </div>
         </div>
 
@@ -232,9 +232,9 @@ export function Scope3Tab() {
                 }}
               />
               <Legend />
-              <Bar dataKey="Scope 1 (Gas)" name="Périmètre 1 (gaz)" stackId="a" fill="#ef4444" />
-              <Bar dataKey="Scope 2 (Electricity)" name="Périmètre 2 (électricité)" stackId="a" fill="#f59e0b" />
-              <Bar dataKey="Scope 3 (Supply Chain)" name="Périmètre 3 (chaîne d’approvisionnement)" stackId="a" fill="#3b82f6" />
+              <Bar dataKey="Scope 1 (Gas)" name="Scope 1 (gaz)" stackId="a" fill="#ef4444" />
+              <Bar dataKey="Scope 2 (Electricity)" name="Scope 2 (électricité)" stackId="a" fill="#f59e0b" />
+              <Bar dataKey="Scope 3 (Supply Chain)" name="Scope 3 (chaîne d’approvisionnement)" stackId="a" fill="#3b82f6" />
             </ComposedChart>
           </ResponsiveContainer>
         ) : (
@@ -292,7 +292,7 @@ export function Scope3Tab() {
 
       {/* Help Section */}
       <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
-        <h3 className="font-bold text-slate-900 mb-3">💡 Catégories du périmètre 3</h3>
+        <h3 className="font-bold text-slate-900 mb-3">💡 Catégories du Scope 3</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <p className="font-semibold text-sm text-slate-900">🏭 Biens achetés</p>

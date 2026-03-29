@@ -27,7 +27,8 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
   const businessId = localStorage.getItem("user_id");
 
   // Form state
-  const [category, setCategory] = useState<'Goods' | 'Logistics' | 'Travel' | 'Commute'>('Goods');
+  // IMPORTANT: must match backend EmissionFactor.category values
+  const [category, setCategory] = useState<'Goods' | 'Transportation' | 'Travel' | 'Commute'>('Goods');
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [factors, setFactors] = useState<EmissionFactor[]>([]);
   const [selectedSupplier, setSelectedSupplier] = useState<number | null>(null);
@@ -115,7 +116,7 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
           co2 = qty * factorValue;
           break;
 
-        case 'Logistics':
+        case 'Transportation':
           if (weight) {
             const wt = parseFloat(weight);
             co2 = qty * wt * factorValue;
@@ -150,15 +151,15 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
     try {
       // Validate required fields
       if (!selectedFactor || !rawQuantity) {
-        throw new Error('Please fill in all required fields');
+        throw new Error('Veuillez remplir tous les champs obligatoires');
       }
 
-      if (category === 'Logistics' && !weight) {
-        throw new Error('Weight is required for logistics entries');
+      if (category === 'Transportation' && !weight) {
+        throw new Error('Le poids est obligatoire pour la logistique');
       }
 
       if (category === 'Commute' && !unitCount) {
-        throw new Error('Days/employees count is required for commute entries');
+        throw new Error('Le nombre de jours/employés est obligatoire pour les trajets domicile-travail');
       }
 
       // Build query parameters
@@ -182,7 +183,7 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.detail || 'Failed to log activity');
+        throw new Error(errorData.detail || "Échec de l'enregistrement de l’activité");
       }
 
       // Success!
@@ -203,7 +204,7 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
       // Clear success message after 3 seconds
       setTimeout(() => setSuccess(false), 3000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
     } finally {
       setIsLoading(false);
     }
@@ -221,15 +222,15 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
           <Truck className="w-5 h-5 text-blue-600" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-slate-900">Log Scope 3 Activity</h3>
-          <p className="text-xs text-slate-500">Track supply chain emissions</p>
+          <h3 className="text-lg font-bold text-slate-900">Enregistrer une activité – Scope 3</h3>
+          <p className="text-xs text-slate-500">Suivez les émissions de la chaîne d’approvisionnement</p>
         </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Category Selection */}
         <div>
-          <label className="block text-sm font-bold text-slate-900 mb-2">Activity Category *</label>
+          <label className="block text-sm font-bold text-slate-900 mb-2">Catégorie d’activité *</label>
           <select
             value={category}
             onChange={(e) => {
@@ -238,10 +239,10 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
             }}
             className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 bg-white text-gray-900 font-medium"
           >
-            <option value="Goods">🏭 Purchased Goods</option>
-            <option value="Logistics">🚚 Logistics & Freight</option>
-            <option value="Travel">✈️ Business Travel</option>
-            <option value="Commute">🚗 Employee Commute</option>
+            <option value="Goods">🏭 Achats de biens</option>
+            <option value="Transportation">🚚 Logistique & transport</option>
+            <option value="Travel">✈️ Déplacements professionnels</option>
+            <option value="Commute">🚗 Trajets domicile-travail</option>
           </select>
         </div>
 
@@ -251,28 +252,28 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
           {category === 'Goods' && (
             <>
               <div>
-                <label className="block text-sm font-bold text-slate-900 mb-2">Material Type *</label>
+                <label className="block text-sm font-bold text-slate-900 mb-2">Type de matériau *</label>
                 <select
                   value={materialType}
                   onChange={(e) => setMaterialType(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 bg-white text-gray-900 font-medium"
                 >
-                  <option value="">Select material...</option>
-                  <option value="steel">♻️ Steel (Recycled/Virgin)</option>
-                  <option value="aluminum">♻️ Aluminum</option>
-                  <option value="paper">📄 Paper</option>
-                  <option value="plastic">♻️ Plastic</option>
-                  <option value="glass">🍾 Glass</option>
-                  <option value="concrete">🏗️ Concrete</option>
+                  <option value="">Sélectionner un matériau…</option>
+                  <option value="steel">♻️ Acier (recyclé / vierge)</option>
+                  <option value="aluminum">♻️ Aluminium</option>
+                  <option value="paper">📄 Papier</option>
+                  <option value="plastic">♻️ Plastique</option>
+                  <option value="glass">🍾 Verre</option>
+                  <option value="concrete">🏗️ Béton</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-bold text-slate-900 mb-2">Quantity (kg) *</label>
+                <label className="block text-sm font-bold text-slate-900 mb-2">Quantité (kg) *</label>
                 <input
                   type="number"
                   value={rawQuantity}
                   onChange={(e) => setRawQuantity(e.target.value)}
-                  placeholder="e.g., 500"
+                  placeholder="ex : 500"
                   step="0.01"
                   min="0"
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500"
@@ -281,17 +282,17 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
             </>
           )}
 
-          {/* LOGISTICS */}
-          {category === 'Logistics' && (
+          {/* LOGISTICS / TRANSPORTATION */}
+          {category === 'Transportation' && (
             <>
               <div>
-                <label className="block text-sm font-bold text-slate-900 mb-2">Supplier</label>
+                <label className="block text-sm font-bold text-slate-900 mb-2">Fournisseur</label>
                 <select
                   value={selectedSupplier || ''}
                   onChange={(e) => setSelectedSupplier(e.target.value ? parseInt(e.target.value) : null)}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 bg-white text-gray-900 font-medium"
                 >
-                  <option value="">Select supplier...</option>
+                  <option value="">Sélectionner un fournisseur…</option>
                   {suppliers.map(s => (
                     <option key={s.id} value={s.id}>{s.name}</option>
                   ))}
@@ -303,19 +304,19 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
                   type="number"
                   value={rawQuantity}
                   onChange={(e) => setRawQuantity(e.target.value)}
-                  placeholder="e.g., 1500"
+                  placeholder="ex : 1500"
                   step="0.01"
                   min="0"
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500"
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-slate-900 mb-2">Weight (tons) *</label>
+                <label className="block text-sm font-bold text-slate-900 mb-2">Poids (tonnes) *</label>
                 <input
                   type="number"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
-                  placeholder="e.g., 2"
+                  placeholder="ex : 2"
                   step="0.01"
                   min="0"
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500"
@@ -328,27 +329,27 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
           {category === 'Travel' && (
             <>
               <div>
-                <label className="block text-sm font-bold text-slate-900 mb-2">Flight Distance (km) *</label>
+                <label className="block text-sm font-bold text-slate-900 mb-2">Distance du vol (km) *</label>
                 <input
                   type="number"
                   value={rawQuantity}
                   onChange={(e) => setRawQuantity(e.target.value)}
-                  placeholder="e.g., 8000"
+                  placeholder="ex : 8000"
                   step="0.01"
                   min="0"
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500"
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-slate-900 mb-2">Flight Class *</label>
+                <label className="block text-sm font-bold text-slate-900 mb-2">Classe de vol *</label>
                 <select
                   value={flightClass}
                   onChange={(e) => setFlightClass(e.target.value as typeof flightClass)}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 bg-white text-gray-900 font-medium"
                 >
-                  <option value="Economy">💺 Economy (1.0x)</option>
-                  <option value="Premium Economy">🪑 Premium Economy (1.5x)</option>
-                  <option value="Business">✈️ Business Class (2.6x)</option>
+                  <option value="Economy">💺 Économie (1,0×)</option>
+                  <option value="Premium Economy">🪑 Premium Économie (1,5×)</option>
+                  <option value="Business">✈️ Business (2,6×)</option>
                 </select>
               </div>
             </>
@@ -358,40 +359,40 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
           {category === 'Commute' && (
             <>
               <div>
-                <label className="block text-sm font-bold text-slate-900 mb-2">Transport Mode *</label>
+                <label className="block text-sm font-bold text-slate-900 mb-2">Mode de transport *</label>
                 <select
                   value={transportMode}
                   onChange={(e) => setTransportMode(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 bg-white text-gray-900 font-medium"
                 >
-                  <option value="">Select mode...</option>
-                  <option value="petrol">🚗 Petrol Car</option>
-                  <option value="diesel">🚙 Diesel Car</option>
-                  <option value="ev">🔋 Electric Vehicle</option>
-                  <option value="bus">🚌 Public Bus</option>
+                  <option value="">Sélectionner un mode…</option>
+                  <option value="petrol">🚗 Voiture essence</option>
+                  <option value="diesel">🚙 Voiture diesel</option>
+                  <option value="ev">🔋 Véhicule électrique</option>
+                  <option value="bus">🚌 Bus</option>
                   <option value="train">🚆 Train</option>
-                  <option value="motorcycle">🏍️ Motorcycle</option>
+                  <option value="motorcycle">🏍️ Moto</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-bold text-slate-900 mb-2">Distance per Day (km) *</label>
+                <label className="block text-sm font-bold text-slate-900 mb-2">Distance par jour (km) *</label>
                 <input
                   type="number"
                   value={rawQuantity}
                   onChange={(e) => setRawQuantity(e.target.value)}
-                  placeholder="e.g., 50"
+                  placeholder="ex : 50"
                   step="0.01"
                   min="0"
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500"
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-slate-900 mb-2">Work Days / Employees *</label>
+                <label className="block text-sm font-bold text-slate-900 mb-2">Jours de travail / Employés *</label>
                 <input
                   type="number"
                   value={unitCount}
                   onChange={(e) => setUnitCount(e.target.value)}
-                  placeholder="e.g., 20 days or 10 employees"
+                  placeholder="ex : 20 jours ou 10 employés"
                   step="1"
                   min="0"
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500"
@@ -402,13 +403,13 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
 
           {/* EMISSION FACTOR SELECT (all categories) */}
           <div className="lg:col-span-2">
-            <label className="block text-sm font-bold text-slate-900 mb-2">Select Activity Type *</label>
+            <label className="block text-sm font-bold text-slate-900 mb-2">Type d’activité (facteur) *</label>
             <select
               value={selectedFactor || ''}
               onChange={(e) => setSelectedFactor(e.target.value ? parseInt(e.target.value) : null)}
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 bg-white text-gray-900 font-medium"
             >
-              <option value="">Choose from {category} activities...</option>
+              <option value="">Choisir une activité ({category})…</option>
               {categoryFactors.map(f => (
                 <option key={f.id} value={f.id}>
                   {f.activity_name} ({f.unit}) - {f.notes}
@@ -421,29 +422,29 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
         {/* Cost & Metadata */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4 border-t border-gray-200">
           <div>
-            <label className="block text-sm font-bold text-slate-900 mb-2">Cost (optional)</label>
+            <label className="block text-sm font-bold text-slate-900 mb-2">Coût (optionnel)</label>
             <input
               type="number"
               value={cost}
               onChange={(e) => setCost(e.target.value)}
-              placeholder="e.g., 50000"
+              placeholder="ex : 50000"
               step="0.01"
               min="0"
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label className="block text-sm font-bold text-slate-900 mb-2">Invoice / Reference ID</label>
+            <label className="block text-sm font-bold text-slate-900 mb-2">Facture / Référence</label>
             <input
               type="text"
               value={sourceReference}
               onChange={(e) => setSourceReference(e.target.value)}
-              placeholder="e.g., INV#12345 or Shipment#ABC"
+              placeholder="ex : INV#12345 ou Shipment#ABC"
               className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500"
             />
           </div>
           <div>
-            <label className="block text-sm font-bold text-slate-900 mb-2">Date of Activity *</label>
+            <label className="block text-sm font-bold text-slate-900 mb-2">Date de l’activité *</label>
             <input
               type="date"
               value={dateOfActivity}
@@ -459,12 +460,12 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
             <div className="flex items-start gap-3">
               <Truck className="w-5 h-5 text-blue-600 mt-0.5" />
               <div>
-                <p className="text-sm text-blue-900 font-semibold">Estimated Carbon Footprint</p>
+                <p className="text-sm text-blue-900 font-semibold">Empreinte carbone estimée</p>
                 <p className="text-2xl font-black text-blue-600 mt-1">
                   {estimatedCo2.toFixed(2)} kg CO₂e
                 </p>
                 <p className="text-xs text-blue-700 mt-2">
-                  Using: <strong>{selectedFactorData.activity_name}</strong> ({selectedFactorData.unit})
+                  Basé sur : <strong>{selectedFactorData.activity_name}</strong> ({selectedFactorData.unit})
                 </p>
               </div>
             </div>
@@ -486,8 +487,8 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
           <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-start gap-3">
             <CheckCircle2 className="w-5 h-5 text-green-600 mt-0.5" />
             <div>
-              <p className="text-sm font-semibold text-green-900">Activity logged successfully! ✅</p>
-              <p className="text-xs text-green-700 mt-1">Supplier rating has been updated.</p>
+              <p className="text-sm font-semibold text-green-900">Activité enregistrée avec succès !</p>
+              <p className="text-xs text-green-700 mt-1">La note du fournisseur a été mise à jour.</p>
             </div>
           </div>
         )}
@@ -499,7 +500,7 @@ export function Scope3LogForm({ onSuccess }: Scope3LogFormProps) {
             disabled={isLoading}
             className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
           >
-            {isLoading ? '⏳ Logging...' : '📝 Log Activity'}
+            {isLoading ? '⏳ Enregistrement…' : '📝 Enregistrer'}
           </button>
         </div>
       </form>

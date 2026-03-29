@@ -18,43 +18,42 @@ const V = {
 const PACKS = [
   {
     id: 1,
-    tag: "Pack 01",
-    title: "Mesure de l'Émission Carbone",
-    tagline:
-      "Suivez et réduisez vos émissions de GES grâce à une solution automatisée.",
-    badge: "Le plus populaire",
+    tag: "STARTER",
+    title: "300 TND / mois",
+    tagline: "PME < 50 salariés",
+    badge: "Essentiel",
     features: [
-      "Collecte automatique des données (ERP, Excel ou factures)",
-      "Mesure de l'empreinte carbone (Scopes 1, 2, 3)",
-      "Suivi temps réel",
-      "Rapports carbone conformes aux standards ESG",
+      "Scopes 1 & 2 automatisés",
+      "Dashboard carbone",
+      "Rapport carbone automatisé",
+      "Support basic",
     ],
   },
   {
     id: 2,
-    tag: "Pack 02",
-    title: "Édition de Rapport ESG",
-    tagline:
-      "Pilotez votre conformité et votre performance ESG en toute simplicité.",
-    badge: "CSRD Ready",
+    tag: "PRO",
+    title: "600 TND / mois",
+    tagline: "ETI 50–200 salariés",
+    badge: "Le plus populaire",
     features: [
-      "Centralisation des données (ERP, fichiers, capteurs IoT)",
-      "Suivi des déchets et des matières",
-      "Reporting ESG automatisé (CSRD, export)",
-      "Assurance de la conformité aux standards ESG",
+      "Scope 3 inclus",
+      "Intégration ERP + Capteurs IoT + API",
+      "Rapports ESG conformes CBAM / CSRD",
+      "Support Premium",
     ],
   },
   {
     id: 3,
-    tag: "Pack 03",
-    title: "Package Personnalisé",
-    tagline: "Une solution adaptée aux besoins spécifiques des entreprises.",
-    badge: "Sur mesure",
+    tag: "ENTERPRISE",
+    title: "1200 TND / mois",
+    tagline: "Grande industrie",
+    badge: "Solution complète",
     features: [
-      "Modules Carbone, ACV et ESG combinables",
-      "Intégration ERP et capteurs IoT",
-      "Fonctionnalités sur mesure",
-      "Accompagnement personnalisé",
+      "Multi-sites",
+      "Intégration ERP + Capteurs + API",
+      "Chatbot et Recommendation IA",
+      "Rapports ESG conformes CBAM / CSRD",
+      "Support Premium + formation",
     ],
   },
 ] as const;
@@ -97,7 +96,7 @@ export function PackDetailPage() {
           <div className="grid items-start gap-12 lg:grid-cols-2">
             <div>
               <div
-                className="text-[10px] font-black uppercase tracking-[0.2em]"
+                className="text-[30px] font-black uppercase tracking-[0.2em]"
                 style={{ color: V.mid }}
               >
                 {pack.tag}
@@ -106,9 +105,9 @@ export function PackDetailPage() {
               <button
                 type="button"
                 onClick={() => navigate("/solutions")}
-                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-green-700 hover:text-green-800"
+                className="mt-4 inline-flex items-center gap-2 text-3xl font-semibold text-green-700 hover:text-green-800"
               >
-                ← Retour aux packs
+                ← Découvrir les autres packs
               </button>
 
               <h1 className="mt-4 text-5xl font-black tracking-tight leading-[1.06] sm:text-6xl">
