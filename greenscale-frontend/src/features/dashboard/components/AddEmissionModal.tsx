@@ -22,7 +22,14 @@ export function AddEmissionModal({ isOpen, onClose, onSuccess, type }: Props) {
     setIsLoading(true);
 
     const businessId = localStorage.getItem("user_id");
-    const unit = type === 'Electricity' ? 'kWh' : type === 'Fuel' ? 'Liters' : 'm³';
+    const unit =
+      type === "Electricity"
+        ? "kWh"
+        : type === "Natural Gas"
+          ? "m³"
+          : type === "Fuel"
+            ? "Liters"
+            : "kg";
 
     try {
       const response = await fetch(apiUrl("/add-emission"), {
@@ -72,7 +79,12 @@ export function AddEmissionModal({ isOpen, onClose, onSuccess, type }: Props) {
 
   const colors = getColorClasses();
   const IconComponent = colors.icon;
-  const estimatedCO2 = value ? (parseFloat(value) * (type === 'Electricity' ? 0.4 : type === 'Natural Gas' ? 2.0 : 2.7)).toFixed(2) : '0';
+  const estimatedCO2 = value
+    ? (
+        parseFloat(value) *
+        (type === "Electricity" ? 0.4 : type === "Natural Gas" ? 2.0 : type === "Fuel" ? 2.7 : 0.5)
+      ).toFixed(2)
+    : "0";
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

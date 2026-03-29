@@ -200,7 +200,7 @@ class UserCreate(BaseModel):
         }
 
 
-class Userlogin(BaseModel):
+class UserLogin(BaseModel):
     """User login schema with validation."""
     email: EmailStr = Field(..., description="Email address")
     password: str = Field(..., min_length=1, description="Password")
@@ -304,8 +304,8 @@ def login_info():
 
 
 @app.post("/login", status_code=status.HTTP_200_OK, tags=["auth"])
-def login(credentials: Userlogin, db: Session = Depends(get_db)):
-    """login user with email and password."""
+def login(credentials: UserLogin, db: Session = Depends(get_db)):
+    """Login user with email and password."""
     try:
         # Query user by email (case-insensitive)
         user = db.query(models.User).filter(
@@ -313,7 +313,7 @@ def login(credentials: Userlogin, db: Session = Depends(get_db)):
         ).first()
 
         if not user:
-            logger.warning("❌ login failed: User not found - %s", credentials.email)
+            logger.warning("❌ Login failed: User not found - %s", credentials.email)
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid email or password"
@@ -321,7 +321,7 @@ def login(credentials: Userlogin, db: Session = Depends(get_db)):
 
         # Verify password
         if not auth_utils.verify_password(credentials.password, str(user.password)):  # type: ignore
-            logger.warning("❌ login failed: Invalid password - %s", credentials.email)
+            logger.warning("❌ Login failed: Invalid password - %s", credentials.email)
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid email or password"
@@ -333,7 +333,7 @@ def login(credentials: Userlogin, db: Session = Depends(get_db)):
         token = hashlib.sha256(f"{user.id}:{user.email}:{user.password}".encode()).hexdigest()
         return {
             "status": "success",
-            "message": "login successful",
+            "message": "Login successful",
             "token": token,
             "business_name": user.business_name,
             "user_id": user.id,
@@ -350,10 +350,10 @@ def login(credentials: Userlogin, db: Session = Depends(get_db)):
     except HTTPException:
         raise
     except Exception as e:  # pylint: disable=broad-except
-        logger.error("❌ login error: %s", e, exc_info=True)
+        logger.error("❌ Login error: %s", e, exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="login failed"
+            detail="Login failed"
         ) from e
 
 @app.post("/upload-profile-picture", tags=["uploads"])
